@@ -1,0 +1,1 @@
+<php echo "oui tout va bien" ; ?>
