@@ -77,9 +77,9 @@
                                         Contacts
                                     </a>
                                     <div class="dropdown-menu bg-dark rounded" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="dropdown-item perso_headerContacts" href="#">Contacts</a>
-                                        <a class="dropdown-item perso_headerContacts" href="#">Dons</a>
-                                        <a class="dropdown-item perso_headerContacts" href="#">Mentions légales</a>
+                                        <a class="dropdown-item perso_headerContacts" href="../Contact/contact.php">Contacts</a>
+                                        <a class="dropdown-item perso_headerContacts" href="../Contact/dons.php">Dons</a>
+                                        <a class="dropdown-item perso_headerContacts" href="../Contact/mentions.php">Mentions légales</a>
                                     </div>
                                 </li>
                             </ul>

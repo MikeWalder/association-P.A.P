@@ -16,9 +16,9 @@ function styleTitleLevel2($title, $color)
     return $txt;
 }
 
-function styleTitleLevel3($title, $color)
+function styleTitleLevel3($title, $color, $position)
 {
-    $txt = "<div class='h3 text-center my-3 perso_policeTitle perso_textShadow " . $color . "'>";
+    $txt = "<div class='h3 " . $position . " my-3 perso_policeTitle perso_textShadow " . $color . "'>";
     $txt .= $title;
     $txt .= "</div>";
     return $txt;

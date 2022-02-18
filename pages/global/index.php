@@ -69,7 +69,7 @@ require_once("../../use/format.php");
                 <img src="../../content/images/Animals/chat1.jpg" alt="Chat 1" style="height: 180px;">
             </div>
             <div class="col p-3 d-flex flex-column position-static">
-                <?= styleTitleLevel3("Doyenne Chipie", COLOR_TITLE_ACTUS) ?>
+                <?= styleTitleLevel3("Doyenne Chipie", COLOR_TITLE_ACTUS, "text-center") ?>
                 <p>
                     Un petit coucou de notre doyenne CHIPIE (20 ans) en famille d'accueil.<br>
                     La miss a un programme journalier assez chargé...
@@ -84,7 +84,7 @@ require_once("../../use/format.php");
                 <img src="../../content/images/Animals/chat2.jpg" alt="Chat 2" style="height: 180px;">
             </div>
             <div class="col p-3 d-flex flex-column position-static">
-                <?= styleTitleLevel3("Benjamine Mina", COLOR_TITLE_ASSO) ?>
+                <?= styleTitleLevel3("Benjamine Mina", COLOR_TITLE_ASSO, "text-center") ?>
                 <p>
                     Un petit coucou de notre benjamine MINA CHIPIE (1 an) disponible à l'adoption.<br>
                     <br>
