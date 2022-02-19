@@ -23,3 +23,11 @@ function styleTitleLevel3($title, $color, $position)
     $txt .= "</div>";
     return $txt;
 }
+
+function styleTitlePost($text)
+{
+    $txt = "<div class='h2 mt-5 mb-3 perso_policeTitle perso_textShadow border-bottom border-dark'>";
+    $txt .= $text;
+    $txt .= "</div>";
+    return $txt;
+}

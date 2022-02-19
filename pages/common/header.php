@@ -24,8 +24,8 @@
                         <img src="../../content/images/Others/logo.png" alt="logo de l'association" class="rounded-circle img-fluid perso_imgLogo" title="Association Pattes à Pouffes">
                     </a>
                 </div>
-                <div class="col-8 m-0 p-0">
-                    <nav class="navbar navbar-expand-md navbar-dark bg-dark perso_headerFontSize">
+                <div class="col-6 col-lg-8 m-0 p-0">
+                    <nav class="navbar navbar-expand-lg navbar-dark bg-dark perso_headerFontSize">
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
@@ -45,9 +45,9 @@
                                         Pensionnaires
                                     </a>
                                     <div class="dropdown-menu bg-dark rounded" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="dropdown-item perso_headerPensionnaires" href="#">Action</a>
-                                        <a class="dropdown-item perso_headerPensionnaires" href="#">Another action</a>
-                                        <a class="dropdown-item perso_headerPensionnaires" href="#">Something else here</a>
+                                        <a class="dropdown-item perso_headerPensionnaires" href="../global/pensionnaires.php">Ils cherchent une famille</a>
+                                        <a class="dropdown-item perso_headerPensionnaires" href="#">Famille d'accueil longue durée</a>
+                                        <a class="dropdown-item perso_headerPensionnaires" href="#">Les anciens</a>
                                     </div>
                                 </li>
                                 <li class="nav-item dropdown">
@@ -55,9 +55,9 @@
                                         Actus
                                     </a>
                                     <div class="dropdown-menu bg-dark rounded" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="dropdown-item perso_headerActus" href="#">Action</a>
-                                        <a class="dropdown-item perso_headerActus" href="#">Another action</a>
-                                        <a class="dropdown-item perso_headerActus" href="#">Something else here</a>
+                                        <a class="dropdown-item perso_headerActus" href="../global/actus.php">Nouvelles des adoptés</a>
+                                        <a class="dropdown-item perso_headerActus" href="#">Evénements</a>
+                                        <a class="dropdown-item perso_headerActus" href="#">Nos actions au quotidien</a>
                                     </div>
                                 </li>
                                 <li class="nav-item dropdown">
@@ -86,8 +86,8 @@
                         </div>
                     </nav>
                 </div>
-                <div class="col-2 text-right font-weight-bold pr-lg-4 d-none d-lg-block">
-                    P. A. P. &nbsp;<br>
+                <div class="col-3 col-md-2 text-center font-weight-bold pr-lg-4">
+                    P. A. P.<br>
                     Centre Alsace
                 </div>
             </div>

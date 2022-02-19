@@ -53,9 +53,13 @@ hr {
 }
 
 .perso_bgGreen {
-  background-color: lightgreen;
+  background-color: lightgreen !important;
 }
 
 .perso_bgPink {
-  background-color: pink;
+  background-color: pink !important;
+}
+
+.perso_bglightBlue {
+  background-color: lightskyblue !important;
 }
