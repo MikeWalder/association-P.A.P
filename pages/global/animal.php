@@ -37,15 +37,33 @@ require_once("../../use/format.php");
     </div>
 </div>
 
-<div class="row no-gutters mt-3">
+<div class="row no-gutters mt-3 align-items-center">
     <div class="col-12 col-lg-6">
         <img class="img-fluid img-thumbnail" src="../../content/images/Animals/chat3.jpg" style="max-height: 600px;">
     </div>
     <div class="col-12 col-lg-6">
         <?= styleTitleLevel2("Qui suis-je ?", COLOR_TITLE_PENSIONNAIRES) ?>
         <p>FELIX, mâle tigré abandonné en pleine rue et recueilli il y a 3 semaines.<br>
-            Est stérilisé et pucé. Est très affectueux et sociable. </p>
+            Est stérilisé et pucé. <br>
+            Il est très affectueux et sociable avec les autres animaux et les bébés.
+        </p>
+        <hr>
+        <div class="text-center">
+            <?= styleTitleLevel2("<i class='fas fa-map-marked-alt mr-2 mr-lg-3'></i>Localisation", COLOR_TITLE_PENSIONNAIRES) ?>
+        </div>
+        <p>
+            Marckolsheim (67)
+        </p>
+        <hr>
+        <div class="text-center">
+            <?= styleTitleLevel2("<i class='fas fa-file-contract mr-2 mr-lg-3'></i></i>Informations", COLOR_TITLE_PENSIONNAIRES) ?>
+        </div>
+        <p>
+            Frais d'adoption de 100€.<br>
+            Identifié par puce, primo vaccination + anti parasitaires à jour.
+        </p>
     </div>
+
 </div>
 <?php
 require_once("../common/footer.php");
