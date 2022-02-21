@@ -1,42 +1,74 @@
 <?php
 require_once("../common/header.php");
-require_once("../../use/config.php");
+
 require_once("../../use/format.php");
+require_once("pensionnaires.dao.php");
 ?>
 
-<?= styleTitleLevel1("Ils cherchent une famille", COLOR_TITLE_PENSIONNAIRES) ?>
+<?php $animaux = selectAnimalsFromStatut($_GET['idstatut']); ?>
 
-<div class="row no-gutters">
-    <div class="col-12 col-lg-6">
-        <div class="row no-gutters align-items-center border border-dark rounded m-2 perso_bglightBlue perso_headerPensionnaires" style="height: 200px;">
-            <div class="col p-2 text-center">
-                <!-- image -->
-                <img src="../../content/images/Animals/chat3.jpg" class="img-thumbnail" style="max-height: 190px;" alt="Félix">
-            </div>
-            <div class="col-2 border-left border-right border-dark text-center">
-                <!-- icones -->
-                <img src="../../content/images/Others/icons/dog.png" class="mb-2" style="height: 50px;" alt="Dog OK">
-                <img src="../../content/images/Others/icons/cat.png" class="my-2" style="height: 50px;" alt="Cat OK">
-                <img src="../../content/images/Others/icons/baby.png" class="mt-2" style="height: 50px;" alt="Baby OK">
-            </div>
-            <div class="col-6 text-center">
-                <!-- informations -->
-                <div class="font-weight-bold h3 mt-2">
-                    Félix
+<?php
+$text = mainTitlePensionnaire($_GET['idstatut']);
+echo styleTitleLevel1($text, COLOR_TITLE_PENSIONNAIRES);
+?>
+
+<div class="row no-gutters mt-2">
+    <?php foreach ($animaux as $animal) : ?>
+
+        <?php $image = selectFirstImageFromIdAnimal($animal['id_animal']); ?>
+
+        <div class="col-12 col-lg-6">
+            <div class="row no-gutters align-items-center border border-dark rounded m-2 perso_headerPensionnaires
+            <?= $animal['sexe'] == 1 ? "perso_bglightBlue" : "perso_bgPink" ?>" style="height: 200px;">
+
+                <div class="col p-2 text-center">
+                    <img src="../../content/images/Animals/<?= $image['url_image'] ?>" class="img-thumbnail" alt="<?= $image['libelle_image'] ?>" style="max-height: 190px;" alt="Félix">
                 </div>
-                <div class="h4">
-                    02 / 12 / 2019
+
+                <?php
+                $iconeDog = "";
+                if ($animal['ami_chien'] === "oui") $iconeDog = "dog";
+                else if ($animal['ami_chien'] === "non") $iconeDog = "dogNot";
+                else if ($animal['ami_chien'] === "N/A") $iconeDog = "dogQuest";
+                $iconeCat = "";
+                if ($animal['ami_chat'] === "oui") $iconeCat = "cat";
+                else if ($animal['ami_chat'] === "non") $iconeCat = "catNot";
+                else if ($animal['ami_chat'] === "N/A") $iconeCat = "catQuest";
+                $iconeChild = "";
+                if ($animal['ami_enfant'] === "oui") $iconeChild = "baby";
+                else if ($animal['ami_enfant'] === "non") $iconeChild = "babyNot";
+                else if ($animal['ami_enfant'] === "N/A") $iconeChild = "babyQuest";
+                ?>
+                <div class="col-2 border-left border-right border-dark text-center">
+                    <img src="../../content/images/Others/icons/<?= $iconeDog ?>.png" class="mb-2" style="height: 50px;" alt="Dog OK">
+                    <img src="../../content/images/Others/icons/<?= $iconeCat ?>.png" class="my-2" style="height: 50px;" alt="Cat OK">
+                    <img src="../../content/images/Others/icons/<?= $iconeChild ?>.png" class="mt-2" style="height: 50px;" alt="Baby OK">
                 </div>
-                <div class="d-none d-sm-inline font-weight-bold h4">
-                    <div class="badge badge-warning">Joueur</div>
-                    <div class="badge badge-warning">Câlin</div>
-                    <div class="badge badge-warning">Avenant</div>
+                <div class="col-6 text-center perso_textShadow">
+
+                    <div class="font-weight-bold h3 mt-2">
+                        <?= $animal['nom_animal'] ?> (
+                        <?= $animal['sexe'] == 0 ? "<i class='fas fa-venus'></i>" : "<i class='fas fa-mars'></i>" ?>
+                        )
+                    </div>
+                    <div class="h4">
+                        Né le : <?= $animal['date_naissance_animal'] ?>
+                    </div>
+
+                    <?php $caracteres = selectCaracteresFromIdAnimal($animal['id_animal']); ?>
+
+                    <div class="d-none d-sm-inline font-weight-bold h4">
+                        <?php foreach ($caracteres as $caractere) : ?>
+                            <div class="badge badge-warning">
+                                <?= $animal['sexe'] == 0 ? $caractere['libelle_caractere_f'] : $caractere['libelle_caractere_m'] ?>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <a href="animal.php?idAnimal=<?= $animal['id_animal'] ?>" class="btn btn-primary mt-3">Visiter ma page</a>
                 </div>
-                <a href="animal.php" class="btn btn-primary mt-3">Visiter ma page</a>
             </div>
         </div>
-    </div>
-    <div class="col-12 col-lg-6"></div>
+    <?php endforeach; ?>
 </div>
 
 

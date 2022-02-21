@@ -45,9 +45,9 @@
                                         Pensionnaires
                                     </a>
                                     <div class="dropdown-menu bg-dark rounded" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="dropdown-item perso_headerPensionnaires" href="../global/pensionnaires.php">Ils cherchent une famille</a>
-                                        <a class="dropdown-item perso_headerPensionnaires" href="#">Famille d'accueil longue durée</a>
-                                        <a class="dropdown-item perso_headerPensionnaires" href="#">Les anciens</a>
+                                        <a class="dropdown-item perso_headerPensionnaires" href="../global/pensionnaires.php?idstatut=1">Ils cherchent une famille</a>
+                                        <a class="dropdown-item perso_headerPensionnaires" href="../global/pensionnaires.php?idstatut=3">Famille d'accueil longue durée</a>
+                                        <a class="dropdown-item perso_headerPensionnaires" href="../global/pensionnaires.php?idstatut=2">Les anciens</a>
                                     </div>
                                 </li>
                                 <li class="nav-item dropdown">
