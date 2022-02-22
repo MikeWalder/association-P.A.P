@@ -1,6 +1,6 @@
 <?php
-require_once("../../use/config.php");
 require_once("bdd/functions.php");
+require_once("../config/config.php");
 
 function selectAnimalsFromStatut($idStatut)
 {

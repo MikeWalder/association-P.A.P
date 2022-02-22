@@ -1,7 +1,7 @@
 <?php
-require_once("../common/header.php");
-require_once("../../use/config.php");
-require_once("../../use/format.php");
+require_once("../../views/header.php");
+require_once("../../config/config.php");
+require_once("../format.php");
 ?>
 
 <?= styleTitleLevel1("Attention, le chocolat est très dangereux pour les chiens et chats !", COLOR_TITLE_CONSEILS) ?>
@@ -13,7 +13,6 @@ require_once("../../use/format.php");
     </div>
 </div>
 
-
 <?php
-require_once("../common/footer.php");
+require_once("../../views/footer.php");
 ?>

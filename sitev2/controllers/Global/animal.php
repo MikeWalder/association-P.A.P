@@ -1,9 +1,5 @@
 <?php
-require_once("../common/header.php");
-require_once("../../use/config.php");
-require_once("../../use/format.php");
-
-require_once("animal.dao.php");
+require_once("../../models/animal.dao.php");
 
 $animal = getAnimalFromId($_GET['idAnimal']);
 ?>
@@ -112,5 +108,5 @@ $animal = getAnimalFromId($_GET['idAnimal']);
 
 </div>
 <?php
-require_once("../common/footer.php");
+require_once("../../common/footer.php");
 ?>

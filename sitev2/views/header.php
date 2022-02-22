@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../../bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../../css/main.css" rel="stylesheet">
+    <link href="public/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="public/css/main.css" rel="stylesheet">
     <!-- Font awesome 5.14.0 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Google fonts -->
@@ -21,7 +21,7 @@
             <div class="row align-items-center m-0">
                 <div class="col-2 p-2 text-center">
                     <a href="index.php">
-                        <img src="../../content/images/Others/logo.png" alt="logo de l'association" class="rounded-circle img-fluid perso_imgLogo" title="Association Pattes à Pouffes">
+                        <img src="public/content/images/Others/logo.png" alt="logo de l'association" class="rounded-circle img-fluid perso_imgLogo" title="Association Pattes à Pouffes">
                     </a>
                 </div>
                 <div class="col-6 col-lg-8 m-0 p-0">
@@ -36,8 +36,8 @@
                                         L'asso
                                     </a>
                                     <div class="dropdown-menu bg-dark rounded" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="dropdown-item perso_headerAsso" href="../global/association.php">Qui sommes-nous ?</a>
-                                        <a class="dropdown-item perso_headerAsso" href="../global/partenaires.php">Nos partenaires</a>
+                                        <a class="dropdown-item perso_headerAsso" href="../controllers/association.php">Qui sommes-nous ?</a>
+                                        <a class="dropdown-item perso_headerAsso" href="../controllers/partenaires.php">Nos partenaires</a>
                                     </div>
                                 </li>
                                 <li class="nav-item dropdown">
@@ -45,9 +45,9 @@
                                         Pensionnaires
                                     </a>
                                     <div class="dropdown-menu bg-dark rounded" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="dropdown-item perso_headerPensionnaires" href="../global/pensionnaires.php?idstatut=1">Ils cherchent une famille</a>
-                                        <a class="dropdown-item perso_headerPensionnaires" href="../global/pensionnaires.php?idstatut=3">Famille d'accueil longue durée</a>
-                                        <a class="dropdown-item perso_headerPensionnaires" href="../global/pensionnaires.php?idstatut=2">Les anciens</a>
+                                        <a class="dropdown-item perso_headerPensionnaires" href="../controllers/pensionnaires.php?idstatut=1">Ils cherchent une famille</a>
+                                        <a class="dropdown-item perso_headerPensionnaires" href="../controllers/pensionnaires.php?idstatut=3">Famille d'accueil longue durée</a>
+                                        <a class="dropdown-item perso_headerPensionnaires" href="../controllers/pensionnaires.php?idstatut=2">Les anciens</a>
                                     </div>
                                 </li>
                                 <li class="nav-item dropdown">
@@ -55,7 +55,7 @@
                                         Actus
                                     </a>
                                     <div class="dropdown-menu bg-dark rounded" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="dropdown-item perso_headerActus" href="../global/actus.php">Nouvelles des adoptés</a>
+                                        <a class="dropdown-item perso_headerActus" href="../controllers/actus.php">Nouvelles des adoptés</a>
                                         <a class="dropdown-item perso_headerActus" href="#">Evénements</a>
                                         <a class="dropdown-item perso_headerActus" href="#">Nos actions au quotidien</a>
                                     </div>
@@ -65,11 +65,11 @@
                                         Conseils
                                     </a>
                                     <div class="dropdown-menu bg-dark rounded" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="dropdown-item perso_headerConseils" href="../Articles/temperatures.php">Températures</a>
-                                        <a class="dropdown-item perso_headerConseils" href="../Articles/chocolat.php">Le chocolat</a>
-                                        <a class="dropdown-item perso_headerConseils" href="../Articles/plantes.php">Les plantes toxiques</a>
-                                        <a class="dropdown-item perso_headerConseils" href="../Articles/sterilisation.php">Stérilisation</a>
-                                        <a class="dropdown-item perso_headerConseils" href="../Articles/educateur.php">Educateur canin</a>
+                                        <a class="dropdown-item perso_headerConseils" href="../controllers/Articles/temperatures.php">Températures</a>
+                                        <a class="dropdown-item perso_headerConseils" href="../controllers/Articles/chocolat.php">Le chocolat</a>
+                                        <a class="dropdown-item perso_headerConseils" href="../controllers/Articles/plantes.php">Les plantes toxiques</a>
+                                        <a class="dropdown-item perso_headerConseils" href="../controllers/Articles/sterilisation.php">Stérilisation</a>
+                                        <a class="dropdown-item perso_headerConseils" href="../controllers/Articles/educateur.php">Educateur canin</a>
                                     </div>
                                 </li>
                                 <li class="nav-item dropdown">
@@ -77,9 +77,9 @@
                                         Contacts
                                     </a>
                                     <div class="dropdown-menu bg-dark rounded" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="dropdown-item perso_headerContacts" href="../Contact/contact.php">Contacts</a>
-                                        <a class="dropdown-item perso_headerContacts" href="../Contact/dons.php">Dons</a>
-                                        <a class="dropdown-item perso_headerContacts" href="../Contact/mentions.php">Mentions légales</a>
+                                        <a class="dropdown-item perso_headerContacts" href="../controllers/Contact/contact.php">Contacts</a>
+                                        <a class="dropdown-item perso_headerContacts" href="../controllers/Contact/dons.php">Dons</a>
+                                        <a class="dropdown-item perso_headerContacts" href="../controllers/Contact/mentions.php">Mentions légales</a>
                                     </div>
                                 </li>
                             </ul>

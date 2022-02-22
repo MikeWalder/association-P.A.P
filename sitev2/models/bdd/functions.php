@@ -13,16 +13,3 @@ function connectionPDO()
         die($message);
     }
 }
-
-function mainTitlePensionnaire($val)
-{
-    $mainTitle = "";
-    if ($val === TO_ADOPT) {
-        $mainTitle = "Ils cherchent une famille";
-    } else if ($val === IS_ADOPTED) {
-        $mainTitle = "Les anciens";
-    } else if ($val === FALD) {
-        $mainTitle = "Famille d'accueil longue durée";
-    }
-    return $mainTitle;
-}

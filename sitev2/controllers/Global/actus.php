@@ -1,7 +1,7 @@
 <?php
-require_once("../common/header.php");
-require_once("../../use/config.php");
-require_once("../../use/format.php");
+require_once("../../views/header.php");
+require_once("../../config/config.php");
+require_once("format.php");
 ?>
 
 <?= styleTitleLevel1("Nouvelles des adoptés", COLOR_TITLE_ACTUS) ?>
@@ -33,5 +33,5 @@ require_once("../../use/format.php");
 </div>
 
 <?php
-require_once("../common/footer.php");
+require_once("../../views/footer.php");
 ?>
