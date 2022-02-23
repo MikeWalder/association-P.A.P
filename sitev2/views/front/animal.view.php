@@ -1,17 +1,12 @@
 <?php
-require_once("header.php");
-require_once("../controllers/format.php");
-
-$animal = getAnimalFromId($_GET['idAnimal']);
+ob_start();
 ?>
 
 <?= styleTitleLevel1($animal['nom_animal'], COLOR_TITLE_PENSIONNAIRES) ?>
 <div class="row no-gutters align-items-center mt-3 border border-dark <?= $animal['sexe'] == 1 ? "perso_bglightBlue" : "perso_bgPink" ?>">
 
-    <?php $images = selectImagesFromAnimal($_GET['idAnimal']); ?>
-
     <div class="col-4 col-md-3 text-center">
-        <img class="img-fluid img-thumbnail" src="../../content/images/Animals/<?= $images[0]['url_image'] ?>" style="max-height: 220px;" alt="<?= $images[0]['libelle_image'] ?>">
+        <img class="img-fluid img-thumbnail" src="content/images/Animals/<?= $animal['url_image'] ?>" style="max-height: 220px;" alt="<?= $animal[0]['libelle_image'] ?>">
     </div>
 
     <?php
@@ -29,9 +24,9 @@ $animal = getAnimalFromId($_GET['idAnimal']);
     else if ($animal['ami_enfant'] === "N/A") $iconeChild = "babyQuest";
     ?>
     <div class="col-2 col-md-1 border-left border-right border-dark text-center">
-        <img src="../../content/images/Others/icons/<?= $iconeDog ?>.png" class="mb-2" style="height: 50px;" alt="Dog OK">
-        <img src="../../content/images/Others/icons/<?= $iconeCat ?>.png" class="my-2" style="height: 50px;" alt="Cat OK">
-        <img src="../../content/images/Others/icons/<?= $iconeChild ?>.png" class="mt-2" style="height: 50px;" alt="Baby OK">
+        <img src="public/content/images/Others/icons/<?= $iconeDog ?>.png" class="mb-2" style="height: 50px;" alt="Dog OK">
+        <img src="public/content/images/Others/icons/<?= $iconeCat ?>.png" class="my-2" style="height: 50px;" alt="Cat OK">
+        <img src="public/content/images/Others/icons/<?= $iconeChild ?>.png" class="mt-2" style="height: 50px;" alt="Baby OK">
     </div>
 
     <div class="col-4 col-md-3 text-center">
@@ -45,8 +40,6 @@ $animal = getAnimalFromId($_GET['idAnimal']);
             Puce : <?= empty($animal['puce_animal']) ? "aucun" : $animal['puce_animal'] ?><br>
             Né le : <?= empty($animal['date_naissance_animal']) ? "non défini" : $animal['date_naissance_animal'] ?>
         </div>
-
-        <?php $caracteres = selectCaracteresFromAnimal($_GET['idAnimal']); ?>
 
         <div class="d-none d-sm-inline font-weight-bold h4">
             <?php foreach ($caracteres as $caractere) : ?>
@@ -72,7 +65,7 @@ $animal = getAnimalFromId($_GET['idAnimal']);
             <div class="carousel-inner">
                 <?php foreach ($images as $key => $image) : ?>
                     <div class="carousel-item <?= $key === 0 ? "active" : "" ?>">
-                        <img class="d-block w-80 p-3" src="../../content/images/Animals/<?= $image['url_image'] ?>" style="max-height: 600px;" alt="<?= $image['libelle_image'] ?>">
+                        <img class="d-block w-80 p-3" src="public/content/images/Animals/<?= $images[0]['url_image'] ?>" style="max-height: 600px;" alt="<?= $image['libelle_image'] ?>">
                     </div>
                 <?php endforeach; ?>
             </div>
@@ -109,5 +102,6 @@ $animal = getAnimalFromId($_GET['idAnimal']);
 
 </div>
 <?php
-require_once("footer.php");
+$content = ob_get_clean();
+require_once("views/template.php");
 ?>

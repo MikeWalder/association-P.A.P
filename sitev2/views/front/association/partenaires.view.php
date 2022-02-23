@@ -1,14 +1,12 @@
 <?php
-require_once("../../views/header.php");
-require_once("../../config/config.php");
-require_once("format.php");
+ob_start();
 ?>
 
 <?= styleTitleLevel1("Nos partenaires", COLOR_TITLE_ASSO) ?>
 
 <div class="row no-gutters">
     <div class="card col-auto text-center mt-5 mx-auto" style="width: 18rem;">
-        <img class="card-img-top img-lfuid" src="../../content/images/Others/logo_spa.png" alt="Logo de la SPA">
+        <img class="card-img-top img-lfuid" src="public/content/images/Others/logo_spa.png" alt="Logo de la SPA">
         <div class="card-body">
             <h5 class="card-title font-weight-bold perso_policeTitle perso_textShadow perso_headerAsso">S . P . A .</h5>
             <p class="card-text">
@@ -20,7 +18,7 @@ require_once("format.php");
         </div>
     </div>
     <div class="card text-center mt-5 mx-auto" style="width: 18rem;">
-        <img class="card-img-top img-lfuid" src="../../content/images/Others/logo_spa.png" alt="Logo de la SPA">
+        <img class="card-img-top img-lfuid" src="public/content/images/Others/logo_spa.png" alt="Logo de la SPA">
         <div class="card-body">
             <h5 class="card-title font-weight-bold perso_policeTitle perso_textShadow perso_headerAsso">S . P . A .</h5>
             <p class="card-text">
@@ -34,5 +32,6 @@ require_once("format.php");
 </div>
 
 <?php
-require_once("../../views/footer.php");
+$content = ob_get_clean();
+require_once("views/template.php");
 ?>

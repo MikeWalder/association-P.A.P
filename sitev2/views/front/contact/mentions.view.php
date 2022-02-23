@@ -1,7 +1,5 @@
 <?php
-require_once("../../views/header.php");
-require_once("../../config/config.php");
-require_once("../format.php");
+ob_start();
 ?>
 
 
@@ -138,5 +136,6 @@ require_once("../format.php");
 </div>
 
 <?php
-require_once("../../views/footer.php");
+$content = ob_get_clean();
+require_once("views/template.php");
 ?>

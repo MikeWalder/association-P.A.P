@@ -1,16 +1,16 @@
 <?php
 require_once("../../models/animal.dao.php");
-
-$animal = getAnimalFromId($_GET['idAnimal']);
 ?>
+
+<?= $animal ?>
 
 <?= styleTitleLevel1($animal['nom_animal'], COLOR_TITLE_PENSIONNAIRES) ?>
 <div class="row no-gutters align-items-center mt-3 border border-dark <?= $animal['sexe'] == 1 ? "perso_bglightBlue" : "perso_bgPink" ?>">
 
-    <?php $images = selectImagesFromAnimal($_GET['idAnimal']); ?>
+    <?= $images ?>
 
     <div class="col-4 col-md-3 text-center">
-        <img class="img-fluid img-thumbnail" src="../../content/images/Animals/<?= $images[0]['url_image'] ?>" style="max-height: 220px;" alt="<?= $images[0]['libelle_image'] ?>">
+        <img class="img-fluid img-thumbnail" src="content/images/Animals/<?= $animal[0]['url_image'] ?>" style="max-height: 220px;" alt="<?= $animal[0]['libelle_image'] ?>">
     </div>
 
     <?php
@@ -28,9 +28,9 @@ $animal = getAnimalFromId($_GET['idAnimal']);
     else if ($animal['ami_enfant'] === "N/A") $iconeChild = "babyQuest";
     ?>
     <div class="col-2 col-md-1 border-left border-right border-dark text-center">
-        <img src="../../content/images/Others/icons/<?= $iconeDog ?>.png" class="mb-2" style="height: 50px;" alt="Dog OK">
-        <img src="../../content/images/Others/icons/<?= $iconeCat ?>.png" class="my-2" style="height: 50px;" alt="Cat OK">
-        <img src="../../content/images/Others/icons/<?= $iconeChild ?>.png" class="mt-2" style="height: 50px;" alt="Baby OK">
+        <img src="content/images/Others/icons/<?= $iconeDog ?>.png" class="mb-2" style="height: 50px;" alt="Dog OK">
+        <img src="content/images/Others/icons/<?= $iconeCat ?>.png" class="my-2" style="height: 50px;" alt="Cat OK">
+        <img src="content/images/Others/icons/<?= $iconeChild ?>.png" class="mt-2" style="height: 50px;" alt="Baby OK">
     </div>
 
     <div class="col-4 col-md-3 text-center">
@@ -45,7 +45,7 @@ $animal = getAnimalFromId($_GET['idAnimal']);
             Né le : <?= empty($animal['date_naissance_animal']) ? "non défini" : $animal['date_naissance_animal'] ?>
         </div>
 
-        <?php $caracteres = selectCaracteresFromAnimal($_GET['idAnimal']); ?>
+        <?= $caracteres ?>
 
         <div class="d-none d-sm-inline font-weight-bold h4">
             <?php foreach ($caracteres as $caractere) : ?>
@@ -71,7 +71,7 @@ $animal = getAnimalFromId($_GET['idAnimal']);
             <div class="carousel-inner">
                 <?php foreach ($images as $key => $image) : ?>
                     <div class="carousel-item <?= $key === 0 ? "active" : "" ?>">
-                        <img class="d-block w-80 p-3" src="../../content/images/Animals/<?= $image['url_image'] ?>" style="max-height: 600px;" alt="<?= $image['libelle_image'] ?>">
+                        <img class="d-block w-80 p-3" src="content/images/Animals/<?= $image['url_image'] ?>" style="max-height: 600px;" alt="<?= $image['libelle_image'] ?>">
                     </div>
                 <?php endforeach; ?>
             </div>

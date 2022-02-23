@@ -1,9 +1,16 @@
 <?php
-function getPensionnaires() {
+require_once("config/config.php");
+require_once("config/format.php");
+
+function getPensionnaires()
+{
     require_once("models/pensionnaires.dao.php");
-    
+
+    $title = "Page des pensionnaires";
+    $description = "Affichage et description des pensionnaires de l'association P.A.P";
+
     $animaux = selectAnimalsFromStatut($_GET['idstatut']);
-    
+
     function mainTitlePensionnaire($val)
     {
         $mainTitle = "";
@@ -16,16 +23,122 @@ function getPensionnaires() {
         }
         return $mainTitle;
     }
-    
+
     $text = mainTitlePensionnaire($_GET['idstatut']);
-    
+
     foreach ($animaux as $key => $animal) {
         $image = selectFirstImageFromIdAnimal($animal['id_animal']);
         $animaux[$key]['image'] = $image;
-    
+
         $caracteres = selectCaracteresFromIdAnimal($animal['id_animal']);
         $animaux[$key]['caracteres'] = $caracteres;
     }
+    require_once("views/front/pensionnaires.view.php");
+}
 
-    require_once("views/pensionnaires.view.php");
+function getAccueil()
+{
+    $title = "Page d'accueil";
+    $description = "Page d'accueil de l'association";
+
+    require_once("views/front/accueil.view.php");
+}
+
+function getAssociation()
+{
+    $title = "Présentation de l'association";
+    $description = "Description générale de l'association Pattes à Pouffes";
+    require_once("views/front/association/association.view.php");
+}
+
+function getPartenaires()
+{
+    $title = "Nos partenaires";
+    $description = "Partenaires en collaboration et en soutien de notre association.";
+    require_once("views/front/association/partenaires.view.php");
+}
+
+function getActus()
+{
+    $title = "Actualités";
+    $description = "Actualités de l'association Pattes à Pouffes";
+    require_once("views/front/actus/actus.view.php");
+}
+
+function getTemperature()
+{
+    $title = "Alerte températures";
+    $description = "Les dangers de la températures sur les animaux de compagnie";
+    require_once("views/front/articles/temperatures.view.php");
+}
+
+function getChocolat()
+{
+    $title = "Effets du chocolat";
+    $description = "Les effets néfastes du chocolat sur la santé des animaux de compagnie";
+    require_once("views/front/articles/chocolat.view.php");
+}
+
+function getPlantes()
+{
+    $title = "Les plantes nocives";
+    $description = "Liste des plantes nocives à votre animal de compagnie";
+    require_once("views/front/articles/plantes.view.php");
+}
+
+function getSterilisation()
+{
+    $title = "La stérilisation";
+    $description = "Informations importantes et avantages de la stérilisation de vos animaux de compagnie";
+    require_once("views/front/articles/sterilisation.view.php");
+}
+
+function getEducateur()
+{
+    $title = "Educateur canin";
+    $description = "Informations utiles sur notre éducateur canin";
+    require_once("views/front/articles/educateur.view.php");
+}
+
+function getContact()
+{
+    $title = "Nos contacts";
+    $description = "Nos informations de contact permettant de nous trouver";
+    require_once("views/front/contact/contact.view.php");
+}
+
+function getDons()
+{
+    $title = "Donnations";
+    $description = "Notre page de soutien financier à l'association Pattes à Pouffes";
+    require_once("views/front/contact/dons.view.php");
+}
+
+function getMentions()
+{
+    $title = "Mentions légales";
+    $description = "Mentions légales du site web de l'association";
+    require_once("views/front/contact/mentions.view.php");
+}
+
+function getAnimal()
+{
+    require_once("models/animal.dao.php");
+
+    $title = "Description de l'animal";
+    $description = "Descriptif de l'animal et localisation";
+
+    $animal = getAnimalFromId($_GET['id_animal']);
+    $images = selectImagesFromAnimal($_GET['id_animal']);
+    $caracteres = selectCaracteresFromAnimal($_GET['id_animal']);
+
+    foreach ($images as $key => $image) {
+        $images[$key]['url_image'] = $image;
+    }
+
+    foreach ($caracteres as $key => $caractere) {
+        $images[$key]['caractere'] = $caractere;
+    }
+
+    require_once("views/front/animal.view.php");
 }

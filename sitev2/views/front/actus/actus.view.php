@@ -1,7 +1,5 @@
 <?php
-require_once("../../views/header.php");
-require_once("../../config/config.php");
-require_once("format.php");
+ob_start();
 ?>
 
 <?= styleTitleLevel1("Nouvelles des adoptés", COLOR_TITLE_ACTUS) ?>
@@ -10,7 +8,7 @@ require_once("format.php");
 
 <div class="row no-gutters align-items-center" style="min-height: 280px;">
     <div class="col-12 col-md-3 text-center">
-        <img src="../../content/images/Others/temperatures.jpg" class="img-fluid img-thumbnail" alt="Attention aux températures">
+        <img src="public/content/images/Others/temperatures.jpg" class="img-fluid img-thumbnail" alt="Attention aux températures">
     </div>
     <div class="col-12 col-md-9 p-2 text-center h4">
         Faites attentions à vos animaux lors des canicules en été !<br>
@@ -24,7 +22,7 @@ require_once("format.php");
 
 <div class="row no-gutters align-items-center" style="min-height: 280px;">
     <div class="col-12 col-md-3 text-center">
-        <img src="../../content/images/Others/chocolat.jpg" class="img-fluid img-thumbnail" alt="Attention aux températures">
+        <img src="public/content/images/Others/chocolat.jpg" class="img-fluid img-thumbnail" alt="Attention aux températures">
     </div>
     <div class="col-12 col-md-9 p-2 text-center h4">
         Ne donnez pas à manger de chocolat à vos animaux !<br>
@@ -33,5 +31,6 @@ require_once("format.php");
 </div>
 
 <?php
-require_once("../../views/footer.php");
+$content = ob_get_clean();
+require_once("views/template.php");
 ?>

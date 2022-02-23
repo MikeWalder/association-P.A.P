@@ -1,8 +1,7 @@
 <?php
-require_once("header.php");
-require_once("../controllers/Format/format.php");
+ob_start();
 ?>
-
+<pre><?= $caracteres ?></pre>
 <?= styleTitleLevel1($text, COLOR_TITLE_PENSIONNAIRES); ?>
 
 <div class="row no-gutters mt-2">
@@ -12,7 +11,7 @@ require_once("../controllers/Format/format.php");
             <?= $animal['sexe'] == 1 ? "perso_bglightBlue" : "perso_bgPink" ?>" style="height: 200px;">
 
                 <div class="col p-2 text-center">
-                    <img src="../public/content/images/Animals/<?= $animal['image']['url_image'] ?>" class="img-thumbnail" alt="<?= $animal['image']['libelle_image'] ?>" style="max-height: 190px;" alt="Félix">
+                    <img src="public/content/images/Animals/<?= $animal['image']['url_image'] ?>" class="img-thumbnail" alt="<?= $animal['image']['libelle_image'] ?>" style="max-height: 190px;" alt="Félix">
                 </div>
 
                 <?php
@@ -30,9 +29,9 @@ require_once("../controllers/Format/format.php");
                 else if ($animal['ami_enfant'] === "N/A") $iconeChild = "babyQuest";
                 ?>
                 <div class="col-2 border-left border-right border-dark text-center">
-                    <img src="../public/content/images/Others/icons/<?= $iconeDog ?>.png" class="mb-2" style="height: 50px;" alt="Dog OK">
-                    <img src="../public/content/images/Others/icons/<?= $iconeCat ?>.png" class="my-2" style="height: 50px;" alt="Cat OK">
-                    <img src="../public/content/images/Others/icons/<?= $iconeChild ?>.png" class="mt-2" style="height: 50px;" alt="Baby OK">
+                    <img src="public/content/images/Others/icons/<?= $iconeDog ?>.png" class="mb-2" style="height: 50px;" alt="Dog OK">
+                    <img src="public/content/images/Others/icons/<?= $iconeCat ?>.png" class="my-2" style="height: 50px;" alt="Cat OK">
+                    <img src="public/content/images/Others/icons/<?= $iconeChild ?>.png" class="mt-2" style="height: 50px;" alt="Baby OK">
                 </div>
                 <div class="col-6 text-center perso_textShadow">
 
@@ -53,7 +52,7 @@ require_once("../controllers/Format/format.php");
                             </div>
                         <?php endforeach; ?>
                     </div>
-                    <a href="animal.php?idAnimal=<?= $animal['id_animal'] ?>" class="btn btn-primary mt-3">Visiter ma page</a>
+                    <a href="?page=animal&id_animal=<?= $animal['id_animal'] ?>" class="btn btn-primary mt-3">Visiter ma page</a>
                 </div>
             </div>
         </div>
@@ -61,5 +60,5 @@ require_once("../controllers/Format/format.php");
 </div>
 
 <?php
-require_once("footer.php");
-?>
+$content = ob_get_clean();
+require("views/template.php");

@@ -1,14 +1,12 @@
 <?php
-require_once("../../views/header.php");
-require_once("../../config/config.php");
-require_once("../format.php");
+ob_start();
 ?>
 
 <?= styleTitleLevel1("Informations sur la stérilisation des chats", COLOR_TITLE_CONSEILS) ?>
 <div class="container-fluid">
     <div class="row">
         <div class="col-5 p-2">
-            <img class="img-fluid img-thumbnail" src="../../content/images/Others/sterilisation_chat.jpg" alt="Stérilisation chats">
+            <img class="img-fluid img-thumbnail" src="public/content/images/Others/sterilisation_chat.jpg" alt="Stérilisation chats">
         </div>
         <div class="col-7 p-2">
             <p class="h4 mb-3">
@@ -34,7 +32,7 @@ require_once("../format.php");
     </div>
 </div>
 
-
 <?php
-require_once("../../views/footer.php");
+$content = ob_get_clean();
+require_once("views/template.php");
 ?>

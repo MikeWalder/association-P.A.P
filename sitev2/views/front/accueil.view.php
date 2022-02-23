@@ -1,7 +1,5 @@
 <?php
-require_once("../../views/header.php");
-require_once("../../config/config.php");
-require_once("format.php");
+ob_start();
 ?>
 
 <?= styleTitleLevel1("Ils ont besoin de vous !", COLOR_TITLE_ASSO) ?>
@@ -16,7 +14,7 @@ require_once("format.php");
         <div class="carousel-item active">
             <div class="row no-gutters border rounded overflow-hidden mb-4">
                 <div class="col-12 col-md-auto text-center">
-                    <img src="../../content/images/Animals/chat1.jpg" alt="Chat 1" style="height: 300px;">
+                    <img src="public/content/images/Animals/chat1.jpg" alt="Chat 1" style="height: 300px;">
                 </div>
                 <div class="col p-4 d-flex flex-column position-static">
                     <h3 class="font-weight-bold">Freddy</h3>
@@ -31,7 +29,7 @@ require_once("format.php");
         <div class="carousel-item">
             <div class="row no-gutters border rounded overflow-hidden mb-4">
                 <div class="col-12 col-md-auto text-center">
-                    <img src="../../content/images/Animals/chat2.jpg" alt="Chat 2" style="height: 300px;">
+                    <img src="public/content/images/Animals/chat2.jpg" alt="Chat 2" style="height: 300px;">
                 </div>
                 <div class="col p-4 d-flex flex-column position-static">
                     <h3 class="font-weight-bold">Marco</h3>
@@ -66,7 +64,7 @@ require_once("format.php");
     <div class="col-6">
         <div class="row no-gutters border rounded mb-4">
             <div class="col-auto d-none d-lg-block">
-                <img src="../../content/images/Animals/chat1.jpg" alt="Chat 1" style="height: 180px;">
+                <img src="public/content/images/Animals/chat1.jpg" alt="Chat 1" style="height: 180px;">
             </div>
             <div class="col p-3 d-flex flex-column position-static">
                 <?= styleTitleLevel3("Doyenne Chipie", COLOR_TITLE_ACTUS, "text-center") ?>
@@ -81,7 +79,7 @@ require_once("format.php");
     <div class="col-6">
         <div class="row no-gutters border rounded mb-4">
             <div class="col-auto d-none d-lg-block">
-                <img src="../../content/images/Animals/chat2.jpg" alt="Chat 2" style="height: 180px;">
+                <img src="public/content/images/Animals/chat2.jpg" alt="Chat 2" style="height: 180px;">
             </div>
             <div class="col p-3 d-flex flex-column position-static">
                 <?= styleTitleLevel3("Benjamine Mina", COLOR_TITLE_ASSO, "text-center") ?>
@@ -95,9 +93,7 @@ require_once("format.php");
     </div>
 </div>
 
-
-
-
 <?php
-require_once("../../views/footer.php");
+$content = ob_get_clean();
+require("views/template.php");
 ?>

@@ -1,7 +1,5 @@
 <?php
-require_once("../../views/header.php");
-require_once("../../config/config.php");
-require_once("../format.php");
+ob_start();
 ?>
 
 <?= styleTitleLevel1("Attention aux plantes toxiques pour les chats !", COLOR_TITLE_CONSEILS) ?>
@@ -13,12 +11,12 @@ require_once("../format.php");
                 Pour en savoir plus, consultez
                 <a href="https://www.saphirbleucarlin.com/information-m%C3%A9dical/" target="_blank" class="btn btn-info mb-1"> ce site.</a>
             </p>
-            <img class="img-fluid img-thumbnail" src="../../content/images/Others/plantes_toxiques.jpg" alt="Plantes toxiques" title="Les plantes toxiques pour chats et chiens">
+            <img class="img-fluid img-thumbnail" src="public/content/images/Others/plantes_toxiques.jpg" alt="Plantes toxiques" title="Les plantes toxiques pour chats et chiens">
         </div>
     </div>
 </div>
 
-
 <?php
-require_once("../../views/footer.php");
+$content = ob_get_clean();
+require_once("views/template.php");
 ?>

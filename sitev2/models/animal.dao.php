@@ -1,6 +1,5 @@
 <?php
 require_once("bdd/functions.php");
-require_once("../config/config.php");
 
 function getAnimalFromId($idAnimal)
 {
