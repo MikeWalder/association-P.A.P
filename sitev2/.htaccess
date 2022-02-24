@@ -1,0 +1,41 @@
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule ^(.*)$ index.php?page=$1
+
+ErrorDocument 301 /h2prog/PHP/association-P.A.P/sitev2/index.php?page=error301
+ErrorDocument 302 /h2prog/PHP/association-P.A.P/sitev2/index.php?page=error302
+
+ErrorDocument 400 /h2prog/PHP/association-P.A.P/sitev2/index.php?page=error400
+ErrorDocument 401 /h2prog/PHP/association-P.A.P/sitev2/index.php?page=error401
+ErrorDocument 402 /h2prog/PHP/association-P.A.P/sitev2/index.php?page=error402
+ErrorDocument 403 /h2prog/PHP/association-P.A.P/sitev2/index.php?page=error403
+ErrorDocument 404 /h2prog/PHP/association-P.A.P/sitev2/index.php?page=error404
+ErrorDocument 405 /h2prog/PHP/association-P.A.P/sitev2/index.php?page=error405
+
+ErrorDocument 500 /h2prog/PHP/association-P.A.P/sitev2/index.php?page=error500
+ErrorDocument 505 /h2prog/PHP/association-P.A.P/sitev2/index.php?page=error505
+
+Options All -Indexes 
+##Désactive le listing des fichiers
+ServerSignature Off
+Options +FollowSymLinks
+AddDefaultCharset UTF-8
+
+#Protection XSS, clickJacking et Mime-Type
+<IfModule mod_headers.c>
+    # Protect against XSS attacks
+    Header set X-XSS-Protection "1; mode=block"
+    Header always append X-Frame-Options SAMEORIGIN
+    Header set X-Content-Type-Options: "nosniff"
+</IfModule>
+
+#Protection contre les injections de fichiers
+RewriteCond ${REQUEST_METHOD} GET
+RewriteCond ${QUERY_STRING} [a-zA-Z0-9_]=http:// [OR]
+RewriteCond ${QUERY_STRING} [a-zA-Z0-9_]=(\.\.//?)+ [OR]
+RewriteCond ${QUERY_STRING} [a-zA-Z0-9_]=/([a-z0-9_.]//?)+ [NC]
+
+RewriteRule .* - [F]

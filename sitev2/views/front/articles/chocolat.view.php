@@ -6,7 +6,7 @@ ob_start();
 <div class="container">
     <div class="row">
         <div class="col-auto mx-auto text-center mt-3 ml-3">
-            <img class="img-fluid img-thumbnail" src="public/content/images/Others/chocolat.jpg" alt="Danger chocolat" title="Dangers du chocolat">
+            <img class="img-fluid img-thumbnail" src="<?= URL ?>public/content/images/Others/chocolat.jpg" alt="Danger chocolat" title="Dangers du chocolat">
         </div>
     </div>
 </div>

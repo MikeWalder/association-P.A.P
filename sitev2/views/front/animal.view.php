@@ -6,7 +6,8 @@ ob_start();
 <div class="row no-gutters align-items-center mt-3 border border-dark <?= $animal['sexe'] == 1 ? "perso_bglightBlue" : "perso_bgPink" ?>">
 
     <div class="col-4 col-md-3 text-center">
-        <img class="img-fluid img-thumbnail" src="content/images/Animals/<?= $animal['url_image'] ?>" style="max-height: 220px;" alt="<?= $animal[0]['libelle_image'] ?>">
+
+        <img class="img-fluid img-thumbnail" src="<?= URL ?>public/content/images/Animals/<?= $images[0]['url_image'] ?>" style="max-height: 220px;" alt="<?= $images[0]['libelle_image'] ?>">
     </div>
 
     <?php
@@ -24,9 +25,9 @@ ob_start();
     else if ($animal['ami_enfant'] === "N/A") $iconeChild = "babyQuest";
     ?>
     <div class="col-2 col-md-1 border-left border-right border-dark text-center">
-        <img src="public/content/images/Others/icons/<?= $iconeDog ?>.png" class="mb-2" style="height: 50px;" alt="Dog OK">
-        <img src="public/content/images/Others/icons/<?= $iconeCat ?>.png" class="my-2" style="height: 50px;" alt="Cat OK">
-        <img src="public/content/images/Others/icons/<?= $iconeChild ?>.png" class="mt-2" style="height: 50px;" alt="Baby OK">
+        <img src="<?= URL ?>public/content/images/Others/icons/<?= $iconeDog ?>.png" class="mb-2" style="height: 50px;" alt="Dog OK">
+        <img src="<?= URL ?>public/content/images/Others/icons/<?= $iconeCat ?>.png" class="my-2" style="height: 50px;" alt="Cat OK">
+        <img src="<?= URL ?>public/content/images/Others/icons/<?= $iconeChild ?>.png" class="mt-2" style="height: 50px;" alt="Baby OK">
     </div>
 
     <div class="col-4 col-md-3 text-center">
@@ -65,7 +66,7 @@ ob_start();
             <div class="carousel-inner">
                 <?php foreach ($images as $key => $image) : ?>
                     <div class="carousel-item <?= $key === 0 ? "active" : "" ?>">
-                        <img class="d-block w-80 p-3" src="public/content/images/Animals/<?= $images[0]['url_image'] ?>" style="max-height: 600px;" alt="<?= $image['libelle_image'] ?>">
+                        <img class="d-block w-80 p-3" src="<?= URL ?>public/content/images/Animals/<?= $image['url_image'] ?>" style="max-height: 600px;" alt="<?= $image['libelle_image'] ?>">
                     </div>
                 <?php endforeach; ?>
             </div>

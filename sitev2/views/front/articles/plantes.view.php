@@ -11,7 +11,7 @@ ob_start();
                 Pour en savoir plus, consultez
                 <a href="https://www.saphirbleucarlin.com/information-m%C3%A9dical/" target="_blank" class="btn btn-info mb-1"> ce site.</a>
             </p>
-            <img class="img-fluid img-thumbnail" src="public/content/images/Others/plantes_toxiques.jpg" alt="Plantes toxiques" title="Les plantes toxiques pour chats et chiens">
+            <img class="img-fluid img-thumbnail" src="<?= URL ?>public/content/images/Others/plantes_toxiques.jpg" alt="Plantes toxiques" title="Les plantes toxiques pour chats et chiens">
         </div>
     </div>
 </div>

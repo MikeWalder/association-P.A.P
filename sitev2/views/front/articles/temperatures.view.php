@@ -6,7 +6,7 @@ ob_start();
 <div class="container-fluid">
     <div class="row">
         <div class="col-5 p-2">
-            <img class="img-fluid img-thumbnail" src="public/content/images/Others/temperatures.jpg" alt="Image températures">
+            <img class="img-fluid img-thumbnail" src="<?= URL ?>public/content/images/Others/temperatures.jpg" alt="Image températures">
         </div>
         <div class="col-7 p-2">
             <p class="h4">

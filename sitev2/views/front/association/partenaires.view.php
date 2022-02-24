@@ -6,7 +6,7 @@ ob_start();
 
 <div class="row no-gutters">
     <div class="card col-auto text-center mt-5 mx-auto" style="width: 18rem;">
-        <img class="card-img-top img-lfuid" src="public/content/images/Others/logo_spa.png" alt="Logo de la SPA">
+        <img class="card-img-top img-lfuid" src="<?= URL ?>public/content/images/Others/logo_spa.png" alt="Logo de la SPA">
         <div class="card-body">
             <h5 class="card-title font-weight-bold perso_policeTitle perso_textShadow perso_headerAsso">S . P . A .</h5>
             <p class="card-text">
@@ -18,7 +18,7 @@ ob_start();
         </div>
     </div>
     <div class="card text-center mt-5 mx-auto" style="width: 18rem;">
-        <img class="card-img-top img-lfuid" src="public/content/images/Others/logo_spa.png" alt="Logo de la SPA">
+        <img class="card-img-top img-lfuid" src="<?= URL ?>public/content/images/Others/logo_spa.png" alt="Logo de la SPA">
         <div class="card-body">
             <h5 class="card-title font-weight-bold perso_policeTitle perso_textShadow perso_headerAsso">S . P . A .</h5>
             <p class="card-text">

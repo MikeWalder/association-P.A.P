@@ -4,21 +4,72 @@ require_once("controllers/frontend.controller.php");
 
 //getPensionnaires();
 
-if (isset($_GET['page']) && !empty($_GET['page'])) {
-    if ($_GET['page'] === "accueil") getAccueil();
-    if ($_GET['page'] === "pensionnaires") getPensionnaires();
-    if ($_GET['page'] === "association") getAssociation();
-    if ($_GET['page'] === "partenaires") getPartenaires();
-    if ($_GET['page'] === "actus") getActus();
-    if ($_GET['page'] === "temperatures") getTemperature();
-    if ($_GET['page'] === "chocolat") getChocolat();
-    if ($_GET['page'] === "plantes") getPlantes();
-    if ($_GET['page'] === "sterilisation") getSterilisation();
-    if ($_GET['page'] === "educateur") getEducateur();
-    if ($_GET['page'] === "contact") getContact();
-    if ($_GET['page'] === "dons") getDons();
-    if ($_GET['page'] === "mentions") getMentions();
-    if ($_GET['page'] === "animal") getAnimal();
-} else {
-    getAccueil();
+try {
+    if (isset($_GET['page']) && !empty($_GET['page'])) {
+        switch ($_GET['page']) {
+            case "accueil":
+                getPageAccueil();
+                break;
+            case "pensionnaires":
+                getPagePensionnaires();
+                break;
+            case "association":
+                getPageAssociation();
+                break;
+            case "partenaires":
+                getPagePartenaires();
+                break;
+            case "actus":
+                getPageActus();
+                break;
+            case "temperatures":
+                getPageTemperature();
+                break;
+            case "chocolat":
+                getPageChocolat();
+                break;
+            case "plantes":
+                getPagePlantes();
+                break;
+            case "sterilisation":
+                getPageSterilisation();
+                break;
+            case "educateur":
+                getPageEducateur();
+                break;
+            case "contact":
+                getPageContact();
+                break;
+            case "dons":
+                getPageDons();
+                break;
+            case "mentions":
+                getPageMentions();
+                break;
+            case "animal":
+                getPageAnimal();
+                break;
+            case "error301":
+            case "error302":
+            case "error400":
+            case "error401":
+            case "error402":
+            case "error405":
+            case "error500":
+            case "error505":
+                throw new Exception("Erreur de type : " . $_GET['page']);
+                break;
+            case "error403":
+                throw new Exception("Vous n'avez pas le droit d'accéder à ce dossier");
+                break;
+            case "error404":
+            default:
+                throw new Exception("La page demandée n'existe pas");
+        }
+    } else {
+        getPageAccueil();
+    }
+} catch (Exception $e) {
+    $errorMessage = $e->getMessage();
+    require_once("views/erreur.view.php");
 }

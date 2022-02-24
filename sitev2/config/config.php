@@ -11,3 +11,6 @@ const TO_ADOPT = "1";
 const IS_ADOPTED = "2";
 const FALD = "3";
 const IS_DEAD = "4";
+
+
+define("URL", str_replace("index.php", "", (isset($_SERVER["HTTPS"]) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[PHP_SELF]"));

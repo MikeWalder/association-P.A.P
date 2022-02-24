@@ -21,7 +21,7 @@ ob_start();
 
 <div class="row align-items-center mt-3 mb-3">
     <div class="col-12 col-lg-3 text-center">
-        <img class="img-fluid" src="public/content/images/Others/team.jpg" alt="Loulou">
+        <img class="img-fluid" src="<?= URL ?>public/content/images/Others/team.jpg" alt="Loulou">
     </div>
     <div class="col-12 col-lg-9">
         <span class="badge badge-primary">Directeur</span> : Franck Pierrat<br>

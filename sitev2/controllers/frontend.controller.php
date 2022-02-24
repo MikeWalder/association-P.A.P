@@ -2,7 +2,7 @@
 require_once("config/config.php");
 require_once("config/format.php");
 
-function getPensionnaires()
+function getPagePensionnaires()
 {
     require_once("models/pensionnaires.dao.php");
 
@@ -36,7 +36,7 @@ function getPensionnaires()
     require_once("views/front/pensionnaires.view.php");
 }
 
-function getAccueil()
+function getPageAccueil()
 {
     $title = "Page d'accueil";
     $description = "Page d'accueil de l'association";
@@ -44,101 +44,92 @@ function getAccueil()
     require_once("views/front/accueil.view.php");
 }
 
-function getAssociation()
+function getPageAssociation()
 {
     $title = "Présentation de l'association";
     $description = "Description générale de l'association Pattes à Pouffes";
     require_once("views/front/association/association.view.php");
 }
 
-function getPartenaires()
+function getPagePartenaires()
 {
     $title = "Nos partenaires";
     $description = "Partenaires en collaboration et en soutien de notre association.";
     require_once("views/front/association/partenaires.view.php");
 }
 
-function getActus()
+function getPageActus()
 {
     $title = "Actualités";
     $description = "Actualités de l'association Pattes à Pouffes";
     require_once("views/front/actus/actus.view.php");
 }
 
-function getTemperature()
+function getPageTemperature()
 {
     $title = "Alerte températures";
     $description = "Les dangers de la températures sur les animaux de compagnie";
     require_once("views/front/articles/temperatures.view.php");
 }
 
-function getChocolat()
+function getPageChocolat()
 {
     $title = "Effets du chocolat";
     $description = "Les effets néfastes du chocolat sur la santé des animaux de compagnie";
     require_once("views/front/articles/chocolat.view.php");
 }
 
-function getPlantes()
+function getPagePlantes()
 {
     $title = "Les plantes nocives";
     $description = "Liste des plantes nocives à votre animal de compagnie";
     require_once("views/front/articles/plantes.view.php");
 }
 
-function getSterilisation()
+function getPageSterilisation()
 {
     $title = "La stérilisation";
     $description = "Informations importantes et avantages de la stérilisation de vos animaux de compagnie";
     require_once("views/front/articles/sterilisation.view.php");
 }
 
-function getEducateur()
+function getPageEducateur()
 {
     $title = "Educateur canin";
     $description = "Informations utiles sur notre éducateur canin";
     require_once("views/front/articles/educateur.view.php");
 }
 
-function getContact()
+function getPageContact()
 {
     $title = "Nos contacts";
     $description = "Nos informations de contact permettant de nous trouver";
     require_once("views/front/contact/contact.view.php");
 }
 
-function getDons()
+function getPageDons()
 {
     $title = "Donnations";
     $description = "Notre page de soutien financier à l'association Pattes à Pouffes";
     require_once("views/front/contact/dons.view.php");
 }
 
-function getMentions()
+function getPageMentions()
 {
     $title = "Mentions légales";
     $description = "Mentions légales du site web de l'association";
     require_once("views/front/contact/mentions.view.php");
 }
 
-function getAnimal()
+function getPageAnimal()
 {
     require_once("models/animal.dao.php");
 
-    $title = "Description de l'animal";
-    $description = "Descriptif de l'animal et localisation";
-
     $animal = getAnimalFromId($_GET['id_animal']);
+    $title = "La page de " . $animal['nom_animal'];
+    $description = "Descriptif de " . $animal['nom_animal'];
     $images = selectImagesFromAnimal($_GET['id_animal']);
     $caracteres = selectCaracteresFromAnimal($_GET['id_animal']);
-
-    foreach ($images as $key => $image) {
-        $images[$key]['url_image'] = $image;
-    }
-
-    foreach ($caracteres as $key => $caractere) {
-        $images[$key]['caractere'] = $caractere;
-    }
 
     require_once("views/front/animal.view.php");
 }

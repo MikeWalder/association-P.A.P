@@ -8,7 +8,7 @@ ob_start();
 
 <div class="row no-gutters align-items-center" style="min-height: 280px;">
     <div class="col-12 col-md-3 text-center">
-        <img src="public/content/images/Others/temperatures.jpg" class="img-fluid img-thumbnail" alt="Attention aux températures">
+        <img src="<?= URL ?>public/content/images/Others/temperatures.jpg" class="img-fluid img-thumbnail" alt="Attention aux températures">
     </div>
     <div class="col-12 col-md-9 p-2 text-center h4">
         Faites attentions à vos animaux lors des canicules en été !<br>
@@ -22,7 +22,7 @@ ob_start();
 
 <div class="row no-gutters align-items-center" style="min-height: 280px;">
     <div class="col-12 col-md-3 text-center">
-        <img src="public/content/images/Others/chocolat.jpg" class="img-fluid img-thumbnail" alt="Attention aux températures">
+        <img src="<?= URL ?>public/content/images/Others/chocolat.jpg" class="img-fluid img-thumbnail" alt="Attention aux températures">
     </div>
     <div class="col-12 col-md-9 p-2 text-center h4">
         Ne donnez pas à manger de chocolat à vos animaux !<br>

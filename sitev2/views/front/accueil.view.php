@@ -29,7 +29,7 @@ ob_start();
         <div class="carousel-item">
             <div class="row no-gutters border rounded overflow-hidden mb-4">
                 <div class="col-12 col-md-auto text-center">
-                    <img src="public/content/images/Animals/chat2.jpg" alt="Chat 2" style="height: 300px;">
+                    <img src="<?= URL ?>public/content/images/Animals/chat2.jpg" alt="Chat 2" style="height: 300px;">
                 </div>
                 <div class="col p-4 d-flex flex-column position-static">
                     <h3 class="font-weight-bold">Marco</h3>
@@ -79,7 +79,7 @@ ob_start();
     <div class="col-6">
         <div class="row no-gutters border rounded mb-4">
             <div class="col-auto d-none d-lg-block">
-                <img src="public/content/images/Animals/chat2.jpg" alt="Chat 2" style="height: 180px;">
+                <img src="<?= URL ?>public/content/images/Animals/chat2.jpg" alt="Chat 2" style="height: 180px;">
             </div>
             <div class="col p-3 d-flex flex-column position-static">
                 <?= styleTitleLevel3("Benjamine Mina", COLOR_TITLE_ASSO, "text-center") ?>
