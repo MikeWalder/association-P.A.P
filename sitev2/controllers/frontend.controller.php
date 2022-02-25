@@ -8,32 +8,36 @@ function getPagePensionnaires()
 
     $title = "Page des pensionnaires";
     $description = "Affichage et description des pensionnaires de l'association P.A.P";
+    if (isset($_GET['idstatut']) && !empty($_GET['idstatut'])) {
+        $idStatut = Securite::secureHTML($_GET['idstatut']);
+        $animaux = selectAnimalsFromStatut($idStatut);
 
-    $animaux = selectAnimalsFromStatut($_GET['idstatut']);
-
-    function mainTitlePensionnaire($val)
-    {
-        $mainTitle = "";
-        if ($val === TO_ADOPT) {
-            $mainTitle = "Ils cherchent une famille";
-        } else if ($val === IS_ADOPTED) {
-            $mainTitle = "Les anciens";
-        } else if ($val === FALD) {
-            $mainTitle = "Famille d'accueil longue durée";
+        function mainTitlePensionnaire($val)
+        {
+            $mainTitle = "";
+            if ($val === TO_ADOPT) {
+                $mainTitle = "Ils cherchent une famille";
+            } else if ($val === IS_ADOPTED) {
+                $mainTitle = "Les anciens";
+            } else if ($val === FALD) {
+                $mainTitle = "Famille d'accueil longue durée";
+            }
+            return $mainTitle;
         }
-        return $mainTitle;
+
+        $text = mainTitlePensionnaire(Securite::secureHTML($_GET['idstatut']));
+
+        foreach ($animaux as $key => $animal) {
+            $image = selectFirstImageFromIdAnimal($animal['id_animal']);
+            $animaux[$key]['image'] = $image;
+
+            $caracteres = selectCaracteresFromIdAnimal($animal['id_animal']);
+            $animaux[$key]['caracteres'] = $caracteres;
+        }
+        require_once("views/front/pensionnaires.view.php");
+    } else {
+        throw new Exception("Erreur ! L'id de statut n'est pas renseigné");
     }
-
-    $text = mainTitlePensionnaire($_GET['idstatut']);
-
-    foreach ($animaux as $key => $animal) {
-        $image = selectFirstImageFromIdAnimal($animal['id_animal']);
-        $animaux[$key]['image'] = $image;
-
-        $caracteres = selectCaracteresFromIdAnimal($animal['id_animal']);
-        $animaux[$key]['caracteres'] = $caracteres;
-    }
-    require_once("views/front/pensionnaires.view.php");
 }
 
 function getPageAccueil()
@@ -60,8 +64,23 @@ function getPagePartenaires()
 
 function getPageActus()
 {
+    require_once("models/actus.dao.php");
     $title = "Actualités";
     $description = "Actualités de l'association Pattes à Pouffes";
+
+    $actualites = getActusFromBDD();
+    foreach ($actualites as $key => $actualite) {
+        $image = getImageActualiteFromBDD($actualite['id_image']);
+        $actualites[$key]['image'] = $image;
+        echo "<pre>";
+        print_r($actualites[$key]);
+        echo "</pre>";
+    }
+
+    /*  echo "<pre>";
+    print_r($image);
+    echo "</pre>"; */
+
     require_once("views/front/actus/actus.view.php");
 }
 
@@ -124,12 +143,16 @@ function getPageMentions()
 function getPageAnimal()
 {
     require_once("models/animal.dao.php");
+    if (isset($_GET['id_animal']) && !empty($_GET['id_animal'])) {
+        $idAnimal = Securite::secureHTML($_GET['id_animal']);
+        $animal = getAnimalFromId($idAnimal);
+        $title = "La page de " . $animal['nom_animal'];
+        $description = "Descriptif de " . $animal['nom_animal'];
+        $images = selectImagesFromAnimal(Securite::secureHTML($idAnimal));
+        $caracteres = selectCaracteresFromAnimal(Securite::secureHTML($idAnimal));
 
-    $animal = getAnimalFromId($_GET['id_animal']);
-    $title = "La page de " . $animal['nom_animal'];
-    $description = "Descriptif de " . $animal['nom_animal'];
-    $images = selectImagesFromAnimal($_GET['id_animal']);
-    $caracteres = selectCaracteresFromAnimal($_GET['id_animal']);
-
-    require_once("views/front/animal.view.php");
+        require_once("views/front/animal.view.php");
+    } else {
+        throw new Exception("Erreur ! L'id de l'animal n'est pas spécifié");
+    }
 }

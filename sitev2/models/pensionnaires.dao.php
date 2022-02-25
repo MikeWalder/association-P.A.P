@@ -9,7 +9,7 @@ function selectAnimalsFromStatut($idStatut)
         $req .= ' OR id_statut = ' . IS_DEAD;
     }
     $stmt = $bdd->prepare($req);
-    $stmt->bindValue(":idstatut", $idStatut);
+    $stmt->bindValue(":idstatut", $idStatut, PDO::PARAM_INT);
     $stmt->execute();
     $animaux = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $stmt->closeCursor(); // libère la connexion au serveur permettant ainsi à d'autres requêtes d'être exécutées
@@ -27,7 +27,7 @@ function selectFirstImageFromIdAnimal($idAnimal)
     WHERE a.id_animal= :idAnimal 
     LIMIT 1
     ');
-    $stmt->bindValue(":idAnimal", $idAnimal);
+    $stmt->bindValue(":idAnimal", $idAnimal, PDO::PARAM_INT);
     $stmt->execute();
     $image = $stmt->fetch(PDO::FETCH_ASSOC);
     $stmt->closeCursor();
@@ -44,7 +44,7 @@ function selectCaracteresFromIdAnimal($idAnimal)
     INNER JOIN animal a ON a.id_animal = d.id_animal 
     WHERE a.id_animal = :idAnimal 
     ');
-    $stmt->bindValue(":idAnimal", $idAnimal);
+    $stmt->bindValue(":idAnimal", $idAnimal, PDO::PARAM_INT);
     $stmt->execute();
     $caracteres = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $stmt->closeCursor();

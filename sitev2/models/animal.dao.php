@@ -7,7 +7,7 @@ function getAnimalFromId($idAnimal)
     $req = 'SELECT * FROM animal WHERE id_animal = :idAnimal';
 
     $stmt = $bdd->prepare($req);
-    $stmt->bindValue(":idAnimal", $idAnimal);
+    $stmt->bindValue(":idAnimal", $idAnimal, PDO::PARAM_INT);
     $stmt->execute();
     $animal = $stmt->fetch(PDO::FETCH_ASSOC);
     $stmt->closeCursor();
@@ -24,7 +24,7 @@ function selectImagesFromAnimal($idAnimal)
     INNER JOIN animal a ON a.id_animal = c.id_animal 
     WHERE a.id_animal= :idAnimal 
     ');
-    $stmt->bindValue(":idAnimal", $idAnimal);
+    $stmt->bindValue(":idAnimal", $idAnimal, PDO::PARAM_INT);
     $stmt->execute();
     $images = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $stmt->closeCursor();
@@ -41,7 +41,7 @@ function selectCaracteresFromAnimal($idAnimal)
     INNER JOIN animal a ON a.id_animal = d.id_animal 
     WHERE a.id_animal = :idAnimal 
     ');
-    $stmt->bindValue(":idAnimal", $idAnimal);
+    $stmt->bindValue(":idAnimal", $idAnimal, PDO::PARAM_INT);
     $stmt->execute();
     $caracteres = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $stmt->closeCursor();

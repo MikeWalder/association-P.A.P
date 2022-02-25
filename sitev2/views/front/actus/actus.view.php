@@ -4,31 +4,22 @@ ob_start();
 
 <?= styleTitleLevel1("Nouvelles des adoptés", COLOR_TITLE_ACTUS) ?>
 
-<?= styleTitlePost("Posté le : <span class='" . COLOR_TITLE_ACTUS . "'>05 / 2018 </span>par <span class='" . COLOR_TITLE_ACTUS . "'>Framboise</span>") ?>
+<?php foreach ($actualites as $actualite) : ?>
 
-<div class="row no-gutters align-items-center" style="min-height: 280px;">
-    <div class="col-12 col-md-3 text-center">
-        <img src="<?= URL ?>public/content/images/Others/temperatures.jpg" class="img-fluid img-thumbnail" alt="Attention aux températures">
-    </div>
-    <div class="col-12 col-md-9 p-2 text-center h4">
-        Faites attentions à vos animaux lors des canicules en été !<br>
-        Hydratez-les régulièrement et mettez-les à l'abri du soleil.
-    </div>
-</div>
+    <?= styleTitlePost("Posté le : <span class='" . COLOR_TITLE_ACTUS . "'>" . $actualite['date_publication_actualite'] . " </span>par 
+    <span class='" . COLOR_TITLE_ACTUS . "'>" . $actualite['libelle_actualite'] . "</span>") ?>
 
-<hr>
-
-<?= styleTitlePost("Posté le : <span class='" . COLOR_TITLE_ACTUS . "'>08 / 2018 </span>par <span class='" . COLOR_TITLE_ACTUS . "'>Anthony</span>") ?>
-
-<div class="row no-gutters align-items-center" style="min-height: 280px;">
-    <div class="col-12 col-md-3 text-center">
-        <img src="<?= URL ?>public/content/images/Others/chocolat.jpg" class="img-fluid img-thumbnail" alt="Attention aux températures">
+    <div class="row no-gutters align-items-center" style="min-height: 280px;">
+        <div class="col-12 col-md-3 text-center">
+            <img src="<?= URL ?>public/content/images/Animals/<?= $actualite['image']['url_image'] ?>" class="img-fluid img-thumbnail" alt="<?= $actualite['libelle_actualite'] ?>">
+        </div>
+        <div class="col-12 col-md-9 p-2 text-center h4">
+            <?= $actualite['contenu_actualite'] ?>
+        </div>
     </div>
-    <div class="col-12 col-md-9 p-2 text-center h4">
-        Ne donnez pas à manger de chocolat à vos animaux !<br>
-        En effet, ces derniers peuvent présenter des symptômes plus ou moins graves en fonction de la quantité consommée.
-    </div>
-</div>
+
+    <hr>
+<?php endforeach; ?>
 
 <?php
 $content = ob_get_clean();
