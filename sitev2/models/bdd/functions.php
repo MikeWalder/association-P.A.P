@@ -1,5 +1,5 @@
 <?php
-require_once("configBDD.php");
+require_once("configBDD.models.php");
 //-----------------------------------
 
 function connectionPDO()

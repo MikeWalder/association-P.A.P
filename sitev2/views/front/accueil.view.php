@@ -6,39 +6,31 @@ ob_start();
 
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
-        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active bg-dark"></li>
-        <li data-target="#carouselExampleIndicators" data-slide-to="1" class="bg-dark"></li>
+        <?php for ($i = 0; $i < count($animaux); $i++) : ?>
+            <li data-target="#carouselExampleIndicators" data-slide-to="<? $i ?>" class="bg-dark <?= $i === 0 ? 'active' : '' ?>"></li>
+        <?php endfor; ?>
     </ol>
     <div class="carousel-inner">
         <!-- Début de l'item -->
-        <div class="carousel-item active">
-            <div class="row no-gutters border rounded overflow-hidden mb-4">
-                <div class="col-12 col-md-auto text-center">
-                    <img src="public/content/images/Animals/chat1.jpg" alt="Chat 1" style="height: 300px;">
-                </div>
-                <div class="col p-4 d-flex flex-column position-static">
-                    <h3 class="font-weight-bold">Freddy</h3>
-                    <div>03/2018</div>
-                    <p>Description du chat</p>
-                    <a href="" class="btn btn-primary">Visiter ma page</a>
+        <?php foreach ($animaux as $key => $animal) : ?>
+            <div class="carousel-item <?= $key === 0 ? 'active' : '' ?>">
+                <div class="row no-gutters border rounded overflow-hidden mb-4">
+                    <div class="col-12 col-md-auto text-center">
+                        <img src="public/content/images/website/<?= $animal['image']['url_image'] ?>" alt="<?= $animal['image'][$key]['libelle_image'] ?>" style="height: 300px;">
+                    </div>
+                    <div class="col p-4 d-flex flex-column position-static">
+                        <h3 class="font-weight-bold"><?= $animal['nom_animal'] ?></h3>
+                        <div><?= $animal['date_naissance_animal'] ?></div>
+                        <p><?= $animal['image'][$key]['description_image'] ?></p>
+                        <a href="" class="btn btn-primary">Visiter ma page</a>
+                    </div>
                 </div>
             </div>
-        </div>
+
+        <?php endforeach; ?>
         <!-- Fin de l'item -->
         <!-- Début de l'item -->
-        <div class="carousel-item">
-            <div class="row no-gutters border rounded overflow-hidden mb-4">
-                <div class="col-12 col-md-auto text-center">
-                    <img src="<?= URL ?>public/content/images/Animals/chat2.jpg" alt="Chat 2" style="height: 300px;">
-                </div>
-                <div class="col p-4 d-flex flex-column position-static">
-                    <h3 class="font-weight-bold">Marco</h3>
-                    <div>06/2017</div>
-                    <p>Description du chat</p>
-                    <a href="" class="btn btn-primary">Visiter ma page</a>
-                </div>
-            </div>
-        </div>
+
         <!-- Fin de l'item -->
     </div>
     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -64,7 +56,7 @@ ob_start();
     <div class="col-6">
         <div class="row no-gutters border rounded mb-4">
             <div class="col-auto d-none d-lg-block">
-                <img src="public/content/images/Animals/chat1.jpg" alt="Chat 1" style="height: 180px;">
+                <img src="public/content/images/website/animals/chat1.jpg" alt="Chat 1" style="height: 180px;">
             </div>
             <div class="col p-3 d-flex flex-column position-static">
                 <?= styleTitleLevel3("Doyenne Chipie", COLOR_TITLE_ACTUS, "text-center") ?>
@@ -79,7 +71,7 @@ ob_start();
     <div class="col-6">
         <div class="row no-gutters border rounded mb-4">
             <div class="col-auto d-none d-lg-block">
-                <img src="<?= URL ?>public/content/images/Animals/chat2.jpg" alt="Chat 2" style="height: 180px;">
+                <img src="<?= URL ?>public/content/images/website/animals/chat2.jpg" alt="Chat 2" style="height: 180px;">
             </div>
             <div class="col p-3 d-flex flex-column position-static">
                 <?= styleTitleLevel3("Benjamine Mina", COLOR_TITLE_ASSO, "text-center") ?>

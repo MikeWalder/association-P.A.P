@@ -11,7 +11,7 @@ ob_start();
             <?= $animal['sexe'] == 1 ? "perso_bglightBlue" : "perso_bgPink" ?>" style="height: 200px;">
 
                 <div class="col p-2 text-center">
-                    <img src="<?= URL ?>public/content/images/Animals/<?= $animal['image']['url_image'] ?>" class="img-thumbnail" alt="<?= $animal['image']['libelle_image'] ?>" style="max-height: 190px;" alt="Félix">
+                    <img src="<?= URL ?>public/content/images/website/<?= $animal['image']['url_image'] ?>" class="img-thumbnail" alt="<?= $animal['image']['libelle_image'] ?>" style="max-height: 190px;" alt="Félix">
                 </div>
 
                 <?php
@@ -42,7 +42,7 @@ ob_start();
                     </div>
 
                     <div class="h4">
-                        Né le : <?= $animal['date_naissance_animal'] ?>
+                        Né le : <?= date("d/m/Y", strtotime($animal['date_naissance_animal'])) ?>
                     </div>
 
                     <div class="d-none d-sm-inline font-weight-bold h4">

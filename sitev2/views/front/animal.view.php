@@ -7,7 +7,7 @@ ob_start();
 
     <div class="col-4 col-md-3 text-center">
 
-        <img class="img-fluid img-thumbnail" src="<?= URL ?>public/content/images/Animals/<?= $images[0]['url_image'] ?>" style="max-height: 220px;" alt="<?= $images[0]['libelle_image'] ?>">
+        <img class="img-fluid img-thumbnail" src="<?= URL ?>public/content/images/website/<?= $images[0]['url_image'] ?>" style="max-height: 220px;" alt="<?= $images[0]['libelle_image'] ?>">
     </div>
 
     <?php
@@ -38,8 +38,8 @@ ob_start();
             )
         </div>
         <div class="h5">
-            Puce : <?= empty($animal['puce_animal']) ? "aucun" : $animal['puce_animal'] ?><br>
-            Né le : <?= empty($animal['date_naissance_animal']) ? "non défini" : $animal['date_naissance_animal'] ?>
+            Puce : <?= empty($animal['puce_animal']) ? "aucun" : date("d/m/Y", strtotime($animal['puce_animal'])) ?><br>
+            Né le : <?= empty($animal['date_naissance_animal']) ? "non défini" : date("d/m/Y", strtotime($animal['date_naissance_animal'])) ?>
         </div>
 
         <div class="d-none d-sm-inline font-weight-bold h4">
@@ -66,7 +66,7 @@ ob_start();
             <div class="carousel-inner">
                 <?php foreach ($images as $key => $image) : ?>
                     <div class="carousel-item <?= $key === 0 ? "active" : "" ?>">
-                        <img class="d-block w-80 p-3" src="<?= URL ?>public/content/images/Animals/<?= $image['url_image'] ?>" style="max-height: 600px;" alt="<?= $image['libelle_image'] ?>">
+                        <img class="d-block w-80 p-3" src="<?= URL ?>public/content/images/website/<?= $image['url_image'] ?>" style="max-height: 600px;" alt="<?= $image['libelle_image'] ?>">
                     </div>
                 <?php endforeach; ?>
             </div>

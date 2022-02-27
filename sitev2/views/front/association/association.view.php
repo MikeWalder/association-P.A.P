@@ -6,7 +6,7 @@ ob_start();
 
 <div class="row align-items-center mt-3 mt-lg-5">
     <div class="col-12 col-lg-3 text-center">
-        <img class="img-fluid" src="public/content/images/Animals/loulou.jpg" alt="Loulou">
+        <img class="img-fluid" src="public/content/images/website/animals/loulou.jpg" alt="Loulou">
     </div>
     <div class="col-12 col-lg-9 h4">
         Notre association recueille des animaux placés en adoption au sein de familles d'accueil.<br>

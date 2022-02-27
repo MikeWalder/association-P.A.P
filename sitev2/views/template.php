@@ -56,9 +56,9 @@
                                         Actus
                                     </a>
                                     <div class="dropdown-menu bg-dark rounded" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="dropdown-item perso_headerActus" href="<?= URL ?>actus">Nouvelles des adoptés</a>
-                                        <a class="dropdown-item perso_headerActus" href="#">Evénements</a>
-                                        <a class="dropdown-item perso_headerActus" href="#">Nos actions au quotidien</a>
+                                        <a class="dropdown-item perso_headerActus" href="<?= URL ?>actus&type=<?= TYPE_NEWS ?>">Nouvelles des adoptés</a>
+                                        <a class="dropdown-item perso_headerActus" href="<?= URL ?>actus&type=<?= TYPE_EVENT ?>">Evénements</a>
+                                        <a class="dropdown-item perso_headerActus" href="<?= URL ?>actus&type=<?= TYPE_ACTION ?>">Nos actions au quotidien</a>
                                     </div>
                                 </li>
                                 <li class="nav-item dropdown">

@@ -36,15 +36,22 @@ function getPagePensionnaires()
         }
         require_once("views/front/pensionnaires.view.php");
     } else {
-        throw new Exception("Erreur ! L'id de statut n'est pas renseigné");
+        throw new Exception("Erreur ! L'id de statut n'est pas renseigné, vous ne pouvez donc pas accéder à la page.");
     }
 }
 
 function getPageAccueil()
 {
+    require_once("models/accueil.dao.php");
+
     $title = "Page d'accueil";
     $description = "Page d'accueil de l'association";
 
+    $animaux = selectAnimalsFromStatut(TO_ADOPT);
+    foreach ($animaux as $key => $animal) {
+        $images = selectImagesFromAnimal($animal['id_animal']);
+        $animaux[$key]['image'] = $images;
+    }
     require_once("views/front/accueil.view.php");
 }
 
@@ -64,23 +71,21 @@ function getPagePartenaires()
 
 function getPageActus()
 {
-    require_once("models/actus.dao.php");
+
     $title = "Actualités";
     $description = "Actualités de l'association Pattes à Pouffes";
 
-    $actualites = getActusFromBDD();
-    foreach ($actualites as $key => $actualite) {
-        $image = getImageActualiteFromBDD($actualite['id_image']);
-        $actualites[$key]['image'] = $image;
-        echo "<pre>";
-        print_r($actualites[$key]);
-        echo "</pre>";
+    if (isset($_GET['type']) && !empty($_GET['type'])) {
+        $typeActus = Securite::secureHTML($_GET['type']);
+        require_once("models/actus.dao.php");
+        $actualites = getActusFromBDD($typeActus);
+        foreach ($actualites as $key => $actualite) {
+            $image = getImageActualiteFromBDD($actualite['id_image']);
+            $actualites[$key]['image'] = $image;
+        }
+    } else {
+        throw new Exception("Le type d'acualité n'est pas renseigné, ous ne pouvez pas accéder à la page.");
     }
-
-    /*  echo "<pre>";
-    print_r($image);
-    echo "</pre>"; */
-
     require_once("views/front/actus/actus.view.php");
 }
 

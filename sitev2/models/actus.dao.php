@@ -2,17 +2,20 @@
 
 require_once("bdd/functions.php");
 
-function getActusFromBDD()
+function getActusFromBDD($type)
 {
     $bdd = connectionPDO();
-    $req = $bdd->prepare('
+    $stmt = $bdd->prepare('
     SELECT *
     FROM actualite
+    WHERE type_actualite = :typeActualite
+    ORDER BY date_publication_actualite
+    DESC
     ');
-
-    $req->execute();
-    $actualites = $req->fetchAll(PDO::FETCH_ASSOC);
-    $req->closeCursor();
+    $stmt->bindValue(":typeActualite", $type, PDO::PARAM_STR);
+    $stmt->execute();
+    $actualites = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt->closeCursor();
     return $actualites;
 }
 
