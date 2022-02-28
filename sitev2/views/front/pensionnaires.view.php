@@ -11,7 +11,7 @@ ob_start();
             <?= $animal['sexe'] == 1 ? "perso_bglightBlue" : "perso_bgPink" ?>" style="height: 200px;">
 
                 <div class="col p-2 text-center">
-                    <img src="<?= URL ?>public/content/images/website/<?= $animal['image']['url_image'] ?>" class="img-thumbnail" alt="<?= $animal['image']['libelle_image'] ?>" style="max-height: 190px;" alt="Félix">
+                    <img src="<?= URL ?>public/content/images/website/<?= $animaux['image']['url_image'] ?>" class="img-thumbnail" alt="<?= $animaux['image']['libelle_image'] ?>" style="max-height: 190px;" alt="Félix">
                 </div>
 
                 <?php

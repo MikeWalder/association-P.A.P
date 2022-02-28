@@ -31,3 +31,12 @@ function styleTitlePost($text)
     $txt .= "</div>";
     return $txt;
 }
+
+function previewArticle($text, $number)
+{
+
+    $previewText = "";
+    $text = strip_tags($text);
+    $previewText = substr($text, 0, $number);
+    return $previewText;
+}

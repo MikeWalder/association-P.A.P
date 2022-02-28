@@ -29,7 +29,7 @@ function getPagePensionnaires()
 
         foreach ($animaux as $key => $animal) {
             $image = selectFirstImageFromIdAnimal($animal['id_animal']);
-            $animaux[$key]['image'] = $image;
+            $animaux['image'] = $image;
 
             $caracteres = selectCaracteresFromIdAnimal($animal['id_animal']);
             $animaux[$key]['caracteres'] = $caracteres;
@@ -48,9 +48,16 @@ function getPageAccueil()
     $description = "Page d'accueil de l'association";
 
     $animaux = selectAnimalsFromStatut(TO_ADOPT);
+    $lastNews = getLastNewsPlusImageFromBDD();
+
+
     foreach ($animaux as $key => $animal) {
         $images = selectImagesFromAnimal($animal['id_animal']);
         $animaux[$key]['image'] = $images;
+        $lastNews = getLastNewsPlusImageFromBDD();
+        $animaux[$key]['actuNews'] = $lastNews;
+        $lastActionOrEvent = getLastActionOrEvent();
+        $animaux[$key]['actuActionOrNews'] = $lastActionOrEvent;
     }
     require_once("views/front/accueil.view.php");
 }

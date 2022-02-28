@@ -29,3 +29,43 @@ function selectImagesFromAnimal($idAnimal)
     $stmt->closeCursor();
     return $images;
 }
+
+function getLastNewsPlusImageFromBDD()
+{
+    $bdd = connectionPDO();
+    $stmt = $bdd->prepare('
+    SELECT *
+    FROM actualite a 
+    INNER JOIN image i 
+    ON a.id_image = i.id_image
+    WHERE type_actualite = :typeActualite
+    ORDER BY date_publication_actualite
+    DESC
+    LIMIT 1
+    ');
+    $stmt->bindValue(":typeActualite", TYPE_NEWS, PDO::PARAM_STR);
+    $stmt->execute();
+    $actuNews = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt->closeCursor();
+    return $actuNews;
+}
+
+function getLastActionOrEvent()
+{
+    $bdd = connectionPDO();
+    $stmt = $bdd->prepare('
+    SELECT *
+    FROM actualite a 
+    INNER JOIN image i 
+    ON a.id_image = i.id_image
+    WHERE type_actualite = :typeAction OR type_actualite = :typeEvent
+    ORDER BY date_publication_actualite
+    DESC
+    ');
+    $stmt->bindValue(":typeAction", TYPE_ACTION, PDO::PARAM_STR);
+    $stmt->bindValue(":typeEvent", TYPE_EVENT, PDO::PARAM_STR);
+    $stmt->execute();
+    $lastActionOrEvent = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt->closeCursor();
+    return $lastActionOrEvent;
+}
