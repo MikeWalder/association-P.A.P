@@ -1,6 +1,7 @@
 <?php
-
+session_start();
 require_once("controllers/frontend.controller.php");
+require_once("controllers/backend.controller.php");
 require_once("config/Securite.class.php");
 
 try {
@@ -48,6 +49,12 @@ try {
                 break;
             case "animal":
                 getPageAnimal();
+                break;
+            case "login":
+                getPageLogin();
+                break;
+            case "admin":
+                getPageAdmin();
                 break;
             case "error301":
             case "error302":

@@ -87,9 +87,10 @@
                         </div>
                     </nav>
                 </div>
-                <div class="col-3 col-md-2 text-center font-weight-bold pr-lg-4">
-                    P. A. P.<br>
-                    Centre Alsace
+                <div class="nav-item col-3 col-md-2 font-weight-bold pr-lg-4">
+                    <a href="login" class="text-white text-center" title="Se connecter à la partie administration">
+                        P. A. P.<br>
+                        Centre Alsace</a>
                 </div>
             </div>
         </header>
@@ -102,7 +103,7 @@
         </div>
 
         <footer class="bg-dark text-center text-white rounded-bottom perso_shadowBox">
-            <p class="p-2">&copy; Association &nbsp; P.A.P. &ensp;&ensp; 2019 - 2022</p>
+            <a href="login" class="text-white">&copy; Association &nbsp; P.A.P. &ensp;&ensp; 2019 - 2022</a>
         </footer>
     </div>
 

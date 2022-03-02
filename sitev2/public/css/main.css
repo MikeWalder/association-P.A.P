@@ -40,6 +40,10 @@ hr {
   color: lightskyblue !important;
 }
 
+.perso_colorAdmin {
+  color: DarkSlateGrey !important;
+}
+
 .perso_headerFontSize {
   font-size: 20px !important;
 }
