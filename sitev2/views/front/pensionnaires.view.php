@@ -4,8 +4,14 @@ ob_start();
 
 <?= styleTitleLevel1($text, COLOR_TITLE_PENSIONNAIRES); ?>
 
+<?php
+/* echo "<pre>";
+print_r($animaux);
+echo "</pre>"; */
+?>
+
 <div class="row no-gutters mt-2">
-    <?php foreach ($animaux as $animal) : ?>
+    <?php foreach ($animaux as $key => $animal) : ?>
         <div class="col-12 col-lg-6">
             <div class="row no-gutters align-items-center border border-dark rounded m-2 perso_headerPensionnaires
             <?= $animal['sexe'] == 1 ? "perso_bglightBlue" : "perso_bgPink" ?>" style="height: 200px;">
@@ -46,7 +52,7 @@ ob_start();
                     </div>
 
                     <div class="d-none d-sm-inline font-weight-bold h4">
-                        <?php foreach ($animal['caracteres'] as $caractere) : ?>
+                        <?php foreach ($animal['caracteres'] as $key => $caractere) : ?>
                             <div class="badge badge-warning">
                                 <?= $animal['sexe'] == 0 ? $caractere['libelle_caractere_f'] : $caractere['libelle_caractere_m'] ?>
                             </div>

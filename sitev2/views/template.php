@@ -27,7 +27,7 @@
                 </div>
                 <div class="col-6 col-lg-8 m-0 p-0">
                     <nav class="navbar navbar-expand-lg navbar-dark bg-dark perso_headerFontSize">
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                        <button class="navbar-toggler mx-auto" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="collapse navbar-collapse" id="navbarNavDropdown">
@@ -49,6 +49,9 @@
                                         <a class="dropdown-item perso_headerPensionnaires" href="<?= URL ?>pensionnaires&idstatut=1">Ils cherchent une famille</a>
                                         <a class="dropdown-item perso_headerPensionnaires" href="<?= URL ?>pensionnaires&idstatut=3">Famille d'accueil longue durée</a>
                                         <a class="dropdown-item perso_headerPensionnaires" href="<?= URL ?>pensionnaires&idstatut=2">Les anciens</a>
+                                        <?php if (Securite::verificationAccessSession()) { ?>
+                                            <a class="dropdown-item text-info" href="<?= URL ?>generationPensionnaireAdmin">Gestion des Pensionnaires</a>
+                                        <?php } ?>
                                     </div>
                                 </li>
                                 <li class="nav-item dropdown">
@@ -59,6 +62,9 @@
                                         <a class="dropdown-item perso_headerActus" href="<?= URL ?>actus&type=<?= TYPE_NEWS ?>">Nouvelles des adoptés</a>
                                         <a class="dropdown-item perso_headerActus" href="<?= URL ?>actus&type=<?= TYPE_EVENT ?>">Evénements</a>
                                         <a class="dropdown-item perso_headerActus" href="<?= URL ?>actus&type=<?= TYPE_ACTION ?>">Nos actions au quotidien</a>
+                                        <?php if (Securite::verificationAccessSession()) { ?>
+                                            <a class="dropdown-item text-info" href="<?= URL ?>generationNewsAdmin">Gestion des Actus</a>
+                                        <?php } ?>
                                     </div>
                                 </li>
                                 <li class="nav-item dropdown">
@@ -83,14 +89,51 @@
                                         <a class="dropdown-item perso_headerContacts" href="<?= URL ?>mentions">Mentions légales</a>
                                     </div>
                                 </li>
+                                <?php if (Securite::verificationAccessSession()) { ?>
+                                    <li class="nav-item dropdown pl-5 pt-2 d-none d-md-block">
+                                        <button type="submit" class="btn btn-secondary" title="Quitter mode administrateur" value="&#xf011; Login" data-toggle="modal" data-target="#exampleModal">
+                                            <i class="fas fa-lg fa-power-off text-white"></i>
+                                        </button>
+                                    </li>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header text-secondary text-center">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Confirmez-vous la sortie du mode administrateur ?</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <!-- <div class="modal-body">
+                                                    ...
+                                                </div> -->
+                                                <div class="modal-footer mx-auto">
+                                                    <form method="POST" action="admin">
+                                                        <div class="row">
+                                                            <div class="form-group no-gutters m-1">
+                                                                <input type="hidden" name="deconnection" value="true">
+                                                                <button type="submit" class="btn btn-success col p-1 p-lg-3">Valider</button>
+                                                            </div>
+                                                            <div class="form-group no-gutters  m-1">
+                                                                <button type="button" class="btn btn-danger col p-1 p-lg-3" data-dismiss="modal">Annuler</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } ?>
                             </ul>
                         </div>
                     </nav>
                 </div>
-                <div class="nav-item col-3 col-md-2 font-weight-bold pr-lg-4">
+                <div class="nav-item col-2 col-md-2 font-weight-bold pr-1 pr-md-2 pr-lg-4">
                     <a href="login" class="text-white text-center" title="Se connecter à la partie administration">
                         P. A. P.<br>
-                        Centre Alsace</a>
+                        <span class="text-left d-none d-md-block">Centre Alsace</span></a>
                 </div>
             </div>
         </header>

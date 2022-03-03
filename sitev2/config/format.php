@@ -40,3 +40,10 @@ function previewArticle($text, $number)
     $previewText = substr($text, 0, $number);
     return $previewText;
 }
+
+function displayAlert($text, $type)
+{
+    //$txt = "<div class='alert " . $type . "' text-center 
+    $txt = "<div class='col-12 alert " . $type . " text-center'>" . $text . "</div>";
+    return $txt;
+}

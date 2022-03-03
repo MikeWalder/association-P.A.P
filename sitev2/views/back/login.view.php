@@ -16,8 +16,8 @@ ob_start();
             <input type="password" class="col-6 col-md-4 col-lg-4 pl-2 form-control" id="password" name="password" required>
         </div>
         <div class="row no-gutters">
-            <div class="col-md-3 col-lg-4"></div>
-            <input type="submit" class="btn btn-primary btn-block col-md-6 col-lg-5" value="Valider">
+            <div class="col-md-2 col-lg-3"></div>
+            <input type="submit" class="btn btn-primary btn-block col-md-6 col-md-8 col-lg-6" value="Valider">
         </div>
     </form>
 </div>

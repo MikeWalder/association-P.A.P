@@ -23,6 +23,7 @@ class Securite
         } else {
             session_destroy();
             throw new Exception("Vous n'avez pas les droits requis pour accéder à cette page.");
+            return false;
         }
     }
 
