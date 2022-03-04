@@ -6,9 +6,11 @@ function getPagePensionnaires()
 {
     require_once("models/pensionnaires.dao.php");
 
-    $title = "Page des pensionnaires";
-    $description = "Affichage et description des pensionnaires de l'association P.A.P";
     if (isset($_GET['idstatut']) && !empty($_GET['idstatut'])) {
+
+        $title = "Page des pensionnaires";
+        $description = "Affichage et description des pensionnaires de l'association P.A.P";
+
         $idStatut = Securite::secureHTML($_GET['idstatut']);
         $animaux = selectAnimalsFromStatut($idStatut);
 
@@ -29,8 +31,7 @@ function getPagePensionnaires()
 
         foreach ($animaux as $key => $animal) {
             $image = selectFirstImageFromIdAnimal($animal['id_animal']);
-            $animaux['image'] = $image;
-
+            $animaux[$key]['image'] = $image;
             $caracteres = selectCaracteresFromIdAnimal($animal['id_animal']);
             $animaux[$key]['caracteres'] = $caracteres;
         }

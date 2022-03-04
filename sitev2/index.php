@@ -56,11 +56,14 @@ try {
             case "admin":
                 getPageAdmin();
                 break;
-            case "generationNewsAdmin":
-                getPageNewsAdmin();
+            case "adminNews":
+                getPageAdminNews();
                 break;
-            case "generationPensionnaireAdmin":
-                getPagePensionnaireAdmin();
+            case "adminAddNews":
+                getPageAdminAddNews();
+                break;
+            case "adminPensionnaire":
+                getPageAdminPensionnaire();
                 break;
             case "error301":
             case "error302":

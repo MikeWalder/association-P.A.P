@@ -17,13 +17,15 @@ class Securite
 
     public static function cookieVerification()
     {
-        if ($_COOKIE[COOKIE_PROTECT] === $_SESSION[COOKIE_PROTECT]) {
-            Securite::generateSecuredCookie();
-            return true;
-        } else {
-            session_destroy();
-            throw new Exception("Vous n'avez pas les droits requis pour accéder à cette page.");
-            return false;
+        if (isset($_COOKIE[COOKIE_PROTECT]) && isset($_SESSION[COOKIE_PROTECT])) {
+            if ($_COOKIE[COOKIE_PROTECT] === $_SESSION[COOKIE_PROTECT]) {
+                Securite::generateSecuredCookie();
+                return true;
+            } else {
+                session_destroy();
+                throw new Exception("Vous n'avez pas les droits requis pour accéder à cette page.");
+                return false;
+            }
         }
     }
 

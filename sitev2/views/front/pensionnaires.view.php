@@ -4,12 +4,6 @@ ob_start();
 
 <?= styleTitleLevel1($text, COLOR_TITLE_PENSIONNAIRES); ?>
 
-<?php
-/* echo "<pre>";
-print_r($animaux);
-echo "</pre>"; */
-?>
-
 <div class="row no-gutters mt-2">
     <?php foreach ($animaux as $key => $animal) : ?>
         <div class="col-12 col-lg-6">
@@ -17,7 +11,7 @@ echo "</pre>"; */
             <?= $animal['sexe'] == 1 ? "perso_bglightBlue" : "perso_bgPink" ?>" style="height: 200px;">
 
                 <div class="col p-2 text-center">
-                    <img src="<?= URL ?>public/content/images/website/<?= $animaux['image']['url_image'] ?>" class="img-thumbnail" alt="<?= $animaux['image']['libelle_image'] ?>" style="max-height: 190px;" alt="Félix">
+                    <img src="<?= URL ?>public/content/images/website/<?= $animal['image']['url_image'] ?>" class="img-thumbnail" alt="<?= $animal['image']['libelle_image'] ?>" style="max-height: 190px;" alt="Félix">
                 </div>
 
                 <?php
@@ -34,23 +28,22 @@ echo "</pre>"; */
                 else if ($animal['ami_enfant'] === "non") $iconeChild = "babyNot";
                 else if ($animal['ami_enfant'] === "N/A") $iconeChild = "babyQuest";
                 ?>
+
                 <div class="col-2 border-left border-right border-dark text-center">
                     <img src="<?= URL ?>public/content/images/Others/icons/<?= $iconeDog ?>.png" class="mb-2" style="height: 50px;" alt="Dog OK">
                     <img src="<?= URL ?>public/content/images/Others/icons/<?= $iconeCat ?>.png" class="my-2" style="height: 50px;" alt="Cat OK">
                     <img src="<?= URL ?>public/content/images/Others/icons/<?= $iconeChild ?>.png" class="mt-2" style="height: 50px;" alt="Baby OK">
                 </div>
-                <div class="col-6 text-center perso_textShadow">
 
+                <div class="col-6 text-center perso_textShadow">
                     <div class="font-weight-bold h3 mt-2">
                         <?= $animal['nom_animal'] ?> (
                         <?= $animal['sexe'] == 0 ? "<i class='fas fa-venus'></i>" : "<i class='fas fa-mars'></i>" ?>
                         )
                     </div>
-
                     <div class="h4">
                         Né le : <?= date("d/m/Y", strtotime($animal['date_naissance_animal'])) ?>
                     </div>
-
                     <div class="d-none d-sm-inline font-weight-bold h4">
                         <?php foreach ($animal['caracteres'] as $key => $caractere) : ?>
                             <div class="badge badge-warning">

@@ -3,45 +3,36 @@ ob_start();
 ?>
 <?= styleTitleLevel1("Gestion des News", COLOR_TITLE_CONSEILS); ?>
 
-<form method="POST" action="" class="mt-2 mt-md-3 mt-lg-5">
-    <div class="row">
-        <div class="col-md-1"></div>
-        <div class="form-group col-md-6">
-            <label for="titleActu" class="font-weight-bold">Titre de l'actualité</label>
-            <input type="text" class="form-control" name="titleActu" id="titleActu" required>
-        </div>
-        <div class="form-group col-md-4">
-            <label for="typeActu" class="font-weight-bold">Type</label>
-            <select class="form-control" id="typeActu" name="typeActu">
-                <?php for ($i = 0; $i < count($ada); $i++) : ?>
-                    <option value="<?= $ada[$i] ?>"><?= $ada[$i] ?></option>
-                <?php endfor; ?>
-            </select>
-        </div>
+<div class="row mt-2 mt-md-3 mt-lg-5 text-center">
+    <div class="col-12 col-md mb-1 mb-md-0 text-center">
+        <a href="adminAddNews" class="btn btn-lg btn-primary p-1 p-md-2">Ajouter une actualité</a>
     </div>
-    <div class="row mt-1">
-        <div class="col-md-1"></div>
-        <div class="form-group col-md-10">
-            <label for="contentActu" class="font-weight-bold">Contenu </label>
-            <textarea class="form-control" id="contentActu" name="contentActu" rows="5" required></textarea>
-        </div>
-    </div>
-    <div class="row mt-1">
-        <div class="col-md-1"></div>
-        <div class="form-group col-md-10">
-            <label for="imgActu" class="font-weight-bold">Image</label>
-            <input type="file" class="form-control-file" name="imgActu" id="imgActu" accept="image/*">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-1 col-lg-2"></div>
-        <input type="hidden" name="validateAdminNews" value="true">
-        <input type="submit" class="btn btn-info col-md-10 col-lg-8 my-1 my-md-3 my-lg-5" value="Valider">
-    </div>
-</form>
+</div>
 
-<div class="row no-gutters">
-    <?= empty($result) ? '' : $result ?>
+<div class="row no-gutters mt-2 mt-md-3 mt-lg-5 mx-auto">
+    <table class="d-none d-md-block table table-striped table-bordered">
+        <thead class="thead-dark text-center">
+            <tr class="h5">
+                <th scope="col">Titre </th>
+                <th scope="col">Date de publication</th>
+                <th scope="col">Extrait contenu</th>
+                <th scope="col">Type</th>
+                <th scope="col">Image liée</th>
+                <th colspan="2" scope="col" class="col-md-2"> Actions</th>
+            </tr>
+        </thead>
+        <tbody class="">
+            <tr class="text-center h6">
+                <td>Titre 1 assez simplissime</td>
+                <td>02/04/2022</td>
+                <td>Un simple petit extrait de la new</td>
+                <td>Type 1</td>
+                <td>Image liée 1</td>
+                <td><a href="" class="btn btn-block btn-warning pt-0 pb-0" title="Modify"><i class="fas fa-edit"></i></a></td>
+                <td><a href="" class="btn btn-block btn-danger pt-0 pb-0" title="Delete"><i class="fas fa-trash-alt"></i></a></td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
 <?php

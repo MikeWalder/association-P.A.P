@@ -48,7 +48,21 @@ function getPageAdmin()
     }
 }
 
-function getPageNewsAdmin()
+function getPageAdminNews()
+{
+    if (Securite::verificationAccessSession()) {
+        Securite::generateSecuredCookie();
+
+        $title = "Administration des News";
+        $description = "Administration des News du site P.A.P";
+
+        require_once("models/adminNews.dao.php");
+
+        require_once("views/back/adminNews.view.php");
+    }
+}
+
+function getPageAdminAddNews()
 {
     if (Securite::verificationAccessSession()) {
         Securite::generateSecuredCookie();
@@ -78,24 +92,36 @@ function getPageNewsAdmin()
                 $titleActu = Securite::secureHTML($_POST['titleActu']);
                 $typeActu = Securite::secureHTML($_POST['typeActu']);
                 $contentActu = Securite::secureHTML($_POST['contentActu']);
+                /* echo "<pre";
+                print_r($_FILES['imgActu']);
+                echo "</pre>"; */
+                $imgActu = $_FILES['imgActu'];
+                $repertory = "public/content/images/website/news/";
                 $date = date("Y-m-d H:i:s", time());
 
-                if (insertActuIntoActuTable($titleActu, $typeActu, $contentActu, $date, 1)) {
-                    //$result = "<div class='col-12 alert alert-success text-center'>Informations enregistrées avec succès !</div>";
-                    $result = displayAlert("Informations enregistrées avec succès !", "alert-success");
-                } else {
-                    $result = displayAlert("Informations non enregistrées", "alert-danger");
+                try {
+                    $name_ImgUploaded = verifyUploadedActuImage($imgActu, $repertory, $titleActu);
+                    $idImage = insertImgActuUploadedIntoBD($name_ImgUploaded, "news/" . $name_ImgUploaded);
+                    $idImg = selectIdImageLoaded($idImage);
+                    if (insertActuIntoActuTable($titleActu, $typeActu, $contentActu, $date, $idImg['id_image'])) {
+
+                        $result = displayAlert("Informations enregistrées avec succès !", "alert-success");
+                    } else {
+                        $result = displayAlert("Informations non enregistrées en BD", "alert-danger");
+                    }
+                } catch (Exception $e) {
+                    $result = displayAlert("La création de l'actualité n'a pas pu fonctionner<br>" . $e->getMessage(), "alert-danger");
                 }
             }
         }
 
-        require_once("views/back/adminNews.view.php");
+        require_once("views/back/adminAddNews.view.php");
     } else {
         throw new Exception("Vous n'avez pas les accès requis pour cette page");
     }
 }
 
-function getPagePensionnaireAdmin()
+function getPageAdminPensionnaire()
 {
     if (Securite::verificationAccessSession()) {
         Securite::generateSecuredCookie();
