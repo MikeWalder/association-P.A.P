@@ -50,7 +50,7 @@
                                         <a class="dropdown-item perso_headerPensionnaires" href="<?= URL ?>pensionnaires&idstatut=3">Famille d'accueil longue durée</a>
                                         <a class="dropdown-item perso_headerPensionnaires" href="<?= URL ?>pensionnaires&idstatut=2">Les anciens</a>
                                         <?php if (Securite::verificationAccessSession()) { ?>
-                                            <a class="dropdown-item text-info" href="<?= URL ?>pensionnaireAdmin">Gestion des Pensionnaires</a>
+                                            <a class="dropdown-item text-info" href="<?= URL ?>adminPensionnaire">Gestion des Pensionnaires</a>
                                         <?php } ?>
                                     </div>
                                 </li>
@@ -63,7 +63,7 @@
                                         <a class="dropdown-item perso_headerActus" href="<?= URL ?>actus&type=<?= TYPE_EVENT ?>">Evénements</a>
                                         <a class="dropdown-item perso_headerActus" href="<?= URL ?>actus&type=<?= TYPE_ACTION ?>">Nos actions au quotidien</a>
                                         <?php if (Securite::verificationAccessSession()) { ?>
-                                            <a class="dropdown-item text-info" href="<?= URL ?>newsAdmin">Gestion des Actus</a>
+                                            <a class="dropdown-item text-info" href="<?= URL ?>adminNews">Gestion des Actus</a>
                                         <?php } ?>
                                     </div>
                                 </li>

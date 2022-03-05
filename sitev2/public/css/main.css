@@ -67,3 +67,12 @@ hr {
 .perso_bglightBlue {
   background-color: lightskyblue !important;
 }
+
+.perso_bgGoldenRod {
+  background-color: goldenrod !important;
+}
+
+.btnHover:hover i {
+  color: white !important;
+  transform: scale(1.25) !important;
+}

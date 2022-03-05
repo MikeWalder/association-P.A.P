@@ -62,6 +62,9 @@ try {
             case "adminAddNews":
                 getPageAdminAddNews();
                 break;
+            case "adminModifNews":
+                getPageAdminModifNews();
+                break;
             case "adminPensionnaire":
                 getPageAdminPensionnaire();
                 break;

@@ -47,3 +47,20 @@ function displayAlert($text, $type)
     $txt = "<div class='col-12 alert " . $type . " text-center'>" . $text . "</div>";
     return $txt;
 }
+
+function displayColorActuFromType($typeActu)
+{
+    switch ($typeActu) {
+        case "Action":
+            return "perso_bgGreen";
+            break;
+        case "Event":
+            return "perso_bgPink";
+            break;
+        case "News":
+            return "perso_bglightBlue";
+            break;
+        default:
+            return "perso_bgGreen";
+    }
+}

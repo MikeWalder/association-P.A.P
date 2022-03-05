@@ -99,4 +99,88 @@ function insertImgActuUploadedIntoBD($nameImage, $urlImage)
 
 function selectLastActusFromTable()
 {
+    $bdd = connectionPDO();
+    $req = '
+    SELECT *
+    FROM actualite
+    ORDER BY date_publication_actualite
+    DESC
+    ';
+    $stmt = $bdd->prepare($req);
+    $stmt->execute();
+    $actus = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt->closeCursor();
+    return $actus;
+}
+
+function selectImagefromIdActu($idImg)
+{
+    $bdd = connectionPDO();
+    $req = '
+    SELECT i.url_image 
+    FROM image i 
+    INNER JOIN 
+    actualite a
+    ON a.id_image = i.id_image
+    WHERE i.id_image = :idImage';
+    $stmt = $bdd->prepare($req);
+    $stmt->bindValue(":idImage", $idImg, PDO::PARAM_STR);
+    $stmt->execute();
+    $urlImg = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt->closeCursor();
+    return $urlImg;
+}
+
+function selectActuById($id_Actu)
+{
+    $bdd = connectionPDO();
+    $req = '
+    SELECT *
+    FROM actualite 
+    WHERE id_actualite = :idActu';
+    $stmt = $bdd->prepare($req);
+    $stmt->bindValue(":idActu", $id_Actu, PDO::PARAM_INT);
+    $stmt->execute();
+    $selectedActu = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt->closeCursor();
+    return $selectedActu;
+}
+
+function getImageActualiteFromBDD($idActu)
+{
+    $bdd = connectionPDO();
+    $stmt = $bdd->prepare('
+    SELECT i.id_image, i.libelle_image, i.url_image
+    FROM image i 
+    INNER JOIN actualite a
+    ON i.id_image = a.id_image
+    WHERE a.id_actualite = :idActu
+    ');
+    $stmt->bindValue(":idActu", $idActu, PDO::PARAM_INT);
+    $stmt->execute();
+    $image = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt->closeCursor();
+    return $image;
+}
+
+function updateActuTable($titleActu, $typeActu, $contentActu, $date, $idActu)
+{
+    $bdd = connectionPDO();
+    $req = '
+    UPDATE actualite 
+    SET libelle_actualite = :titre, contenu_actualite = :contenu, 
+    date_publication_actualite = :date_ajout, type_actualite = :type_actu
+    WHERE id = ' . (int)$idActu;
+    $stmt = $bdd->prepare($req);
+    $stmt->bindValue(":titre", $titleActu, PDO::PARAM_STR);
+    $stmt->bindValue(":contenu", $contentActu, PDO::PARAM_STR);
+    $stmt->bindValue(":date_ajout", $date, PDO::PARAM_STR);
+    $stmt->bindValue(":type_actu", $typeActu, PDO::PARAM_STR);
+    $res = $stmt->execute();
+    $stmt->closeCursor();
+    if ($res > 0) {
+        return true;
+    } else {
+        return false;
+    }
 }
