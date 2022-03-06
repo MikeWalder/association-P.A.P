@@ -3,16 +3,6 @@ ob_start();
 ?>
 <?= styleTitleLevel1("Gestion des News", COLOR_TITLE_CONSEILS); ?>
 
-<?php
-/* echo "<pre>";
-print_r($lastActus);
-echo "</pre>";
-
-echo "<pre>";
-print_r($imageActuUrl);
-echo "</pre>"; */
-?>
-
 <div class="row mt-2 mt-md-3 mt-lg-5 text-center">
     <div class="col-12 col-md mb-1 mb-md-0 text-center">
         <a href="adminAddNews" class="btn btn-lg btn-primary p-1 p-md-2"><i class="fas fa-plus-circle"></i>&nbsp;Ajouter une actualité</a>
@@ -47,7 +37,7 @@ echo "</pre>"; */
                         </a>
                     </td>
                     <td class="align-middle">
-                        <a href="<?= URL ?>adminNews&d=<?= $actu['id_actualite'] ?>" class="btn btn-block btn-danger btnHover" title="Supprimer" data-toggle="modal" data-target="#modalDeleteActu">
+                        <a href="<?= URL ?>adminNews&d=<?= $actu['id_actualite'] ?>" class="btn btn-block btn-danger btnHover" title="Supprimer">
                             <i class="fas fa-trash-alt"></i>
                         </a>
                     </td>
@@ -71,10 +61,11 @@ echo "</pre>"; */
                 <?= $actu['id_actualite'] ?>
             </div>
             <div class="modal-footer">
-                <a href="adminNews?d=<?= $actu['id_actualite'] ?>" class="btn btn-lg btn-warning" title="Supprimer">
-                    <i class="fas fa-trash-alt"></i>
-                </a>
-                <button type="button" class="btn btn-lg btn-danger" data-dismiss="modal">Annuler</button>
+                <form action="<?= URL ?>adminNews&d=<?= $actu['id_actualite'] ?>" method="POST">
+                    <input type="hidden" name="d">
+                    <input type="submit" class="btn btn-info" value="Valider">
+                </form>
+                <button type="button" class="btn btn-lg btn-danger text-dark" data-dismiss="modal">Annuler</button>
             </div>
         </div>
     </div>

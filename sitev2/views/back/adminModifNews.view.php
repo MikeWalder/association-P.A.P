@@ -4,12 +4,12 @@ ob_start();
 <?= styleTitleLevel1("Modifier l'actualité", COLOR_TITLE_CONSEILS); ?>
 
 <?php
-echo "<pre>";
+/* echo "<pre>";
 print_r($actuSelected);
-echo "</pre>";
+echo "</pre>"; */
 
 echo "<pre>";
-print_r($imageActuSelected);
+print_r($imageUrlToDelete);
 echo "</pre>";
 
 ?>
