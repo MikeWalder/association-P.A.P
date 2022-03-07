@@ -250,7 +250,10 @@ function getPageAdminPensionnaire()
 
         require_once("models/adminPensionnaire.dao.php");
         $lastPensionnaires = selectAllAnimals();
-
+        foreach ($lastPensionnaires as $key => $pensionnaire) {
+            $firstImg = selectFirstImageFromIdAnimal($pensionnaire['id_animal']);
+            $lastPensionnaires[$key]['image'] = $firstImg;
+        }
         require_once("views/back/adminPensionnaire.view.php");
     } else {
         throw new Exception("Vous n'avez pas les accès requis pour cette page");

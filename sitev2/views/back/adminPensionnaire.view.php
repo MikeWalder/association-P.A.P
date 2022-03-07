@@ -32,14 +32,14 @@ echo "</pre>"; */
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($lastPensionnaires as $pensionnaire) : ?>
+            <?php foreach ($lastPensionnaires as $key => $pensionnaire) : ?>
                 <tr class="text-center <?= $bgColorActu = displayColorAnimalByStatut($pensionnaire['id_statut']) ?>">
                     <td class="align-middle col-md-2 font-weight-bold"><?= $pensionnaire['nom_animal'] ?></td>
                     <td class="align-middle col-md-1"><?= $pensionnaire['type_animal'] ?></td>
                     <td class="align-middle col-md-1"><?= $pensionnaire['sexe'] == 1 ? "Mâle" : "Femelle" ?></td>
                     <td class="align-middle col-md-5"><?= previewArticle($pensionnaire['description_animal'], 50) . " [...]" ?></td>
                     <td class="align-middle col-md-1 m-0 p-1" style="max-height: 100px;">
-                        <img src="public/content/images/website/" class="img-fluid img-thumbnail m-0" style="height:100px;">
+                        <img src="public/content/images/website/<?= $pensionnaire['image']['url_image'] ?>" class="img-fluid img-thumbnail m-0" style="height:100px;">
                     </td>
                     <td class="align-middle">
                         <a href="<?= URL ?>adminModifPensionnaire&m=<?= $pensionnaire['id_animal'] ?>" class="btn btn-block btn-warning btnHover" title="Modifier">
