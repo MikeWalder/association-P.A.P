@@ -8,11 +8,11 @@ ob_start();
 print_r($actuSelected);
 echo "</pre>"; */
 
-echo "<pre>";
-print_r($imageUrlToDelete);
-echo "</pre>";
-
 ?>
+
+<div class="row no-gutters">
+    <?= empty($result) ? '' : $result ?>
+</div>
 
 <form method="POST" action="" enctype="multipart/form-data" class="mt-2 mt-md-3 mt-lg-5">
     <div class="row">
@@ -55,10 +55,6 @@ echo "</pre>";
         <input type="submit" class="btn btn-info col-md-10 col-lg-8 my-1 my-md-3 my-lg-5" value="Valider">
     </div>
 </form>
-
-<div class="row no-gutters">
-    <?= empty($result) ? '' : $result ?>
-</div>
 
 <?php
 $content = ob_get_clean();

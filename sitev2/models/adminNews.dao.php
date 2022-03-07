@@ -162,9 +162,11 @@ function updateActuTable($titleActu, $typeActu, $contentActu, $date, $idActu)
     $bdd = connectionPDO();
     $req = '
     UPDATE actualite 
-    SET libelle_actualite = :titre, contenu_actualite = :contenu, 
-    date_publication_actualite = :date_ajout, type_actualite = :type_actu
-    WHERE id = ' . (int)$idActu;
+    SET libelle_actualite = :titre, 
+    contenu_actualite = :contenu, 
+    date_publication_actualite = :date_ajout, 
+    type_actualite = :type_actu
+    WHERE id_actualite = ' . (int)$idActu;
     $stmt = $bdd->prepare($req);
     $stmt->bindValue(":titre", $titleActu, PDO::PARAM_STR);
     $stmt->bindValue(":contenu", $contentActu, PDO::PARAM_STR);

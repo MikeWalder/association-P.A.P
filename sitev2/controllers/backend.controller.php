@@ -1,6 +1,7 @@
 <?php
 require_once("config/config.php");
 require_once("config/format.php");
+//require_once("public/js/main.js");
 
 function getPageLogin()
 {
@@ -76,11 +77,16 @@ function getPageAdminNews()
             if (deleteActuById($idActuDelete)) {
                 deleteImageFromImageTable($imageUrlToDelete['id_image']);
                 $result = displayAlert("Informations supprimées avec succès !", "alert-success");
-                sleep(2);
-                header("Location: admin");
             } else {
                 $result = displayAlert("Informations non supprimées en BD", "alert-danger");
             }
+?>
+            <script>
+                window.setTimeout(function() {
+                    window.location = 'adminNews';
+                }, 2500);
+            </script>
+            <?php
         }
 
         require_once("views/back/adminNews.view.php");
@@ -129,6 +135,13 @@ function getPageAdminAddNews()
                     $idImg = selectIdImageLoaded($idImage);
                     if (insertActuIntoActuTable($titleActu, $typeActu, $contentActu, $date, $idImg['id_image'])) {
                         $result = displayAlert("Informations enregistrées avec succès !", "alert-success");
+            ?>
+                        <script>
+                            window.setTimeout(function() {
+                                window.location = 'adminNews';
+                            }, 5000);
+                        </script>
+                <?php
                     } else {
                         $result = displayAlert("Informations non enregistrées en BD", "alert-danger");
                     }
@@ -137,7 +150,6 @@ function getPageAdminAddNews()
                 }
             }
         }
-
         require_once("views/back/adminAddNews.view.php");
     } else {
         throw new Exception("Vous n'avez pas les accès requis pour cette page");
@@ -180,7 +192,7 @@ function getPageAdminModifNews()
                     empty($typeActu) ? $actuSelected['type_actualite'] : $_POST['typeActu'];
                     empty($contentActu) ? $actuSelected['contenu_actualite'] : $_POST['contentActu'];
 
-                    if (isset($_FILES['imgActu']) && ($_FILES['imgActu']['error'] == 0)) {
+                    if (isset($_FILES['imgActu']) && ($_FILES['imgActu']['size'] > 0)) {
 
                         $imgActu = $_FILES['imgActu'];
                         $repertory = "public/content/images/website/news/";
@@ -203,9 +215,10 @@ function getPageAdminModifNews()
                             $result = displayAlert("La modification de l'actualité n'a pas pu aboutir<br>" . $e->getMessage(), "alert-danger");
                         }
                     } else {
+                        //$imgActu = $_FILES['imgActu'];
                         $date = date("Y-m-d H:i:s", time());
                         try {
-                            if (updateActuTable($titleActu, $typeActu, $contentActu, $date, (int)$modifIdActu)) {
+                            if (updateActuTable($titleActu, $typeActu, $contentActu, $date, $modifIdActu)) {
                                 $result = displayAlert("Informations enregistrées avec succès !", "alert-success");
                             } else {
                                 $result = displayAlert("Informations non enregistrées en BD", "alert-danger");
@@ -215,8 +228,12 @@ function getPageAdminModifNews()
                         }
                     }
                 }
+                ?>
+                <script>
+                    displayResultAndRedirect(50000)
+                </script>
+<?php
             }
-
             require_once("views/back/adminModifNews.view.php");
         } else {
             throw new Exception("Vous n'avez pas les accès requis pour cette page");
@@ -226,15 +243,40 @@ function getPageAdminModifNews()
 
 function getPageAdminPensionnaire()
 {
-    if (!empty($_GET['m'])) {
-        if (Securite::verificationAccessSession()) {
-            Securite::generateSecuredCookie();
-            $title = "Administration des Pensionnaires";
-            $description = "Administration des pensionnaires du site P.A.P";
+    if (Securite::verificationAccessSession()) {
+        Securite::generateSecuredCookie();
+        $title = "Administration des Pensionnaires";
+        $description = "Administration des pensionnaires du site P.A.P";
 
-            require_once("views/back/adminPensionnaire.view.php");
-        } else {
-            throw new Exception("Vous n'avez pas les accès requis pour cette page");
-        }
+        require_once("models/adminPensionnaire.dao.php");
+        $lastPensionnaires = selectAllAnimals();
+
+        require_once("views/back/adminPensionnaire.view.php");
+    } else {
+        throw new Exception("Vous n'avez pas les accès requis pour cette page");
+    }
+}
+
+function getPageAdminAddPensionnaire()
+{
+    if (Securite::verificationAccessSession()) {
+        Securite::generateSecuredCookie();
+        $title = "Administration des Pensionnaires";
+        $description = "Administration des pensionnaires du site P.A.P";
+
+        require_once("models/adminPensionnaire.dao.php");
+
+        require_once("views/back/adminAddPensionnaire.view.php");
+    }
+}
+
+function getPageAdminModifPensionnaire()
+{
+    if (Securite::verificationAccessSession()) {
+        Securite::generateSecuredCookie();
+        $title = "Administration des Pensionnaires";
+        $description = "Administration des pensionnaires du site P.A.P";
+
+        require_once("adminPensionnaire.dao.php");
     }
 }

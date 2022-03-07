@@ -68,6 +68,12 @@ try {
             case "adminPensionnaire":
                 getPageAdminPensionnaire();
                 break;
+            case "adminAddPensionnaire":
+                getPageAdminAddPensionnaire();
+                break;
+            case "adminModifPensionnaire":
+                getPageAdminModifPensionnaire();
+                break;
             case "error301":
             case "error302":
             case "error400":

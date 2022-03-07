@@ -43,8 +43,8 @@ function previewArticle($text, $number)
 
 function displayAlert($text, $type)
 {
-    //$txt = "<div class='alert " . $type . "' text-center 
-    $txt = "<div class='col-12 alert " . $type . " text-center'>" . $text . "</div>";
+    $txt = "<div class='col-12 spinner-border alert " . $type . " text-center' role='status'>";
+    $txt .= "<span class='sr-only'>Loading...</span>" . $text . "</div>";
     return $txt;
 }
 
@@ -59,6 +59,26 @@ function displayColorActuFromType($typeActu)
             break;
         case "News":
             return "perso_bglightBlue";
+            break;
+        default:
+            return "perso_bgGreen";
+    }
+}
+
+function displayColorAnimalByStatut($statut)
+{
+    switch ((int)$statut) {
+        case 1:
+            return "perso_bgGreen";
+            break;
+        case 2:
+            return "perso_bgPink";
+            break;
+        case 3:
+            return "perso_bglightBlue";
+            break;
+        case 4:
+            return "bg-secondary";
             break;
         default:
             return "perso_bgGreen";

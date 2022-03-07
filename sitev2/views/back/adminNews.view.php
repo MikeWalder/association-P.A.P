@@ -1,9 +1,13 @@
 <?php
 ob_start();
 ?>
-<?= styleTitleLevel1("Gestion des News", COLOR_TITLE_CONSEILS); ?>
+<?= styleTitleLevel1("Gestion des actus", COLOR_TITLE_CONSEILS); ?>
 
-<div class="row mt-2 mt-md-3 mt-lg-5 text-center">
+<div class="row no-gutters">
+    <?= empty($result) ? '' : $result ?>
+</div>
+
+<div class="row mt-2 mt-md-3 mt-lg-4 text-center">
     <div class="col-12 col-md mb-1 mb-md-0 text-center">
         <a href="adminAddNews" class="btn btn-lg btn-primary p-1 p-md-2"><i class="fas fa-plus-circle"></i>&nbsp;Ajouter une actualité</a>
     </div>
@@ -24,7 +28,7 @@ ob_start();
         <tbody>
             <?php foreach ($lastActus as $actu) : ?>
                 <tr class="text-center <?= $bgColorActu = displayColorActuFromType($actu['type_actualite']) ?>">
-                    <td class="align-middle col-md-2 font-weight-bold"><?= $actu['libelle_actualite'] ?></td>
+                    <td class="align-middle col-md-3 font-weight-bold"><?= $actu['libelle_actualite'] ?></td>
                     <td class="align-middle col-md-1"><?= date("d/m/Y", strtotime($actu['date_publication_actualite'])) ?></td>
                     <td class="align-middle col-md-5"><?= previewArticle($actu['contenu_actualite'], 50) . " [...]" ?></td>
                     <td class="align-middle col-md-1"><?= $actu['type_actualite'] ?></td>
