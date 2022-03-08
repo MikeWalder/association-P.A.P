@@ -78,9 +78,29 @@ function displayColorAnimalByStatut($statut)
             return "perso_bglightBlue";
             break;
         case 4:
-            return "bg-secondary";
+            return "bg-light";
             break;
         default:
             return "perso_bgGreen";
+    }
+}
+
+function displayNameAnimalStatutByIdStatut($idStatut)
+{
+    switch ((int)$idStatut) {
+        case 1:
+            return "À l'adoption";
+            break;
+        case 2:
+            return "Adopté";
+            break;
+        case 3:
+            return "F.A.L.D";
+            break;
+        case 4:
+            return "Décédé";
+            break;
+        default:
+            return "Indéfini";
     }
 }

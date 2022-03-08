@@ -72,11 +72,9 @@ function getPageAdminNews()
             $repertory = 'public/content/images/website/' . $imgUrl;
             unlink($repertory);
 
-            //$imgActu = getImageActualiteFromBDD($idActuDelete);
-
             if (deleteActuById($idActuDelete)) {
                 deleteImageFromImageTable($imageUrlToDelete['id_image']);
-                $result = displayAlert("Informations supprimées avec succès !", "alert-success");
+                $result = displayAlert("Informations supprimées avec succès !<br>Rafraîchissement de la page en cours...", "alert-success");
             } else {
                 $result = displayAlert("Informations non supprimées en BD", "alert-danger");
             }
@@ -88,8 +86,9 @@ function getPageAdminNews()
             </script>
             <?php
         }
-
         require_once("views/back/adminNews.view.php");
+    } else {
+        throw new Exception("Vous n'avez pas les accès requis pour cette page");
     }
 }
 
@@ -134,17 +133,17 @@ function getPageAdminAddNews()
                     $idImage = insertImgActuUploadedIntoBD($name_ImgUploaded, "news/" . $name_ImgUploaded, $imgSize);
                     $idImg = selectIdImageLoaded($idImage);
                     if (insertActuIntoActuTable($titleActu, $typeActu, $contentActu, $date, $idImg['id_image'])) {
-                        $result = displayAlert("Informations enregistrées avec succès !", "alert-success");
-            ?>
-                        <script>
-                            window.setTimeout(function() {
-                                window.location = 'adminNews';
-                            }, 5000);
-                        </script>
-                <?php
+                        $result = displayAlert("Informations enregistrées avec succès !<br>Redirection en cours...", "alert-success");
                     } else {
                         $result = displayAlert("Informations non enregistrées en BD", "alert-danger");
                     }
+            ?>
+                    <script>
+                        window.setTimeout(function() {
+                            window.location = 'adminNews';
+                        }, 2500);
+                    </script>
+                    <?php
                 } catch (Exception $e) {
                     $result = displayAlert("La création de l'actualité n'a pas pu fonctionner<br>" . $e->getMessage(), "alert-danger");
                 }
@@ -207,10 +206,17 @@ function getPageAdminModifNews()
                             $idImg = selectIdImageLoaded($idImage);
 
                             if (insertActuIntoActuTable($titleActu, $typeActu, $contentActu, $date, $idImg['id_image'], (int)$modifIdActu)) {
-                                $result = displayAlert("Informations enregistrées avec succès !", "alert-success");
+                                $result = displayAlert("Informations enregistrées avec succès !<br>Redirection en cours...", "alert-success");
                             } else {
-                                $result = displayAlert("Informations non enregistrées en BD", "alert-danger");
+                                $result = displayAlert("Informations non enregistrées en BD<br>Redirection en cours...", "alert-danger");
                             }
+                    ?>
+                            <script>
+                                window.setTimeout(function() {
+                                    window.location = 'adminNews';
+                                }, 2500);
+                            </script>
+                        <?php
                         } catch (Exception $e) {
                             $result = displayAlert("La modification de l'actualité n'a pas pu aboutir<br>" . $e->getMessage(), "alert-danger");
                         }
@@ -219,10 +225,17 @@ function getPageAdminModifNews()
                         $date = date("Y-m-d H:i:s", time());
                         try {
                             if (updateActuTable($titleActu, $typeActu, $contentActu, $date, $modifIdActu)) {
-                                $result = displayAlert("Informations enregistrées avec succès !", "alert-success");
+                                $result = displayAlert("Informations enregistrées avec succès !<br>Redirection en cours...", "alert-success");
                             } else {
-                                $result = displayAlert("Informations non enregistrées en BD", "alert-danger");
+                                $result = displayAlert("Informations non enregistrées en BD<br>Redirection....", "alert-danger");
                             }
+                        ?>
+                            <script>
+                                window.setTimeout(function() {
+                                    window.location = 'adminNews';
+                                }, 2500);
+                            </script>
+                <?php
                         } catch (Exception $e) {
                             $result = displayAlert("La modification de l'actualité n'a pas pu aboutir<br>" . $e->getMessage(), "alert-danger");
                         }
@@ -232,7 +245,7 @@ function getPageAdminModifNews()
                 <script>
                     displayResultAndRedirect(50000)
                 </script>
-<?php
+            <?php
             }
             require_once("views/back/adminModifNews.view.php");
         } else {
@@ -250,9 +263,34 @@ function getPageAdminPensionnaire()
 
         require_once("models/adminPensionnaire.dao.php");
         $lastPensionnaires = selectAllAnimals();
+        $countAnimal = countAnimalsByStatut();
         foreach ($lastPensionnaires as $key => $pensionnaire) {
             $firstImg = selectFirstImageFromIdAnimal($pensionnaire['id_animal']);
             $lastPensionnaires[$key]['image'] = $firstImg;
+        }
+        if (isset($_GET['d']) && !empty($_GET['d'])) {
+            $idAnimal = Securite::secureHTML($_GET['d']);
+
+            //$imageUrlToDelete = selectImagefromIdActu($idActuDelete);
+            //$imgUrl = $imageUrlToDelete['url_image'];
+            //$repertory = 'public/content/images/website/' . $imgUrl;
+            //unlink($repertory);
+
+            //$imgActu = getImageActualiteFromBDD($idActuDelete);
+
+            if (deleteAnimalById($idAnimal)) {
+                //deleteImageFromImageTable($imageUrlToDelete['id_image']);
+                $result = displayAlert("Informations supprimées avec succès !<br>Rafraîchissement de la page en cours...", "alert-success");
+            } else {
+                $result = displayAlert("Informations non supprimées en BD", "alert-danger");
+            }
+            ?>
+            <script>
+                window.setTimeout(function() {
+                    window.location = 'adminPensionnaire';
+                }, 2500);
+            </script>
+            <?php
         }
         require_once("views/back/adminPensionnaire.view.php");
     } else {
@@ -269,17 +307,122 @@ function getPageAdminAddPensionnaire()
 
         require_once("models/adminPensionnaire.dao.php");
 
+        if (isset($_POST['validateAdminPensionnaire']) && !empty($_POST['validateAdminPensionnaire'])) {
+            if (
+                isset($_POST['nameAnimal']) && !empty($_POST['nameAnimal']) &&
+                isset($_POST['typeAnimal']) && !empty($_POST['typeAnimal']) &&
+                isset($_POST['sexe']) && !empty($_POST['sexe']) &&
+                isset($_POST['statut']) && !empty($_POST['statut']) &&
+                isset($_POST['description_animal']) && !empty($_POST['description_animal'])
+            ) {
+
+                //Sécurisation des champs
+                $nameAnimal = Securite::secureHTML($_POST['nameAnimal']);
+                $typeAnimal = Securite::secureHTML($_POST['typeAnimal']);
+                $sexe = Securite::secureHTML($_POST['sexe']);
+                $puce = Securite::secureHTML($_POST['puce']);
+                $statut = Securite::secureHTML($_POST['statut']);
+                $birth = Securite::secureHTML($_POST['birthDate']);
+                $adoptionDate = Securite::secureHTML($_POST['adoptionDate']);
+                $amiChien = Securite::secureHTML($_POST['amiChien']);
+                $amiChat = Securite::secureHTML($_POST['amiChat']);
+                $amiEnfant = Securite::secureHTML($_POST['amiEnfant']);
+                $descrAnimal = Securite::secureHTML($_POST['description_animal']);
+                $descrAnimalAdoption = Securite::secureHTML($_POST['description_animal_adoption']);
+                $localisationAnimalAdoption = Securite::secureHTML($_POST['localisation_animal_adoption']);
+                $engagement = Securite::secureHTML($_POST['engagement']);
+
+                $imgActu = $_FILES['imgAnimal'];
+                $repertory = "public/content/images/website/animals/";
+
+                try {
+                    // $name_ImgUploaded = verifyUploadedActuImage($imgActu, $repertory, $titleActu);
+                    //$idImage = insertImgActuUploadedIntoBD($name_ImgUploaded, "animals/" . $name_ImgUploaded, $imgSize);
+                    //$idImg = selectIdImageLoaded($idImage);
+                    if (insertNewAnimalIntoTable($nameAnimal, $typeAnimal, $puce, $sexe, $birth, $adoptionDate, $amiChien, $amiChat, $amiEnfant, $descrAnimal, $descrAnimalAdoption, $localisationAnimalAdoption, $engagement, $statut)) {
+                        $result = displayAlert("Informations enregistrées avec succès !<br>Redirection en cours...", "alert-success");
+                    } else {
+                        $result = displayAlert("Informations non enregistrées en BD", "alert-danger");
+                    }
+            ?>
+                    <script>
+                        window.setTimeout(function() {
+                            window.location = 'adminPensionnaire';
+                        }, 2500);
+                    </script>
+                <?php
+                } catch (Exception $e) {
+                    $result = displayAlert("La création de l'actualité n'a pas pu fonctionner<br>" . $e->getMessage(), "alert-danger");
+                }
+            }
+        }
         require_once("views/back/adminAddPensionnaire.view.php");
     }
 }
 
 function getPageAdminModifPensionnaire()
 {
-    if (Securite::verificationAccessSession()) {
-        Securite::generateSecuredCookie();
-        $title = "Administration des Pensionnaires";
-        $description = "Administration des pensionnaires du site P.A.P";
+    if (isset($_GET['m']) && !empty($_GET['m'])) {
+        $modifIdAnimal = Securite::secureHTML($_GET['m']);
+        if (Securite::verificationAccessSession()) {
+            Securite::generateSecuredCookie();
+            $title = "Administration des Pensionnaires";
+            $description = "Administration des pensionnaires du site P.A.P";
+            require_once("models/adminPensionnaire.dao.php");
 
-        require_once("adminPensionnaire.dao.php");
+            $infosAnimal = selectAnimalById($modifIdAnimal);
+            /* foreach ($infosAnimal as $animal) {
+                $firstImgAnimal = selectFirstImageFromIdAnimal($animal['id_animal']);
+                $infosAnimal['image'] = $firstImgAnimal;
+            } */
+            $firstImgAnimal = selectFirstImageFromIdAnimal($infosAnimal['id_animal']);
+            $infosAnimal['first_url_image'] = $firstImgAnimal['url_image'];
+
+            if (
+                isset($_POST['validateAdminModifPensionnaire']) &&
+                !empty($_POST['validateAdminModifPensionnaire'])
+            ) {
+                if (
+                    isset($_POST['nameAnimal']) && !empty($_POST['nameAnimal']) &&
+                    isset($_POST['typeAnimal']) && !empty($_POST['typeAnimal']) &&
+                    isset($_POST['sexe']) && !empty($_POST['sexe']) &&
+                    isset($_POST['statut']) && !empty($_POST['statut']) &&
+                    isset($_POST['description_animal']) && !empty($_POST['description_animal'])
+                ) {
+
+                    //Sécurisation des champs
+                    $nameAnimal = Securite::secureHTML($_POST['nameAnimal']);
+                    $typeAnimal = Securite::secureHTML($_POST['typeAnimal']);
+                    $sexe = Securite::secureHTML($_POST['sexe']);
+                    $puce = Securite::secureHTML($_POST['puce']);
+                    $statut = Securite::secureHTML($_POST['statut']);
+                    $birth = Securite::secureHTML($_POST['birthDate']);
+                    $adoptionDate = Securite::secureHTML($_POST['adoptionDate']);
+                    $amiChien = Securite::secureHTML($_POST['amiChien']);
+                    $amiChat = Securite::secureHTML($_POST['amiChat']);
+                    $amiEnfant = Securite::secureHTML($_POST['amiEnfant']);
+                    $descrAnimal = Securite::secureHTML($_POST['description_animal']);
+                    $descrAnimalAdoption = Securite::secureHTML($_POST['description_animal_adoption']);
+                    $localisationAnimalAdoption = Securite::secureHTML($_POST['localisation_animal_adoption']);
+                    $engagement = Securite::secureHTML($_POST['engagement']);
+
+                    $imgActu = $_FILES['imgAnimal'];
+                    $repertory = "public/content/images/website/animals/";
+                    if (updateAnimalIntoTable($modifIdAnimal, $nameAnimal, $typeAnimal, $puce, $sexe, $birth, $adoptionDate, $amiChien, $amiChat, $amiEnfant, $descrAnimal, $descrAnimalAdoption, $localisationAnimalAdoption, $engagement, $statut)) {
+                        $result = displayAlert("Informations enregistrées avec succès !<br>Redirection en cours...", "alert-success");
+                    } else {
+                        $result = displayAlert("Informations non enregistrées en BD", "alert-danger");
+                    }
+                ?>
+                    <script>
+                        window.setTimeout(function() {
+                            window.location = 'adminPensionnaire';
+                        }, 1000);
+                    </script>
+<?php
+                }
+            }
+            require_once("views/back/adminModifPensionnaire.view.php");
+        }
     }
 }

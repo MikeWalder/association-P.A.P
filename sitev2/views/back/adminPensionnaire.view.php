@@ -19,6 +19,29 @@ echo "</pre>"; */
     </div>
 </div>
 
+<div class="row mt-2 mt-md-4">
+    <div class="col-2"></div>
+    <button type="button" class="btn perso_bgGreen d-none d-md-block col-2 mx-1">
+        À l'adoption
+        <span class="badge badge-light h3"><?= empty($countAnimal[0]['nbre']) ? '0' : $countAnimal[0]['nbre'] ?></span>
+    </button>
+    <button type="button" class="btn perso_bgPink d-none d-md-block col-2 mx-1">
+        Adopté
+        <span class="badge badge-light"><?= empty($countAnimal[1]['nbre']) ? '0' : $countAnimal[1]['nbre'] ?></span>
+    </button>
+    <button type="button" class="btn perso_bglightBlue d-none d-md-block col-2 mx-1">
+        En F.A.L.D *
+        <span class="badge badge-light"><?= empty($countAnimal[2]['nbre']) ? '0' : $countAnimal[2]['nbre'] ?></span>
+    </button>
+    <button type="button" class="btn bg-light d-none d-md-block col-2 mx-1">
+        Décédé
+        <span class="badge badge-light"><?= empty($countAnimal[3]['nbre']) ? '0' : $countAnimal[3]['nbre'] ?></span>
+    </button>
+</div>
+<div class="row d-none d-md-block text-center">
+    <small>F.A.L.D. = Famille d'Accueil Longue Durée</small>
+</div>
+
 <div class="row no-gutters mt-2 mt-md-3 mt-lg-5">
     <table class="d-none d-md-block table table-striped table-bordered align-items-center">
         <thead class="thead-dark text-center align-items-center">
@@ -39,7 +62,7 @@ echo "</pre>"; */
                     <td class="align-middle col-md-1"><?= $pensionnaire['sexe'] == 1 ? "Mâle" : "Femelle" ?></td>
                     <td class="align-middle col-md-5"><?= previewArticle($pensionnaire['description_animal'], 50) . " [...]" ?></td>
                     <td class="align-middle col-md-1 m-0 p-1" style="max-height: 100px;">
-                        <img src="public/content/images/website/<?= $pensionnaire['image']['url_image'] ?>" class="img-fluid img-thumbnail m-0" style="height:100px;">
+                        <img src="public/content/images/<?= empty($pensionnaire['image']['url_image']) ? "others/no-img.png" : "website/" . $pensionnaire['image']['url_image'] ?>" class="img-fluid img-thumbnail m-0" style="height:100px;">
                     </td>
                     <td class="align-middle">
                         <a href="<?= URL ?>adminModifPensionnaire&m=<?= $pensionnaire['id_animal'] ?>" class="btn btn-block btn-warning btnHover" title="Modifier">

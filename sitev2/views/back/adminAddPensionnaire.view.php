@@ -16,14 +16,14 @@ ob_start();
         </div>
         <div class="form-group col-md-2">
             <label for="typeAnimal" class="font-weight-bold">Type (*)</label>
-            <select class="form-control" id="typeAnimal" name="typeAnimal">
+            <select class="form-control" id="typeAnimal" name="typeAnimal" required>
                 <option value="Chat">Chat</option>
                 <option value="Chien">Chien</option>
             </select>
         </div>
         <div class="form-group col-md-2">
             <label for="sexe" class="font-weight-bold">Sexe (*)</label>
-            <select class="form-control" id="sexe" name="sexe">
+            <select class="form-control" id="sexe" name="sexe" required>
                 <option value="1">Mâle</option>
                 <option value="0">Femelle</option>
             </select>
@@ -36,7 +36,17 @@ ob_start();
                 <option value="non">Non</option>
             </select>
         </div>
+        <div class="form-group col-md-2">
+            <label for="statut" class="font-weight-bold">Statut (*)</label>
+            <select class="form-control" id="statut" name="statut" required>
+                <option value="1">A l'adoption</option>
+                <option value="2">Adopté</option>
+                <option value="3">F.A.L.D</option>
+                <option value="4">Décédé</option>
+            </select>
+        </div>
     </div>
+    <hr>
     <div class="row mt-2">
         <div class="col-md-1"></div>
         <div class="form-group col-md-2">
@@ -49,7 +59,7 @@ ob_start();
         </div>
         <div class="form-group col-md-2">
             <label for="amiChien" class="font-weight-bold">Ami chien ?</label>
-            <select class="form-control" id="amiChien" name="amiChien">
+            <select class="form-control" id="amiChien" name="amiChien" required>
                 <option value="N/A">Indéfini</option>
                 <option value="oui">Oui</option>
                 <option value="non">Non</option>
@@ -57,7 +67,7 @@ ob_start();
         </div>
         <div class="form-group col-md-2">
             <label for="amiChat" class="font-weight-bold">Ami chat ?</label>
-            <select class="form-control" id="amiChat" name="amiChat">
+            <select class="form-control" id="amiChat" name="amiChat" required>
                 <option value="N/A">Indéfini</option>
                 <option value="oui">Oui</option>
                 <option value="non">Non</option>
@@ -65,13 +75,14 @@ ob_start();
         </div>
         <div class="form-group col-md-2">
             <label for="amiEnfant" class="font-weight-bold">Ami enfant ?</label>
-            <select class="form-control" id="amiEnfant" name="amiEnfant">
+            <select class="form-control" id="amiEnfant" name="amiEnfant" required>
                 <option value="N/A">Indéfini</option>
                 <option value="oui">Oui</option>
                 <option value="non">Non</option>
             </select>
         </div>
     </div>
+    <hr>
     <div class="row mt-2">
         <div class="col-md-1"></div>
         <div class="form-group col-md-10">
@@ -79,6 +90,7 @@ ob_start();
             <textarea class="form-control" id="description_animal" name="description_animal" rows="3" required></textarea>
         </div>
     </div>
+    <hr>
     <div class="row mt-2">
         <div class="col-md-1"></div>
         <div class="form-group col-md-10">
@@ -86,6 +98,7 @@ ob_start();
             <textarea class="form-control" id="description_animal_adoption" name="description_animal_adoption" rows="3"></textarea>
         </div>
     </div>
+    <hr>
     <div class="row mt-2">
         <div class="col-md-1"></div>
         <div class="form-group col-md-10">
@@ -93,16 +106,24 @@ ob_start();
             <textarea class="form-control" id="localisation_animal_adoption" name="localisation_animal_adoption" rows="3"></textarea>
         </div>
     </div>
+    <hr>
     <div class="row mt-2">
         <div class="col-md-1"></div>
         <div class="form-group col-md-10">
-            <label for="imageAnimal" class="font-weight-bold">Image(s)</label>
-            <input type="file" class="form-control-file" id="imageAnimal" name="imgAnimal" multiple>
+            <label for="engagement" class="font-weight-bold">Engagement</label>
+            <textarea class="form-control" id="engagement" name="engagement" rows="3"></textarea>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-md-1"></div>
+        <div class="form-group col-md-10">
+            <label for="imgAnimal" class="font-weight-bold">Image(s)</label>
+            <input type="file" class="form-control-file" id="imgAnimal" name="imgAnimal" multiple>
         </div>
     </div>
     <div class="row mt-2">
         <div class="col-1"></div>
-        <input type="hidden" name="validateAdminNews" value="true">
+        <input type="hidden" name="validateAdminPensionnaire" value="true">
         <input type="submit" class="btn btn-info col-10 my-2 my-md-3 my-lg-5" value="Valider">
     </div>
 </form>
