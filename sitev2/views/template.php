@@ -92,7 +92,7 @@
                                         <a class="dropdown-item perso_headerContacts" href="<?= URL ?>mentions">Mentions légales</a>
                                     </div>
                                 </li>
-                                <?php if (Securite::verificationAccessSession()) { ?>
+                                <?php if (!empty(Securite::verificationAccessSession())) { ?>
                                     <li class="nav-item dropdown pl-5 pt-2 d-none d-md-block">
                                         <button type="submit" class="btn btn-secondary" title="Quitter mode administrateur" value="&#xf011; Login" data-toggle="modal" data-target="#exampleModal">
                                             <i class="fas fa-lg fa-power-off text-white"></i>
@@ -109,9 +109,6 @@
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
-                                                <!-- <div class="modal-body">
-                                                    ...
-                                                </div> -->
                                                 <div class="modal-footer mx-auto">
                                                     <form method="POST" action="admin">
                                                         <div class="row">

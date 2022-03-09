@@ -2,6 +2,12 @@
 ob_start();
 ?>
 
+<?php
+/* echo "<pre>";
+print_r($animaux);
+echo "</pre>"; */
+?>
+
 <?= styleTitleLevel1($text, COLOR_TITLE_PENSIONNAIRES); ?>
 
 <div class="row no-gutters mt-2">
@@ -11,7 +17,7 @@ ob_start();
             <?= $animal['sexe'] == 1 ? "perso_bglightBlue" : "perso_bgPink" ?>" style="height: 200px;">
 
                 <div class="col p-2 text-center">
-                    <img src="<?= URL ?>public/content/images/website/<?= $animal['image']['url_image'] ?>" class="img-thumbnail" alt="<?= $animal['image']['libelle_image'] ?>" style="max-height: 190px;" alt="Félix">
+                    <img src="<?= URL ?>public/content/images/<?= empty($animal['image']['url_image']) ? "others/no-img.png" : "website/" . $animal['image']['url_image'] ?>" class="img-thumbnail" alt="<?= empty($animal['image']['libelle_image']) ? $animal['nom_animal'] : $animal['image']['libelle_image'] ?>" style="max-height: 190px;" alt="Félix">
                 </div>
 
                 <?php

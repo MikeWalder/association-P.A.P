@@ -60,7 +60,7 @@ ob_start();
         <div class="form-group col-md-2">
             <label for="amiChien" class="font-weight-bold">Ami chien ?</label>
             <select class="form-control" id="amiChien" name="amiChien" required>
-                <option value="N/A">Indéfini</option>
+                <option value="N/A">Indéfini (N/A)</option>
                 <option value="oui">Oui</option>
                 <option value="non">Non</option>
             </select>
@@ -68,7 +68,7 @@ ob_start();
         <div class="form-group col-md-2">
             <label for="amiChat" class="font-weight-bold">Ami chat ?</label>
             <select class="form-control" id="amiChat" name="amiChat" required>
-                <option value="N/A">Indéfini</option>
+                <option value="N/A">Indéfini (N/A)</option>
                 <option value="oui">Oui</option>
                 <option value="non">Non</option>
             </select>
@@ -76,7 +76,7 @@ ob_start();
         <div class="form-group col-md-2">
             <label for="amiEnfant" class="font-weight-bold">Ami enfant ?</label>
             <select class="form-control" id="amiEnfant" name="amiEnfant" required>
-                <option value="N/A">Indéfini</option>
+                <option value="N/A">Indéfini (N/A)</option>
                 <option value="oui">Oui</option>
                 <option value="non">Non</option>
             </select>
@@ -117,8 +117,20 @@ ob_start();
     <div class="row mt-2">
         <div class="col-md-1"></div>
         <div class="form-group col-md-10">
-            <label for="imgAnimal" class="font-weight-bold">Image(s)</label>
-            <input type="file" class="form-control-file" id="imgAnimal" name="imgAnimal" multiple>
+            <label for="imgAnimal1" class="font-weight-bold">Image(s)</label>
+            <input type="file" class="form-control-file" id="imgAnimal1" name="imgAnimal1" multiple>
+        </div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-md-1"></div>
+        <div class="form-group col-md-10">
+            <input type="file" class="form-control-file" id="imgAnimal2" name="imgAnimal2" multiple>
+        </div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-md-1"></div>
+        <div class="form-group col-md-10">
+            <input type="file" class="form-control-file" id="imgAnimal3" name="imgAnimal3" multiple>
         </div>
     </div>
     <div class="row mt-2">

@@ -31,7 +31,9 @@ class Securite
 
     public static function verificationAccessSession()
     {
-        return (isset($_SESSION['access']) && !empty($_SESSION['access']) && $_SESSION['access'] === "admin");
+        if (!empty($_SESSION['access'])) {
+            return (isset($_SESSION['access']) && !empty($_SESSION['access']) && $_SESSION['access'] === "admin");
+        }
     }
 
     public static function verificationLoginAndPassword()

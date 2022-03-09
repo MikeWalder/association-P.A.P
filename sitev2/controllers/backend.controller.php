@@ -376,7 +376,9 @@ function getPageAdminModifPensionnaire()
                 $infosAnimal['image'] = $firstImgAnimal;
             } */
             $firstImgAnimal = selectFirstImageFromIdAnimal($infosAnimal['id_animal']);
-            $infosAnimal['first_url_image'] = $firstImgAnimal['url_image'];
+            if (!empty($firstImgAnimal)) {
+                $infosAnimal['first_url_image'] = $firstImgAnimal['url_image'];
+            }
 
             if (
                 isset($_POST['validateAdminModifPensionnaire']) &&
@@ -406,7 +408,9 @@ function getPageAdminModifPensionnaire()
                     $localisationAnimalAdoption = Securite::secureHTML($_POST['localisation_animal_adoption']);
                     $engagement = Securite::secureHTML($_POST['engagement']);
 
-                    $imgActu = $_FILES['imgAnimal'];
+                    $imgActu1 = $_FILES['imgAnimal1'];
+                    $imgActu2 = $_FILES['imgAnimal2'];
+                    $imgActu3 = $_FILES['imgAnimal3'];
                     $repertory = "public/content/images/website/animals/";
                     if (updateAnimalIntoTable($modifIdAnimal, $nameAnimal, $typeAnimal, $puce, $sexe, $birth, $adoptionDate, $amiChien, $amiChat, $amiEnfant, $descrAnimal, $descrAnimalAdoption, $localisationAnimalAdoption, $engagement, $statut)) {
                         $result = displayAlert("Informations enregistrées avec succès !<br>Redirection en cours...", "alert-success");
@@ -417,7 +421,7 @@ function getPageAdminModifPensionnaire()
                     <script>
                         window.setTimeout(function() {
                             window.location = 'adminPensionnaire';
-                        }, 1000);
+                        }, 25000000);
                     </script>
 <?php
                 }

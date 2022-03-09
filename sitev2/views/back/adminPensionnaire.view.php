@@ -42,7 +42,7 @@ echo "</pre>"; */
     <small>F.A.L.D. = Famille d'Accueil Longue Durée</small>
 </div>
 
-<div class="row no-gutters mt-2 mt-md-3 mt-lg-5">
+<div class="row no-gutters mt-2 mt-md-3">
     <table class="d-none d-md-block table table-striped table-bordered align-items-center">
         <thead class="thead-dark text-center align-items-center">
             <tr class="h6">
