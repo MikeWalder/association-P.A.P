@@ -3,6 +3,25 @@ ob_start();
 ?>
 <?= styleTitleLevel1("Ajouter un pensionnaire", COLOR_TITLE_CONSEILS); ?>
 
+<?php
+/* echo "<pre>";
+print_r($imgActu1);
+echo "</pre>";
+
+echo "<pre>";
+print_r($imgActu2);
+echo "</pre>";
+
+echo "<pre>";
+print_r($imgActu3);
+echo "</pre>";
+
+echo "<pre>";
+print_r($imgActu);
+echo "</pre>"; */
+?>
+
+
 <div class="row no-gutters">
     <?= empty($result) ? '' : $result ?>
 </div>
@@ -102,8 +121,8 @@ ob_start();
     <div class="row mt-2">
         <div class="col-md-1"></div>
         <div class="form-group col-md-10">
-            <label for="localisation_animal_adoption" class="font-weight-bold">Localisation du pensionnaire pour l'adoption</label>
-            <textarea class="form-control" id="localisation_animal_adoption" name="localisation_animal_adoption" rows="3"></textarea>
+            <label for="localisation" class="font-weight-bold">Localisation du pensionnaire pour l'adoption</label>
+            <textarea class="form-control" id="localisation" name="localisation" rows="3"></textarea>
         </div>
     </div>
     <hr>

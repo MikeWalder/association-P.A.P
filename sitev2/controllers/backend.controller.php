@@ -315,7 +315,6 @@ function getPageAdminAddPensionnaire()
                 isset($_POST['statut']) && !empty($_POST['statut']) &&
                 isset($_POST['description_animal']) && !empty($_POST['description_animal'])
             ) {
-
                 //Sécurisation des champs
                 $nameAnimal = Securite::secureHTML($_POST['nameAnimal']);
                 $typeAnimal = Securite::secureHTML($_POST['typeAnimal']);
@@ -329,17 +328,34 @@ function getPageAdminAddPensionnaire()
                 $amiEnfant = Securite::secureHTML($_POST['amiEnfant']);
                 $descrAnimal = Securite::secureHTML($_POST['description_animal']);
                 $descrAnimalAdoption = Securite::secureHTML($_POST['description_animal_adoption']);
-                $localisationAnimalAdoption = Securite::secureHTML($_POST['localisation_animal_adoption']);
+                $localisationAnimalAdoption = Securite::secureHTML($_POST['localisation']);
                 $engagement = Securite::secureHTML($_POST['engagement']);
 
-                $imgActu = $_FILES['imgAnimal'];
-                $repertory = "public/content/images/website/animals/";
+                $imgActu1 = $_FILES['imgAnimal1'];
+                $imgActu2 = $_FILES['imgAnimal2'];
+                $imgActu3 = $_FILES['imgAnimal3'];
+                $imgActu = [];
+
+                $nameStatut = displayNameAnimalStatutFileByIdStatut($statut);
+                $repertory = "public/content/images/website/animals/" . $nameStatut . "/";
 
                 try {
-                    // $name_ImgUploaded = verifyUploadedActuImage($imgActu, $repertory, $titleActu);
-                    //$idImage = insertImgActuUploadedIntoBD($name_ImgUploaded, "animals/" . $name_ImgUploaded, $imgSize);
-                    //$idImg = selectIdImageLoaded($idImage);
                     if (insertNewAnimalIntoTable($nameAnimal, $typeAnimal, $puce, $sexe, $birth, $adoptionDate, $amiChien, $amiChat, $amiEnfant, $descrAnimal, $descrAnimalAdoption, $localisationAnimalAdoption, $engagement, $statut)) {
+                        for ($i = 1; $i <= 3; $i++) {
+                            if (${"imgActu$i"}['error'] == 0) {
+                                $imgActu['size'] = round(${"imgActu$i"}['size'] / 1024);
+                                $imgActu['name'] = ${"imgActu$i"}['name'];
+                                $imgActu['error'] = ${"imgActu$i"}['error'];
+                                $imgActu['tmp_name'] = ${"imgActu$i"}['tmp_name'];
+
+                                $name_ImgUploaded = verifyUploadedAnimalImage($imgActu, $repertory, $nameAnimal);
+
+                                insertImageIntoImageTable($name_ImgUploaded, "animals/" . strtolower($nameStatut) . "/" . $imgActu['name'], $imgActu['name'], $imgActu['size']);
+                                $idImage = obtainIdImageByUrlAndSizeFromTable("animals/" . strtolower($nameStatut) . "/" . $imgActu['name'], $imgActu['size']);
+                                $idAnimal = obtainIdAnimalByUrlAndSizeFromTable($nameAnimal, $typeAnimal, $sexe, $descrAnimal);
+                                insertRelativeTableContient($idAnimal['id_animal'], $idImage['id_image']);
+                            }
+                        }
                         $result = displayAlert("Informations enregistrées avec succès !<br>Redirection en cours...", "alert-success");
                     } else {
                         $result = displayAlert("Informations non enregistrées en BD", "alert-danger");
@@ -348,7 +364,7 @@ function getPageAdminAddPensionnaire()
                     <script>
                         window.setTimeout(function() {
                             window.location = 'adminPensionnaire';
-                        }, 2500);
+                        }, 90000);
                     </script>
                 <?php
                 } catch (Exception $e) {
@@ -430,3 +446,5 @@ function getPageAdminModifPensionnaire()
         }
     }
 }
+
+//displayNameAnimalStatutByIdStatut($infosAnimal['id_statut'])

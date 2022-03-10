@@ -91,6 +91,93 @@ function insertNewAnimalIntoTable($name, $type, $puce, $sexe, $birth, $adoptionD
     }
 }
 
+function insertImageIntoImageTable($libelle, $url, $description, $size)
+{
+    $bdd = connectionPDO();
+    $req = '
+    INSERT INTO image(libelle_image, url_image, description_image, size_image)
+    VALUES (:libelle, :url, :description, :size) 
+    ';
+    $stmt = $bdd->prepare($req);
+    $stmt->bindValue(":libelle", $libelle, PDO::PARAM_STR);
+    $stmt->bindValue(":url", $url, PDO::PARAM_STR);
+    $stmt->bindValue(":description", $description, PDO::PARAM_STR);
+    $stmt->bindValue(":size", $size, PDO::PARAM_INT);
+    $res = $stmt->execute();
+    $stmt->closeCursor();
+    if ($res > 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function obtainIdImageByUrlAndSizeFromTable($url, $size)
+{
+    $bdd = connectionPDO();
+    $req = '
+    SELECT id_image 
+    FROM image
+    WHERE 
+    url_image = :urlImg
+    AND 
+    size_image = :sizeImg
+    ';
+    $stmt = $bdd->prepare($req);
+    $stmt->bindValue(":urlImg", $url, PDO::PARAM_STR);
+    $stmt->bindValue(":sizeImg", $size, PDO::PARAM_STR);
+    $stmt->execute();
+    $idImage = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt->closeCursor();
+    return $idImage;
+}
+
+function obtainIdAnimalByUrlAndSizeFromTable($nom, $type, $sexe, $description)
+{
+    $bdd = connectionPDO();
+    $req = '
+    SELECT id_animal 
+    FROM animal
+    WHERE 
+    nom_animal = :nom
+    AND 
+    type_animal = :type
+    AND
+    sexe = :sexe
+    AND
+    description_animal = :description
+    ';
+    $stmt = $bdd->prepare($req);
+    $stmt->bindValue(":nom", $nom, PDO::PARAM_STR);
+    $stmt->bindValue(":type", $type, PDO::PARAM_STR);
+    $stmt->bindValue(":sexe", $sexe, PDO::PARAM_STR);
+    $stmt->bindValue(":description", $description, PDO::PARAM_STR);
+    $stmt->execute();
+    $idAnimal = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt->closeCursor();
+    return $idAnimal;
+}
+
+function insertRelativeTableContient($idAnimal, $idImg)
+{
+    $bdd = connectionPDO();
+    $req = '
+    INSERT INTO contient (id_animal, id_image)
+    VALUES (:idAnimal, :idImg)
+    ';
+    $stmt = $bdd->prepare($req);
+    $stmt->bindValue(":idAnimal", $idAnimal, PDO::PARAM_INT);
+    $stmt->bindValue(":idImg", $idImg, PDO::PARAM_INT);
+    $res = $stmt->execute();
+    $stmt->closeCursor();
+    if ($res > 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+//INSERT INTO `contient` (`id_animal`, `id_image`) VALUES ('7', '1'); 
+
 function updateAnimalIntoTable($idAnimal, $name, $type, $puce, $sexe, $birth, $adoptionDate, $amiChien, $amiChat, $amiEnfant, $descr, $descrAdopt, $descrLocal, $engagement, $idStatut)
 {
     $idAnimal = (int)$idAnimal;
@@ -148,4 +235,32 @@ function deleteAnimalById($idAnimal)
         'idAnimal' => $idAnimal
     ));
     return true;
+}
+
+
+function verifyUploadedAnimalImage($file, $dir, $name)
+{
+    if (!file_exists($dir)) mkdir($dir, 0777);
+
+    empty($file['tmp_name']) ? $file['tmp_name'] = $file : $file['tmp_name'];
+
+    $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+    // echo "<br>" . $extension . "<br>";
+    $target_file = $dir . $name . "_" . $file['name'];
+    // echo "<br>" . $target_file . "<br>";
+
+    if (!getimagesize($file['tmp_name'])) {
+        throw new Exception("Ce fichier n'est pas une image");
+    }
+    if ($extension !== "jpg" && $extension !== "jpeg" && $extension !== "png" && $extension !== "gif") {
+        throw new Exception("Extension de fichier non reconnu");
+    }
+    if (file_exists($target_file))
+        throw new Exception("Le fichier existe déjà");
+    if ($file['size'] > 5000000)
+        throw new Exception("Fichier trop volumineux ( > 5 Mo)");
+    if (!move_uploaded_file($file['tmp_name'], $target_file))
+        throw new Exception("L'image n'a pas pu être ajoutée");
+    else
+        return ($name . "_" . $file['name']);
 }

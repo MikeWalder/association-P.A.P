@@ -104,3 +104,23 @@ function displayNameAnimalStatutByIdStatut($idStatut)
             return "Indéfini";
     }
 }
+
+function displayNameAnimalStatutFileByIdStatut($idStatut)
+{
+    switch ((int)$idStatut) {
+        case 1:
+            return "pouradopter";
+            break;
+        case 2:
+            return "enfamille";
+            break;
+        case 3:
+            return "longueduree";
+            break;
+        case 4:
+            return "decede";
+            break;
+        default:
+            return "Indéfini";
+    }
+}
