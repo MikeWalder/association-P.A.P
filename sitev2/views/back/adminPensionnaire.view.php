@@ -7,6 +7,11 @@ ob_start();
 /* echo "<pre>";
 print_r($lastPensionnaires);
 echo "</pre>"; */
+
+
+/* echo "<pre>";
+print_r($firstImg);
+echo "</pre>"; */
 ?>
 
 <div class="row no-gutters">

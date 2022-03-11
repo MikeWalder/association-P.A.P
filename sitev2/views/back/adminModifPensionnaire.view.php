@@ -4,14 +4,18 @@ ob_start();
 <?= styleTitleLevel1("Modifier le pensionnaire", COLOR_TITLE_CONSEILS); ?>
 
 <?php
-/* echo "<pre>";
-print_r($infosAnimal);
-echo "</pre>"; */
-?>
-
-<?php
 echo "<pre>";
 empty($_FILES) ? '' : var_dump($_FILES);
+echo "</pre>";
+
+echo "<pre>";
+empty($idImagesRelativeTable) ? '' : var_dump($idImagesRelativeTable);
+echo "</pre>";
+
+
+
+echo "<pre>";
+empty($imgDatas) ? '' : var_dump($imgDatas);
 echo "</pre>";
 ?>
 
@@ -140,14 +144,38 @@ echo "</pre>";
         <div class="col-md-1"></div>
         <div class="form-group col-md-5">
             <label for="imageAnimal1" class="font-weight-bold">Image(s)</label>
-            <input type="file" class="form-control-file" id="imageAnimal1" name="imgAnimal1" multiple><br>
-            <input type="file" class="form-control-file" id="imageAnimal2" name="imgAnimal2" multiple><br>
-            <input type="file" class="form-control-file" id="imageAnimal3" name="imgAnimal3" multiple>
+            <input type="file" class="form-control-file" id="imageAnimal1" name="imgAnimal1" accept="image/*"><br>
+            <input type="file" class="form-control-file" id="imageAnimal2" name="imgAnimal2" accept="image/*"><br>
+            <input type="file" class="form-control-file" id="imageAnimal3" name="imgAnimal3" accept="image/*">
         </div>
 
         <div class="form-group col-md-2 border border-secondary rounded p-0 text-center">
-            <img class="img-fluid" src="<?= URL ?>public/content/images/<?= empty($infosAnimal['first_url_image']) ? "others/no-img.png" : "website/" . $infosAnimal['first_url_image'] ?>" style="height: 250px;">
-            <figcaption class="figure-caption text-center"><?= empty($infosAnimal['first_url_image']) ? 'Aucune image' : $infosAnimal['nom_animal'] ?></figcaption>
+
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <?php foreach ($imagesAnimal as $key => $imageAnimal) : ?>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="<?= $key ?>" class="<?= $key == 0 ? 'active' : '' ?>"></li>
+                    <?php endforeach; ?>
+                </ol>
+
+                <div class="carousel-inner">
+                    <?php foreach ($imagesAnimal as $key => $imageAnimal) : ?>
+                        <div class="carousel-item <?= $key == 0 ? 'active' : '' ?>">
+                            <img class="d-block w-100" src="public/content/images/website/<?= $imageAnimal['url_image'] ?>" style="height: 220px;">
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+                <figcaption>Images actuelles</figcaption>
+
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
         </div>
     </div>
     <div class="row mt-2">

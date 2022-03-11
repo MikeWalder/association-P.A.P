@@ -222,7 +222,10 @@ function verifyUploadedActuImage($file, $dir, $name)
     if (!getimagesize($file['tmp_name'])) {
         throw new Exception("Ce fichier n'est pas une image");
     }
-    if ($extension !== "jpg" && $extension !== "jpeg" && $extension !== "png" && $extension !== "gif") {
+    if (
+        $extension !== "jpg" && $extension !== "JPG" && $extension !== "jpeg" && $extension !== "JPEG" &&
+        $extension !== "png" && $extension !== "PNG" && $extension !== "gif" && $extension !== "GIF"
+    ) {
         throw new Exception("Extension de fichier non reconnu");
     }
     if (file_exists($target_file))

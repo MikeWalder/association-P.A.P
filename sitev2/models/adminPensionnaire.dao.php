@@ -39,6 +39,22 @@ function selectAnimalById($id_Animal)
     return $selectedAnimal;
 }
 
+function selectImageById($idImage)
+{
+    $idImage = (int)$idImage;
+    $bdd = connectionPDO();
+    $req = '
+    SELECT id_image, url_image
+    FROM image
+    WHERE id_image = :idImg';
+    $stmt = $bdd->prepare($req);
+    $stmt->bindValue(":idImg", $idImage, PDO::PARAM_INT);
+    $stmt->execute();
+    $selectedImage = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt->closeCursor();
+    return $selectedImage;
+}
+
 function selectFirstImageFromIdAnimal($idAnimal)
 {
     $bdd = connectionPDO();
@@ -47,12 +63,29 @@ function selectFirstImageFromIdAnimal($idAnimal)
     FROM image i 
     INNER JOIN contient c ON i.id_image = c.id_image 
     INNER JOIN animal a ON a.id_animal = c.id_animal 
-    WHERE a.id_animal= :idAnimal 
+    WHERE a.id_animal= :idAnimal
     LIMIT 1
     ');
     $stmt->bindValue(":idAnimal", $idAnimal, PDO::PARAM_INT);
     $stmt->execute();
     $image = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt->closeCursor();
+    return $image;
+}
+
+function selectImagesFromIdAnimal($idAnimal)
+{
+    $bdd = connectionPDO();
+    $stmt = $bdd->prepare('
+    SELECT i.id_image, url_image, libelle_image, description_image 
+    FROM image i 
+    INNER JOIN contient c ON i.id_image = c.id_image 
+    INNER JOIN animal a ON a.id_animal = c.id_animal 
+    WHERE a.id_animal= :idAnimal
+    ');
+    $stmt->bindValue(":idAnimal", $idAnimal, PDO::PARAM_INT);
+    $stmt->execute();
+    $image = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $stmt->closeCursor();
     return $image;
 }
@@ -237,6 +270,63 @@ function deleteAnimalById($idAnimal)
     return true;
 }
 
+function deleteRelativeTableContient($idAnimal)
+{
+    $bdd = connectionPDO();
+    $req = '
+    DELETE FROM contient
+    WHERE
+    id_animal = :idAnimal
+    ';
+    $stmt = $bdd->prepare($req);
+    $stmt->bindValue(":idAnimal", $idAnimal, PDO::PARAM_INT);
+    $res = $stmt->execute();
+    $stmt->closeCursor();
+    if ($res > 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function selectRelativeIdImagesbyIdAnimal($idAnimal)
+{
+    $idAnimal = (int)$idAnimal;
+    $bdd = connectionPDO();
+    $req = '
+    SELECT *
+    FROM contient
+    WHERE
+    id_animal = :idAnimal
+    ';
+    $stmt = $bdd->prepare($req);
+    $stmt->bindValue(":idAnimal", $idAnimal, PDO::PARAM_INT);
+    $stmt->execute();
+    $idImageRelative = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt->closeCursor();
+    return $idImageRelative;
+}
+
+function deleteImageByIdImage($idImage)
+{
+    $idImage = (int)$idImage;
+    $bdd = connectionPDO();
+    $req = '
+    DELETE FROM image
+    WHERE 
+    id_image = :idImage
+    ';
+    $stmt = $bdd->prepare($req);
+    $stmt->bindValue(":idImage", $idImage, PDO::PARAM_INT);
+    $res = $stmt->execute();
+    $stmt->closeCursor();
+    if ($res > 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 
 function verifyUploadedAnimalImage($file, $dir, $name)
 {
@@ -252,7 +342,10 @@ function verifyUploadedAnimalImage($file, $dir, $name)
     if (!getimagesize($file['tmp_name'])) {
         throw new Exception("Ce fichier n'est pas une image");
     }
-    if ($extension !== "jpg" && $extension !== "jpeg" && $extension !== "png" && $extension !== "gif") {
+    if (
+        $extension !== "jpg" && $extension !== "JPG" && $extension !== "jpeg" && $extension !== "JPEG" &&
+        $extension !== "png" && $extension !== "PNG" && $extension !== "gif" && $extension !== "GIF"
+    ) {
         throw new Exception("Extension de fichier non reconnu");
     }
     if (file_exists($target_file))

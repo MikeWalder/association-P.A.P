@@ -277,9 +277,16 @@ function getPageAdminPensionnaire()
             //unlink($repertory);
 
             //$imgActu = getImageActualiteFromBDD($idActuDelete);
+            $idImages = selectRelativeIdImagesbyIdAnimal($idAnimal);
+
+            deleteRelativeTableContient($idAnimal);
+
+            foreach ($idImages as $key => $idImage) {
+                deleteImageByIdImage($idImage['id_image']);
+            }
 
             if (deleteAnimalById($idAnimal)) {
-                //deleteImageFromImageTable($imageUrlToDelete['id_image']);
+                //deleteImagesFromImageByIdAnimal($idAnimal);
                 $result = displayAlert("Informations supprimées avec succès !<br>Rafraîchissement de la page en cours...", "alert-success");
             } else {
                 $result = displayAlert("Informations non supprimées en BD", "alert-danger");
@@ -350,8 +357,8 @@ function getPageAdminAddPensionnaire()
 
                                 $name_ImgUploaded = verifyUploadedAnimalImage($imgActu, $repertory, $nameAnimal);
 
-                                insertImageIntoImageTable($name_ImgUploaded, "animals/" . strtolower($nameStatut) . "/" . $imgActu['name'], $imgActu['name'], $imgActu['size']);
-                                $idImage = obtainIdImageByUrlAndSizeFromTable("animals/" . strtolower($nameStatut) . "/" . $imgActu['name'], $imgActu['size']);
+                                insertImageIntoImageTable($name_ImgUploaded, "animals/" . strtolower($nameStatut) . "/" . $nameAnimal . "_" . $imgActu['name'], $imgActu['name'], $imgActu['size']);
+                                $idImage = obtainIdImageByUrlAndSizeFromTable("animals/" . strtolower($nameStatut) . "/" . $nameAnimal . "_" . $imgActu['name'], $imgActu['size']);
                                 $idAnimal = obtainIdAnimalByUrlAndSizeFromTable($nameAnimal, $typeAnimal, $sexe, $descrAnimal);
                                 insertRelativeTableContient($idAnimal['id_animal'], $idImage['id_image']);
                             }
@@ -364,7 +371,7 @@ function getPageAdminAddPensionnaire()
                     <script>
                         window.setTimeout(function() {
                             window.location = 'adminPensionnaire';
-                        }, 90000);
+                        }, 2500);
                     </script>
                 <?php
                 } catch (Exception $e) {
@@ -391,10 +398,12 @@ function getPageAdminModifPensionnaire()
                 $firstImgAnimal = selectFirstImageFromIdAnimal($animal['id_animal']);
                 $infosAnimal['image'] = $firstImgAnimal;
             } */
-            $firstImgAnimal = selectFirstImageFromIdAnimal($infosAnimal['id_animal']);
-            if (!empty($firstImgAnimal)) {
+            //$firstImgAnimal = selectFirstImageFromIdAnimal($infosAnimal['id_animal']);
+            $imagesAnimal = selectImagesFromIdAnimal($infosAnimal['id_animal']);
+
+            /* if (!empty($firstImgAnimal)) {
                 $infosAnimal['first_url_image'] = $firstImgAnimal['url_image'];
-            }
+            } */
 
             if (
                 isset($_POST['validateAdminModifPensionnaire']) &&
@@ -428,6 +437,19 @@ function getPageAdminModifPensionnaire()
                     $imgActu2 = $_FILES['imgAnimal2'];
                     $imgActu3 = $_FILES['imgAnimal3'];
                     $repertory = "public/content/images/website/animals/";
+
+                    $statut = displayNameAnimalStatutFileByIdStatut($statut);
+
+                    $idImagesRelativeTable = selectRelativeIdImagesbyIdAnimal($modifIdAnimal);
+
+                    for ($i = 1; $i <= 3; $i++) {
+                        $imgDatas[$i] = selectImageById($idImagesRelativeTable[$i - 1]['id_image']);
+                        for ($j = 1; $j <= 3; $j++) {
+                            if (!empty(${"imgActu$i"}) && $imgDatas[$i]['url_image'] !== "animals/" . $statut . "/" .  ${"imgActu$i"}['name']) {
+                            }
+                        }
+                    }
+
                     if (updateAnimalIntoTable($modifIdAnimal, $nameAnimal, $typeAnimal, $puce, $sexe, $birth, $adoptionDate, $amiChien, $amiChat, $amiEnfant, $descrAnimal, $descrAnimalAdoption, $localisationAnimalAdoption, $engagement, $statut)) {
                         $result = displayAlert("Informations enregistrées avec succès !<br>Redirection en cours...", "alert-success");
                     } else {

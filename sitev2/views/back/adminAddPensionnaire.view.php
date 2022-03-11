@@ -137,19 +137,19 @@ echo "</pre>"; */
         <div class="col-md-1"></div>
         <div class="form-group col-md-10">
             <label for="imgAnimal1" class="font-weight-bold">Image(s)</label>
-            <input type="file" class="form-control-file" id="imgAnimal1" name="imgAnimal1" multiple>
+            <input type="file" class="form-control-file" id="imgAnimal1" name="imgAnimal1" accept="image/*">
         </div>
     </div>
     <div class="row mt-1">
         <div class="col-md-1"></div>
         <div class="form-group col-md-10">
-            <input type="file" class="form-control-file" id="imgAnimal2" name="imgAnimal2" multiple>
+            <input type="file" class="form-control-file" id="imgAnimal2" name="imgAnimal2" accept="image/*">
         </div>
     </div>
     <div class="row mt-1">
         <div class="col-md-1"></div>
         <div class="form-group col-md-10">
-            <input type="file" class="form-control-file" id="imgAnimal3" name="imgAnimal3" multiple>
+            <input type="file" class="form-control-file" id="imgAnimal3" name="imgAnimal3" accept="image/*">
         </div>
     </div>
     <div class="row mt-2">
