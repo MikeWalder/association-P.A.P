@@ -36,7 +36,8 @@ function selectAnimalById($id_Animal)
     $stmt->execute();
     $selectedAnimal = $stmt->fetch(PDO::FETCH_ASSOC);
     $stmt->closeCursor();
-    return $selectedAnimal;
+    if (!empty($selectedAnimal))
+        return $selectedAnimal;
 }
 
 function selectImageById($idImage)
@@ -52,7 +53,8 @@ function selectImageById($idImage)
     $stmt->execute();
     $selectedImage = $stmt->fetch(PDO::FETCH_ASSOC);
     $stmt->closeCursor();
-    return $selectedImage;
+    if (!empty($selectedImage))
+        return $selectedImage;
 }
 
 function selectFirstImageFromIdAnimal($idAnimal)
@@ -327,6 +329,42 @@ function deleteImageByIdImage($idImage)
     }
 }
 
+function removeRelativeTableContientDatas($idAnimal, $idImg)
+{
+    $idAnimal = (int)$idAnimal;
+    $idImg = (int)$idImg;
+    $bdd = connectionPDO();
+    $req = '
+    DELETE FROM contient
+    WHERE 
+    id_animal = :idAnimal
+    AND
+    id_image = :idImage
+    ';
+    $stmt = $bdd->prepare($req);
+    $stmt->bindValue(":idAnimal", $idAnimal, PDO::PARAM_INT);
+    $stmt->bindValue(":idImage", $idImg, PDO::PARAM_INT);
+    $stmt->execute();
+    $stmt->closeCursor();
+}
+
+function countNbreIdAnimalLinksByIdImage($idImage)
+{
+    $idImage = (int)$idImage;
+    $bdd = connectionPDO();
+    $req = '
+    SELECT COUNT(id_animal) as nbre 
+    FROM contient
+    WHERE 
+    id_image = :idImage
+    ';
+    $stmt = $bdd->prepare($req);
+    $stmt->bindValue(":idImage", $idImage, PDO::PARAM_INT);
+    $stmt->execute();
+    $number = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt->closeCursor();
+    return $number;
+}
 
 function verifyUploadedAnimalImage($file, $dir, $name)
 {
@@ -357,3 +395,34 @@ function verifyUploadedAnimalImage($file, $dir, $name)
     else
         return ($name . "_" . $file['name']);
 }
+
+/* function verifyUploadedAnimalImages($file, $dir, $name)
+{
+    if (!file_exists($dir)) mkdir($dir, 0777);
+
+    empty($file['tmp_name']) ? $file['tmp_name'] = $file : $file['tmp_name'];
+
+    $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+    // echo "<br>" . $extension . "<br>";
+    $target_file = $dir . $name . "_" . $file['name'];
+    // echo "<br>" . $target_file . "<br>";
+
+    if (!getimagesize($file['tmp_name'])) {
+        throw new Exception("Ce fichier n'est pas une image");
+    }
+    if (
+        $extension !== "jpg" && $extension !== "JPG" && $extension !== "jpeg" && $extension !== "JPEG" &&
+        $extension !== "png" && $extension !== "PNG" && $extension !== "gif" && $extension !== "GIF"
+    ) {
+        throw new Exception("Extension de fichier non reconnu");
+    }
+    if (file_exists($target_file))
+        throw new Exception("Le fichier existe déjà");
+    if ($file['size'] > 5000000)
+        throw new Exception("Fichier trop volumineux ( > 5 Mo)");
+    if (!move_uploaded_file($file['tmp_name'], $target_file))
+        throw new Exception("L'image n'a pas pu être ajoutée");
+    else
+        return ($name . "_" . $file['name']);
+}
+ */

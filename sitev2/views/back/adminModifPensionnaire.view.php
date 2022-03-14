@@ -9,14 +9,28 @@ empty($_FILES) ? '' : var_dump($_FILES);
 echo "</pre>";
 
 echo "<pre>";
-empty($idImagesRelativeTable) ? '' : var_dump($idImagesRelativeTable);
+empty($idImagesRelativeTable) ? var_dump($idImagesRelativeTable) : print_r($idImagesRelativeTable);
 echo "</pre>";
-
-
 
 echo "<pre>";
 empty($imgDatas) ? '' : var_dump($imgDatas);
 echo "</pre>";
+
+echo "<pre>";
+empty($datasImg) ? '' : var_dump($datasImg);
+echo "</pre>";
+
+echo $datasImg[0]['url_image'] . "<br>";
+echo $datasImg[1]['url_image'] . "<br>";
+//echo $datasImg[2]['url_image'] . "<br>";
+
+echo "animals/" . displayNameAnimalStatutFileByIdStatut($infosAnimal['id_statut']) . "/" . $infosAnimal['nom_animal'] . "_" . $imgAnimal2['name'] . "<br>";
+echo strlen($imgAnimal2['name']) . "<br>";
+if (strcmp($datasImg[1]['url_image'], "animals/" . displayNameAnimalStatutFileByIdStatut($infosAnimal['id_statut']) . "/y" . $infosAnimal['nom_animal'] . "_" . $imgAnimal2['name']) == 0) {
+    echo "les deux chaînes de caractères sont identiques !";
+} else {
+    echo "Les deux chaîunes sont différentes !";
+}
 ?>
 
 <div class="row no-gutters">
@@ -142,14 +156,21 @@ echo "</pre>";
     </div>
     <div class="row mt-2">
         <div class="col-md-1"></div>
-        <div class="form-group col-md-5">
+        <div class="form-group col-md-4">
             <label for="imageAnimal1" class="font-weight-bold">Image(s)</label>
             <input type="file" class="form-control-file" id="imageAnimal1" name="imgAnimal1" accept="image/*"><br>
             <input type="file" class="form-control-file" id="imageAnimal2" name="imgAnimal2" accept="image/*"><br>
             <input type="file" class="form-control-file" id="imageAnimal3" name="imgAnimal3" accept="image/*">
         </div>
 
-        <div class="form-group col-md-2 border border-secondary rounded p-0 text-center">
+        <div class="form-group col-md-3">
+            <label class="font-weight-bold">Actuelles</label>
+            <?php foreach ($datasImg as $key => $img) : ?>
+                <input type="text" class="form-control mb-1" placeholder="<?= empty($img['description_image']) ? 'Vide' : $img['description_image'] ?>">
+            <?php endforeach; ?>
+        </div>
+
+        <div class="form-group d-none d-md-block col-md-3 col-lg-3 border border-secondary rounded p-0 text-center">
 
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
@@ -161,7 +182,7 @@ echo "</pre>";
                 <div class="carousel-inner">
                     <?php foreach ($imagesAnimal as $key => $imageAnimal) : ?>
                         <div class="carousel-item <?= $key == 0 ? 'active' : '' ?>">
-                            <img class="d-block w-100" src="public/content/images/website/<?= $imageAnimal['url_image'] ?>" style="height: 220px;">
+                            <img class="d-block w-100" src="<?= URL ?>public/content/images/website/<?= $imageAnimal['url_image'] ?>" alt="<?= $imageAnimal['url_image'] ?>" style="height: 220px;">
                         </div>
                     <?php endforeach; ?>
                 </div>

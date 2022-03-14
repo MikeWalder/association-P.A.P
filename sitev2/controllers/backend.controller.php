@@ -394,16 +394,9 @@ function getPageAdminModifPensionnaire()
             require_once("models/adminPensionnaire.dao.php");
 
             $infosAnimal = selectAnimalById($modifIdAnimal);
-            /* foreach ($infosAnimal as $animal) {
-                $firstImgAnimal = selectFirstImageFromIdAnimal($animal['id_animal']);
-                $infosAnimal['image'] = $firstImgAnimal;
-            } */
-            //$firstImgAnimal = selectFirstImageFromIdAnimal($infosAnimal['id_animal']);
-            $imagesAnimal = selectImagesFromIdAnimal($infosAnimal['id_animal']);
 
-            /* if (!empty($firstImgAnimal)) {
-                $infosAnimal['first_url_image'] = $firstImgAnimal['url_image'];
-            } */
+            $imagesAnimal = selectImagesFromIdAnimal($infosAnimal['id_animal']);
+            $datasImg = selectImagesFromIdAnimal($infosAnimal['id_animal']);
 
             if (
                 isset($_POST['validateAdminModifPensionnaire']) &&
@@ -433,28 +426,100 @@ function getPageAdminModifPensionnaire()
                     $localisationAnimalAdoption = Securite::secureHTML($_POST['localisation_animal_adoption']);
                     $engagement = Securite::secureHTML($_POST['engagement']);
 
-                    $imgActu1 = $_FILES['imgAnimal1'];
-                    $imgActu2 = $_FILES['imgAnimal2'];
-                    $imgActu3 = $_FILES['imgAnimal3'];
-                    $repertory = "public/content/images/website/animals/";
+                    $imgAnimal1 = $_FILES['imgAnimal1'];
+                    $imgAnimal2 = $_FILES['imgAnimal2'];
+                    $imgAnimal3 = $_FILES['imgAnimal3'];
+
+                    //$repertory = "public/content/images/website/";
+
 
                     $statut = displayNameAnimalStatutFileByIdStatut($statut);
 
+                    $repertory = "public/content/images/website/animals/" . $statut . "/";
+
                     $idImagesRelativeTable = selectRelativeIdImagesbyIdAnimal($modifIdAnimal);
 
-                    for ($i = 1; $i <= 3; $i++) {
-                        $imgDatas[$i] = selectImageById($idImagesRelativeTable[$i - 1]['id_image']);
-                        for ($j = 1; $j <= 3; $j++) {
-                            if (!empty(${"imgActu$i"}) && $imgDatas[$i]['url_image'] !== "animals/" . $statut . "/" .  ${"imgActu$i"}['name']) {
+                    if (empty($idImagesRelativeTable)) {
+                        for ($i = 1; $i <= 3; $i++) {
+                            $idImagesRelativeTable[$i - 1]['id_image'] = '';
+                            $imgDatas[$i] = selectImageById($idImagesRelativeTable[$i - 1]['id_image']);
+
+                            if ($imgDatas[$i] == null && (${"imgAnimal$i"}['error'] == 0 && ${"imgAnimal$i"}['size'] > 0)) {
+                                $imgAnimal['size'] = round(${"imgAnimal$i"}['size'] / 1024);
+                                $imgAnimal['name'] = ${"imgAnimal$i"}['name'];
+                                $imgAnimal['error'] = ${"imgAnimal$i"}['error'];
+                                $imgAnimal['tmp_name'] = ${"imgAnimal$i"}['tmp_name'];
+
+                                $name_ImgUploaded = verifyUploadedAnimalImage(${"imgAnimal$i"}, $repertory, $nameAnimal);
+
+                                insertImageIntoImageTable($name_ImgUploaded, "animals/" . strtolower($statut) . "/" . $nameAnimal . "_" . $imgAnimal['name'], $imgAnimal['name'], $imgAnimal['size']);
+                                $idImage = obtainIdImageByUrlAndSizeFromTable("animals/" . strtolower($statut) . "/" . $nameAnimal . "_" . $imgAnimal['name'], $imgAnimal['size']);
+                                insertRelativeTableContient($infosAnimal['id_animal'], $idImage['id_image']);
+                                if (updateAnimalIntoTable($infosAnimal['id_animal'], $nameAnimal, $typeAnimal, $puce, $sexe, $birth, $adoptionDate, $amiChien, $amiChat, $amiEnfant, $descrAnimal, $descrAnimalAdoption, $localisationAnimalAdoption, $engagement, $statut)) {
+                                    $result = displayAlert("Informations enregistrées avec succès !<br>Redirection en cours...", "alert-success");
+                                } else {
+                                    $result = displayAlert("Informations non enregistrées en BD", "alert-danger");
+                                }
+                            }
+                        }
+                    } else {
+                        for ($i = 1; $i <= 3; $i++) {
+                            if (!empty($datasImg[$i - 1]) && !empty(${"imgAnimal$i"}['name'])) {
+                                $urlInputFile = "animals/" . displayNameAnimalStatutByIdStatut($infosAnimal['id_statut']) . "/" . $nameAnimal . "_" . ${"imgAnimal$i"}['name'];
+                                if (strcmp($datasImg[$i - 1]['url_image'], $urlInputFile) == 0) {
+                                    echo "les deux fichiers sont identiques donc pas d'upload<br>";
+                                } else if (strcmp($datasImg[$i - 1]['url_image'], $urlInputFile) !== 0) {
+                                    echo "les deux fichiers sont différents donc l'upload est en cours...<br>";
+                                }
+                            } else if (empty($datasImg[$i - 1]) && !empty(${"imgAnimal$i"}['name'])) {
+                                echo "nous allons uploader cette image dans ce champ vide";
+                            } else if (!empty($datasImg[$i - 1]) && empty(${"imgAnimal$i"}['name'])) {
+                                echo "Aucun fichier n'est à uploader <br";
                             }
                         }
                     }
 
-                    if (updateAnimalIntoTable($modifIdAnimal, $nameAnimal, $typeAnimal, $puce, $sexe, $birth, $adoptionDate, $amiChien, $amiChat, $amiEnfant, $descrAnimal, $descrAnimalAdoption, $localisationAnimalAdoption, $engagement, $statut)) {
-                        $result = displayAlert("Informations enregistrées avec succès !<br>Redirection en cours...", "alert-success");
-                    } else {
-                        $result = displayAlert("Informations non enregistrées en BD", "alert-danger");
-                    }
+
+                    /* for ($i = 1; $i <= 3; $i++) {
+                        $imgDatas[$i] = selectImageById($idImagesRelativeTable[$i - 1]['id_image']);
+                        if (!empty($imagDatas[$i]) && $imageDatas[$i] !== null) {
+                            $idImg = $imgDatas[$i]['id_image'];
+                            if (
+                                !empty(${"imgActu$i"}) && !empty($imgDatas[$i]['url_image']) &&
+                                $imgDatas[$i]['url_image'] !== "animals/" . $statut . "/" . $infosAnimal['nom_animal'] . "_" . ${"imgActu$i"}['name']
+                            ) {
+                                removeRelativeTableContientDatas($infosAnimal['id_animal'], $idImg);
+                                $iteration = countNbreIdAnimalLinksByIdImage($idImg);
+                                if ($iteration['nbre'] == 0) {
+                                    deleteImageByIdImage($idImg);
+                                } else {
+                                    if (${"imgActu$i"}['error'] == 0) {
+                                        $imgActu['size'] = round(${"imgActu$i"}['size'] / 1024);
+                                        $imgActu['name'] = ${"imgActu$i"}['name'];
+                                        $imgActu['error'] = ${"imgActu$i"}['error'];
+                                        $imgActu['tmp_name'] = ${"imgActu$i"}['tmp_name'];
+
+                                        $name_ImgUploaded = verifyUploadedAnimalImage($imgActu['name'], $repertory, $nameAnimal);
+
+                                        insertImageIntoImageTable($name_ImgUploaded, "animals/" . strtolower($nameStatut) . "/" . $nameAnimal . "_" . $imgActu['name'], $imgActu['name'], $imgActu['size']);
+                                        $idImage = obtainIdImageByUrlAndSizeFromTable("animals/" . strtolower($nameStatut) . "/" . $nameAnimal . "_" . $imgActu['name'], $imgActu['size']);
+                                        //$idAnimal = obtainIdAnimalByUrlAndSizeFromTable($nameAnimal, $typeAnimal, $sexe, $descrAnimal);
+                                        insertRelativeTableContient($infosAnimal['id_animal'], $idImage['id_image']);
+
+                                        if (updateAnimalIntoTable($modifIdAnimal, $nameAnimal, $typeAnimal, $puce, $sexe, $birth, $adoptionDate, $amiChien, $amiChat, $amiEnfant, $descrAnimal, $descrAnimalAdoption, $localisationAnimalAdoption, $engagement, $statut)) {
+                                            $result = displayAlert("Informations enregistrées avec succès !<br>Redirection en cours...", "alert-success");
+                                        } else {
+                                            $result = displayAlert("Informations non enregistrées en BD", "alert-danger");
+                                        }
+                                    }
+                                }
+                            } else if (!empty(${"imgActu$i"}) && !empty($imgDatas[$i]['url_image'])) {
+                                echo "oui";
+                            }
+                        } else {
+                            $result = displayAlert("Informations non modifiées en BD", "alert-danger");
+                        }
+                    } */
                 ?>
                     <script>
                         window.setTimeout(function() {
