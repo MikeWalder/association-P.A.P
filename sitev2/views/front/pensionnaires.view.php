@@ -2,12 +2,6 @@
 ob_start();
 ?>
 
-<?php
-/* echo "<pre>";
-print_r($animaux);
-echo "</pre>"; */
-?>
-
 <?= styleTitleLevel1($text, COLOR_TITLE_PENSIONNAIRES); ?>
 
 <div class="row no-gutters mt-2">

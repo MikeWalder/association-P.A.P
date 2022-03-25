@@ -4,7 +4,7 @@ ob_start();
 <?= styleTitleLevel1("Modifier le pensionnaire", COLOR_TITLE_CONSEILS); ?>
 
 <?php
-echo "<pre>";
+/* echo "<pre>";
 empty($_FILES) ? '' : var_dump($_FILES);
 echo "</pre>";
 
@@ -16,21 +16,28 @@ echo "<pre>";
 empty($imgDatas) ? '' : var_dump($imgDatas);
 echo "</pre>";
 
-echo "<pre>";
-empty($datasImg) ? '' : var_dump($datasImg);
-echo "</pre>";
 
-echo $datasImg[0]['url_image'] . "<br>";
-echo $datasImg[1]['url_image'] . "<br>";
-//echo $datasImg[2]['url_image'] . "<br>";
 
-echo "animals/" . displayNameAnimalStatutFileByIdStatut($infosAnimal['id_statut']) . "/" . $infosAnimal['nom_animal'] . "_" . $imgAnimal2['name'] . "<br>";
-echo strlen($imgAnimal2['name']) . "<br>";
-if (strcmp($datasImg[1]['url_image'], "animals/" . displayNameAnimalStatutFileByIdStatut($infosAnimal['id_statut']) . "/y" . $infosAnimal['nom_animal'] . "_" . $imgAnimal2['name']) == 0) {
+$linkrel = "animals/" . displayNameAnimalStatutFileByIdStatut($infosAnimal['id_statut']) . "/" . $infosAnimal['nom_animal'] . "_" . $imgAnimal2['name'];
+
+echo '<h3>' . $linkrel . '</h3>';
+
+echo strlen($datasImg[1]['url_image']) . "<br>";
+echo strlen($linkrel);
+
+if (strlen($linkrel) == strlen($datasImg[1]['url_image'])) {
     echo "les deux chaînes de caractères sont identiques !";
 } else {
-    echo "Les deux chaîunes sont différentes !";
-}
+    echo "Les deux chaînes sont différentes !";
+} */
+
+echo $datasImg[0]['libelle_image'] . "<br>";
+echo $datasImg[1]['libelle_image'] . "<br>";
+echo $datasImg[2]['libelle_image'] . "<br>";
+echo $datasImg[0]['size_image'] . "<br>";
+echo $datasImg[1]['size_image'] . "<br>";
+echo $datasImg[2]['size_image'] . "<br>";
+
 ?>
 
 <div class="row no-gutters">
@@ -174,13 +181,13 @@ if (strcmp($datasImg[1]['url_image'], "animals/" . displayNameAnimalStatutFileBy
 
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
-                    <?php foreach ($imagesAnimal as $key => $imageAnimal) : ?>
+                    <?php foreach ($datasImg as $key => $imageAnimal) : ?>
                         <li data-target="#carouselExampleIndicators" data-slide-to="<?= $key ?>" class="<?= $key == 0 ? 'active' : '' ?>"></li>
                     <?php endforeach; ?>
                 </ol>
 
                 <div class="carousel-inner">
-                    <?php foreach ($imagesAnimal as $key => $imageAnimal) : ?>
+                    <?php foreach ($datasImg as $key => $imageAnimal) : ?>
                         <div class="carousel-item <?= $key == 0 ? 'active' : '' ?>">
                             <img class="d-block w-100" src="<?= URL ?>public/content/images/website/<?= $imageAnimal['url_image'] ?>" alt="<?= $imageAnimal['url_image'] ?>" style="height: 220px;">
                         </div>

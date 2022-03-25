@@ -79,7 +79,7 @@ function selectImagesFromIdAnimal($idAnimal)
 {
     $bdd = connectionPDO();
     $stmt = $bdd->prepare('
-    SELECT i.id_image, url_image, libelle_image, description_image 
+    SELECT i.id_image, url_image, libelle_image, description_image, size_image 
     FROM image i 
     INNER JOIN contient c ON i.id_image = c.id_image 
     INNER JOIN animal a ON a.id_animal = c.id_animal 
@@ -395,34 +395,3 @@ function verifyUploadedAnimalImage($file, $dir, $name)
     else
         return ($name . "_" . $file['name']);
 }
-
-/* function verifyUploadedAnimalImages($file, $dir, $name)
-{
-    if (!file_exists($dir)) mkdir($dir, 0777);
-
-    empty($file['tmp_name']) ? $file['tmp_name'] = $file : $file['tmp_name'];
-
-    $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-    // echo "<br>" . $extension . "<br>";
-    $target_file = $dir . $name . "_" . $file['name'];
-    // echo "<br>" . $target_file . "<br>";
-
-    if (!getimagesize($file['tmp_name'])) {
-        throw new Exception("Ce fichier n'est pas une image");
-    }
-    if (
-        $extension !== "jpg" && $extension !== "JPG" && $extension !== "jpeg" && $extension !== "JPEG" &&
-        $extension !== "png" && $extension !== "PNG" && $extension !== "gif" && $extension !== "GIF"
-    ) {
-        throw new Exception("Extension de fichier non reconnu");
-    }
-    if (file_exists($target_file))
-        throw new Exception("Le fichier existe déjà");
-    if ($file['size'] > 5000000)
-        throw new Exception("Fichier trop volumineux ( > 5 Mo)");
-    if (!move_uploaded_file($file['tmp_name'], $target_file))
-        throw new Exception("L'image n'a pas pu être ajoutée");
-    else
-        return ($name . "_" . $file['name']);
-}
- */

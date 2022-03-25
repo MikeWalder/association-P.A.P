@@ -216,7 +216,7 @@ function getPageAdminModifNews()
                                     window.location = 'adminNews';
                                 }, 2500);
                             </script>
-                        <?php
+                <?php
                         } catch (Exception $e) {
                             $result = displayAlert("La modification de l'actualité n'a pas pu aboutir<br>" . $e->getMessage(), "alert-danger");
                         }
@@ -229,13 +229,6 @@ function getPageAdminModifNews()
                             } else {
                                 $result = displayAlert("Informations non enregistrées en BD<br>Redirection....", "alert-danger");
                             }
-                        ?>
-                            <script>
-                                window.setTimeout(function() {
-                                    window.location = 'adminNews';
-                                }, 2500);
-                            </script>
-                <?php
                         } catch (Exception $e) {
                             $result = displayAlert("La modification de l'actualité n'a pas pu aboutir<br>" . $e->getMessage(), "alert-danger");
                         }
@@ -271,12 +264,6 @@ function getPageAdminPensionnaire()
         if (isset($_GET['d']) && !empty($_GET['d'])) {
             $idAnimal = Securite::secureHTML($_GET['d']);
 
-            //$imageUrlToDelete = selectImagefromIdActu($idActuDelete);
-            //$imgUrl = $imageUrlToDelete['url_image'];
-            //$repertory = 'public/content/images/website/' . $imgUrl;
-            //unlink($repertory);
-
-            //$imgActu = getImageActualiteFromBDD($idActuDelete);
             $idImages = selectRelativeIdImagesbyIdAnimal($idAnimal);
 
             deleteRelativeTableContient($idAnimal);
@@ -286,7 +273,6 @@ function getPageAdminPensionnaire()
             }
 
             if (deleteAnimalById($idAnimal)) {
-                //deleteImagesFromImageByIdAnimal($idAnimal);
                 $result = displayAlert("Informations supprimées avec succès !<br>Rafraîchissement de la page en cours...", "alert-success");
             } else {
                 $result = displayAlert("Informations non supprimées en BD", "alert-danger");
@@ -373,7 +359,7 @@ function getPageAdminAddPensionnaire()
                             window.location = 'adminPensionnaire';
                         }, 2500);
                     </script>
-                <?php
+<?php
                 } catch (Exception $e) {
                     $result = displayAlert("La création de l'actualité n'a pas pu fonctionner<br>" . $e->getMessage(), "alert-danger");
                 }
@@ -395,8 +381,9 @@ function getPageAdminModifPensionnaire()
 
             $infosAnimal = selectAnimalById($modifIdAnimal);
 
-            $imagesAnimal = selectImagesFromIdAnimal($infosAnimal['id_animal']);
             $datasImg = selectImagesFromIdAnimal($infosAnimal['id_animal']);
+            foreach ($datasImg as $key => $dataImg) {
+            }
 
             if (
                 isset($_POST['validateAdminModifPensionnaire']) &&
@@ -430,9 +417,6 @@ function getPageAdminModifPensionnaire()
                     $imgAnimal2 = $_FILES['imgAnimal2'];
                     $imgAnimal3 = $_FILES['imgAnimal3'];
 
-                    //$repertory = "public/content/images/website/";
-
-
                     $statut = displayNameAnimalStatutFileByIdStatut($statut);
 
                     $repertory = "public/content/images/website/animals/" . $statut . "/";
@@ -465,73 +449,24 @@ function getPageAdminModifPensionnaire()
                     } else {
                         for ($i = 1; $i <= 3; $i++) {
                             if (!empty($datasImg[$i - 1]) && !empty(${"imgAnimal$i"}['name'])) {
-                                $urlInputFile = "animals/" . displayNameAnimalStatutByIdStatut($infosAnimal['id_statut']) . "/" . $nameAnimal . "_" . ${"imgAnimal$i"}['name'];
-                                if (strcmp($datasImg[$i - 1]['url_image'], $urlInputFile) == 0) {
-                                    echo "les deux fichiers sont identiques donc pas d'upload<br>";
-                                } else if (strcmp($datasImg[$i - 1]['url_image'], $urlInputFile) !== 0) {
-                                    echo "les deux fichiers sont différents donc l'upload est en cours...<br>";
+                                $urlInputFile = "animals/" . displayNameAnimalStatutFileByIdStatut($infosAnimal['id_statut']) . "/" . $infosAnimal['nom_animal'] . "_" . ${"imgAnimal$i"}['name'];
+                                if (($datasImg[$i - 1]['url_image'] === $urlInputFile) && $datasImg[$i - 1]['size_image'] == round(${"imgAnimal$i"}['size'] / 1024)) {
+                                    echo "Les deux fichiers sont identiques donc pas d'upload<br>";
+                                    echo $datasImg[$i - 1]['url_image'] . ' - ' . $urlInputFile . '<br>';
+                                } else if ($datasImg[$i - 1]['url_image'] !== $urlInputFile) {
+                                    echo "Les deux fichiers sont différents donc l'upload est en cours...<br>";
+                                    echo $datasImg[$i - 1]['url_image'] . ' - ' . $urlInputFile . '<br>';
                                 }
                             } else if (empty($datasImg[$i - 1]) && !empty(${"imgAnimal$i"}['name'])) {
-                                echo "nous allons uploader cette image dans ce champ vide";
+                                echo "Nous allons uploader cette image dans ce champ vide<br>";
                             } else if (!empty($datasImg[$i - 1]) && empty(${"imgAnimal$i"}['name'])) {
-                                echo "Aucun fichier n'est à uploader <br";
+                                echo "Aucun fichier n'est à uploader <br>";
                             }
                         }
                     }
-
-
-                    /* for ($i = 1; $i <= 3; $i++) {
-                        $imgDatas[$i] = selectImageById($idImagesRelativeTable[$i - 1]['id_image']);
-                        if (!empty($imagDatas[$i]) && $imageDatas[$i] !== null) {
-                            $idImg = $imgDatas[$i]['id_image'];
-                            if (
-                                !empty(${"imgActu$i"}) && !empty($imgDatas[$i]['url_image']) &&
-                                $imgDatas[$i]['url_image'] !== "animals/" . $statut . "/" . $infosAnimal['nom_animal'] . "_" . ${"imgActu$i"}['name']
-                            ) {
-                                removeRelativeTableContientDatas($infosAnimal['id_animal'], $idImg);
-                                $iteration = countNbreIdAnimalLinksByIdImage($idImg);
-                                if ($iteration['nbre'] == 0) {
-                                    deleteImageByIdImage($idImg);
-                                } else {
-                                    if (${"imgActu$i"}['error'] == 0) {
-                                        $imgActu['size'] = round(${"imgActu$i"}['size'] / 1024);
-                                        $imgActu['name'] = ${"imgActu$i"}['name'];
-                                        $imgActu['error'] = ${"imgActu$i"}['error'];
-                                        $imgActu['tmp_name'] = ${"imgActu$i"}['tmp_name'];
-
-                                        $name_ImgUploaded = verifyUploadedAnimalImage($imgActu['name'], $repertory, $nameAnimal);
-
-                                        insertImageIntoImageTable($name_ImgUploaded, "animals/" . strtolower($nameStatut) . "/" . $nameAnimal . "_" . $imgActu['name'], $imgActu['name'], $imgActu['size']);
-                                        $idImage = obtainIdImageByUrlAndSizeFromTable("animals/" . strtolower($nameStatut) . "/" . $nameAnimal . "_" . $imgActu['name'], $imgActu['size']);
-                                        //$idAnimal = obtainIdAnimalByUrlAndSizeFromTable($nameAnimal, $typeAnimal, $sexe, $descrAnimal);
-                                        insertRelativeTableContient($infosAnimal['id_animal'], $idImage['id_image']);
-
-                                        if (updateAnimalIntoTable($modifIdAnimal, $nameAnimal, $typeAnimal, $puce, $sexe, $birth, $adoptionDate, $amiChien, $amiChat, $amiEnfant, $descrAnimal, $descrAnimalAdoption, $localisationAnimalAdoption, $engagement, $statut)) {
-                                            $result = displayAlert("Informations enregistrées avec succès !<br>Redirection en cours...", "alert-success");
-                                        } else {
-                                            $result = displayAlert("Informations non enregistrées en BD", "alert-danger");
-                                        }
-                                    }
-                                }
-                            } else if (!empty(${"imgActu$i"}) && !empty($imgDatas[$i]['url_image'])) {
-                                echo "oui";
-                            }
-                        } else {
-                            $result = displayAlert("Informations non modifiées en BD", "alert-danger");
-                        }
-                    } */
-                ?>
-                    <script>
-                        window.setTimeout(function() {
-                            window.location = 'adminPensionnaire';
-                        }, 25000000);
-                    </script>
-<?php
                 }
             }
             require_once("views/back/adminModifPensionnaire.view.php");
         }
     }
 }
-
-//displayNameAnimalStatutByIdStatut($infosAnimal['id_statut'])
