@@ -92,6 +92,26 @@ function selectImagesFromIdAnimal($idAnimal)
     return $image;
 }
 
+function selectImageBySizeAndDescription($size, $description)
+{
+    $size = (int)$size;
+    $bdd = connectionPDO();
+    $req = '
+    SELECT url_image
+    FROM image
+    WHERE size = :sizeImg
+    AND
+    description_image = :descrImg';
+    $stmt = $bdd->prepare($req);
+    $stmt->bindValue(":size", $size, PDO::PARAM_INT);
+    $stmt->bindValue(":descrImg", $description, PDO::PARAM_STR_CHAR);
+    $stmt->execute();
+    $selectedImage = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt->closeCursor();
+    if (!empty($selectedImage))
+        return $selectedImage;
+}
+
 function insertNewAnimalIntoTable($name, $type, $puce, $sexe, $birth, $adoptionDate, $amiChien, $amiChat, $amiEnfant, $descr, $descrAdopt, $descrLocal, $engagement, $idStatut)
 {
     $bdd = connectionPDO();
@@ -147,19 +167,19 @@ function insertImageIntoImageTable($libelle, $url, $description, $size)
     }
 }
 
-function obtainIdImageByUrlAndSizeFromTable($url, $size)
+function obtainIdImageByUrlAndSizeFromTable($descr, $size)
 {
     $bdd = connectionPDO();
     $req = '
     SELECT id_image 
     FROM image
     WHERE 
-    url_image = :urlImg
+    description_image = :descrImg
     AND 
     size_image = :sizeImg
     ';
     $stmt = $bdd->prepare($req);
-    $stmt->bindValue(":urlImg", $url, PDO::PARAM_STR);
+    $stmt->bindValue(":descrImg", $descr, PDO::PARAM_STR);
     $stmt->bindValue(":sizeImg", $size, PDO::PARAM_STR);
     $stmt->execute();
     $idImage = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -211,7 +231,6 @@ function insertRelativeTableContient($idAnimal, $idImg)
         return false;
     }
 }
-//INSERT INTO `contient` (`id_animal`, `id_image`) VALUES ('7', '1'); 
 
 function updateAnimalIntoTable($idAnimal, $name, $type, $puce, $sexe, $birth, $adoptionDate, $amiChien, $amiChat, $amiEnfant, $descr, $descrAdopt, $descrLocal, $engagement, $idStatut)
 {
@@ -233,7 +252,7 @@ function updateAnimalIntoTable($idAnimal, $name, $type, $puce, $sexe, $birth, $a
     localisation_description_animal = :descrLocalisation,
     engagement_description_animal = :engagement,
     id_statut = :idStatut
-    WHERE id_animal = ' . $idAnimal;
+    WHERE id_animal = ' . (int)$idAnimal;
     $stmt = $bdd->prepare($req);
     $stmt->bindValue(":nom", $name, PDO::PARAM_STR);
     $stmt->bindValue(":type", $type, PDO::PARAM_STR);

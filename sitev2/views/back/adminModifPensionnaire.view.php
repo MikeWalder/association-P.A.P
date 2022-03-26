@@ -4,39 +4,14 @@ ob_start();
 <?= styleTitleLevel1("Modifier le pensionnaire", COLOR_TITLE_CONSEILS); ?>
 
 <?php
-/* echo "<pre>";
-empty($_FILES) ? '' : var_dump($_FILES);
-echo "</pre>";
 
-echo "<pre>";
-empty($idImagesRelativeTable) ? var_dump($idImagesRelativeTable) : print_r($idImagesRelativeTable);
-echo "</pre>";
+empty($datasImg[0]['libelle_image']) ? '' : $datasImg[0]['libelle_image'] . "<br>";
+empty($datasImg[1]['libelle_image']) ? '' : $datasImg[1]['libelle_image'] . "<br>";
+empty($datasImg[2]['libelle_image']) ? '' : $datasImg[2]['libelle_image'] . "<br>";
 
-echo "<pre>";
-empty($imgDatas) ? '' : var_dump($imgDatas);
-echo "</pre>";
-
-
-
-$linkrel = "animals/" . displayNameAnimalStatutFileByIdStatut($infosAnimal['id_statut']) . "/" . $infosAnimal['nom_animal'] . "_" . $imgAnimal2['name'];
-
-echo '<h3>' . $linkrel . '</h3>';
-
-echo strlen($datasImg[1]['url_image']) . "<br>";
-echo strlen($linkrel);
-
-if (strlen($linkrel) == strlen($datasImg[1]['url_image'])) {
-    echo "les deux chaînes de caractères sont identiques !";
-} else {
-    echo "Les deux chaînes sont différentes !";
-} */
-
-echo $datasImg[0]['libelle_image'] . "<br>";
-echo $datasImg[1]['libelle_image'] . "<br>";
-echo $datasImg[2]['libelle_image'] . "<br>";
-echo $datasImg[0]['size_image'] . "<br>";
-echo $datasImg[1]['size_image'] . "<br>";
-echo $datasImg[2]['size_image'] . "<br>";
+empty($datasImg[0]['size_image']) ? '' : $datasImg[0]['size_image'] . " Ko<br>";
+empty($datasImg[1]['size_image']) ? '' : $datasImg[1]['size_image'] . " Ko<br>";
+empty($datasImg[2]['size_image']) ? '' : $datasImg[2]['size_image'] . " Ko<br>";
 
 ?>
 
