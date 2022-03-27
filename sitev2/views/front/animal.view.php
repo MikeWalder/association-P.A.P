@@ -66,7 +66,7 @@ ob_start();
             <div class="carousel-inner">
                 <?php foreach ($images as $key => $image) : ?>
                     <div class="carousel-item <?= $key === 0 ? "active" : "" ?>">
-                        <img class="d-block w-80 p-3" src="<?= URL ?>public/content/images/website/<?= $image['url_image'] ?>" style="max-height: 600px;" alt="<?= $image['libelle_image'] ?>">
+                        <img class="d-block w-80 p-3" src="<?= URL ?>public/content/images/website/<?= $image['url_image'] ?>" style="height: 500px;" alt="<?= $image['libelle_image'] ?>">
                     </div>
                 <?php endforeach; ?>
             </div>

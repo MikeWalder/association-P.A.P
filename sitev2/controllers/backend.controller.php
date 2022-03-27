@@ -344,7 +344,7 @@ function getPageAdminAddPensionnaire()
                                 $name_ImgUploaded = verifyUploadedAnimalImage($imgActu, $repertory, $nameAnimal);
 
                                 insertImageIntoImageTable($name_ImgUploaded, "animals/" . strtolower($nameStatut) . "/" . $nameAnimal . "_" . $imgActu['name'], $imgActu['name'], $imgActu['size']);
-                                $idImage = obtainIdImageByUrlAndSizeFromTable("animals/" . strtolower($nameStatut) . "/" . $nameAnimal . "_" . $imgActu['name'], $imgActu['size']);
+                                $idImage = obtainIdImageByUrlAndSizeFromTable($imgActu['name'], $imgActu['size']);
                                 $idAnimal = obtainIdAnimalByUrlAndSizeFromTable($nameAnimal, $typeAnimal, $sexe, $descrAnimal);
                                 insertRelativeTableContient($idAnimal['id_animal'], $idImage['id_image']);
                             }
@@ -438,7 +438,9 @@ function getPageAdminModifPensionnaire()
                                 $name_ImgUploaded = verifyUploadedAnimalImage(${"imgAnimal$i"}, $repertory, $nameAnimal);
 
                                 insertImageIntoImageTable($name_ImgUploaded, "animals/" . strtolower($statut) . "/" . $nameAnimal . "_" . $imgAnimal['name'], $imgAnimal['name'], $imgAnimal['size']);
-                                $idImage = obtainIdImageByUrlAndSizeFromTable("animals/" . strtolower($statut) . "/" . $nameAnimal . "_" . $imgAnimal['name'], $imgAnimal['size']);
+                                $idImage = obtainIdImageByUrlAndSizeFromTable($imgAnimal['name'], $imgAnimal['size']);
+                                echo '<pre>' . $idImage['id_image'] . '</pre>';
+                                echo $imgAnimal['size'];
                                 insertRelativeTableContient($infosAnimal['id_animal'], $idImage['id_image']);
 
                                 if (updateAnimalIntoTable($infosAnimal['id_animal'], $nameAnimal, $typeAnimal, $puce, $sexe, $birth, $adoptionDate, $amiChien, $amiChat, $amiEnfant, $descrAnimal, $descrAnimalAdoption, $localisationAnimalAdoption, $engagement, $nbreStatut)) {
@@ -448,7 +450,7 @@ function getPageAdminModifPensionnaire()
                                 }
                     ?>
                                 <script>
-                                    /* window.setTimeout(function() {
+                                    /*window.setTimeout(function() {
                                         window.location = 'adminPensionnaire';
                                     }, 2500); */
                                 </script>
@@ -467,7 +469,7 @@ function getPageAdminModifPensionnaire()
                                         <script>
                                             window.setTimeout(function() {
                                                 window.location = 'adminPensionnaire';
-                                            }, 2500);
+                                            }, 250000000);
                                         </script>
                                     <?php }
                                 } else if (($datasImg[$i - 1]['url_image'] !== $urlInputFile) && $datasImg[$i - 1]['size_image'] !== 0) {
@@ -487,41 +489,71 @@ function getPageAdminModifPensionnaire()
                                     print_r($countImg[0]['nbre']);
                                     if ($countImg[0]['nbre'] == 0) {
                                         deleteImageByIdImage($datasImg[$i - 1]['id_image']);
-                                        insertImageIntoImageTable($datasImg[$i - 1]['libelle_image'], $datasImg[$i - 1]['url_image'], $datasImg[$i - 1]['description_image'], $datasImg[$i - 1]['size_image']);
+                                        $rep = 'public/content/images/website/' . $datasImg[$i - 1]['url_image'];
+                                        unlink($rep);
+                                        echo "L'image a bien été supprimée";
+                                        $name_ImgUploaded = verifyUploadedAnimalImage(${"imgAnimal$i"}, $repertory, $nameAnimal);
+                                        //insertImageIntoImageTable($datasImg[$i - 1]['libelle_image'], $datasImg[$i - 1]['url_image'], $datasImg[$i - 1]['description_image'], $datasImg[$i - 1]['size_image']);
+                                        insertImageIntoImageTable($name_ImgUploaded, "animals/" . strtolower($statut) . "/" . $nameAnimal . "_" . ${"imgAnimal$i"}['name'], ${"imgAnimal$i"}['name'], round(${"imgAnimal$i"}['size'] / 1024));
+                                        $newIdImg = obtainIdImageByUrlAndSizeFromTable(${"imgAnimal$i"}['name'], round(${"imgAnimal$i"}['size'] / 1024));
+                                        print_r($newIdImg['id_image']);
+                                        echo $datasImg[$i - 1]['size_image'] . '<br>';
+                                        insertRelativeTableContient($infosAnimal['id_animal'], $newIdImg['id_image']);
+                                    } else {
                                     }
                                     // ici vérification si la nouvelle image n'est pas déjà présente (à venir) 
 
 
                                     if (updateAnimalIntoTable($infosAnimal['id_animal'], $nameAnimal, $typeAnimal, $puce, $sexe, $birth, $adoptionDate, $amiChien, $amiChat, $amiEnfant, $descrAnimal, $descrAnimalAdoption, $localisationAnimalAdoption, $engagement, $nbreStatut)) {
-                                        echo "tout est updaté";
+                                        $result = displayAlert("Informations sur le pensionnaire modifiées avec succès !<br>Redirection en cours...", "alert-success");
                                     }
-                                    echo "Les deux fichiers sont différents donc l'upload est en cours...<br>";
-                                    //echo $datasImg[$i - 1]['url_image'] . ' - ' . $urlInputFile . '<br>';
+                                    ?>
+                                    <script>
+                                        window.setTimeout(function() {
+                                            window.location = 'adminPensionnaire';
+                                        }, 250000000);
+                                    </script>
+                                <?php
                                 }
                             } else if (empty($datasImg[$i - 1]) && !empty(${"imgAnimal$i"}['name'])) {
 
                                 echo "Nous allons uploader cette image dans ce champ vide<br>";
                                 echo '<h3>' . ${"imgAnimal$i"}['name'] . '</h3>';
+                                echo '<h3>' . ${"imgAnimal$i"}['size'] . ' octets</h3>';
                                 $test = obtainIdImageByUrlAndSizeFromTable(${"imgAnimal$i"}['name'], round(${"imgAnimal$i"}['size'] / 1024));
                                 print_r($test);
-                                if ($test[0]['id_image'] == 0) {
-                                    insertImageIntoImageTable($name_ImgUploaded, "animals/" . strtolower($statut) . "/" . $nameAnimal . "_" . ${"imgAnimal$i"}['name'], ${"imgAnimal$i"}['name'], ${"imgAnimal$i"}['size']);
+                                if (!empty($test['id_image'])) {
+                                    removeRelativeTableContientDatas($infosAnimal['id_animal'], $test['id_image']);
+                                    deleteImageByIdImage($test['id_image']);
+                                    $rep = 'public/content/images/website/' . $datasImg[$i - 1]['url_image'];
+                                    echo $rep . '<hr>';
+                                    unlink($rep);
+                                    $name_ImgUploaded = verifyUploadedAnimalImage(${"imgAnimal$i"}, $repertory, $nameAnimal);
+                                    insertImageIntoImageTable($name_ImgUploaded, "animals/" . strtolower($statut) . "/" . $nameAnimal . "_" . ${"imgAnimal$i"}['name'], ${"imgAnimal$i"}['name'], round(${"imgAnimal$i"}['size'] / 1024));
                                     $idNewImage = obtainIdImageByUrlAndSizeFromTable(${"imgAnimal$i"}['name'], round(${"imgAnimal$i"}['size'] / 1024));
-                                    insertRelativeTableContient((int)$modifIdAnimal, $idNewImage['id_image']);
+                                    print_r($idNewImage);
+                                    insertRelativeTableContient((int)$modifIdAnimal, (int)$idNewImage['id_image']);
+                                } else {
                                 }
                             } else if (!empty($datasImg[$i - 1]) && empty(${"imgAnimal$i"}['name'])) {
                                 echo "Aucun fichier n'est à uploader <br>";
                                 $isImageInTable = obtainIdImageByUrlAndSizeFromTable($datasImg[$i - 1]['description_image'], $datasImg[$i - 1]['size_image']);
-                                if (empty($isImageInTable)) {
+                                print_r($isImageInTable);
+                                if (empty($isImageInTable['id_image'])) {
                                     insertImageIntoImageTable($datasImg[$i - 1]['libelle_image'], $datasImg[$i - 1]['url_image'], $datasImg[$i - 1]['description_image'], round(${"imgAnimal$i"}['size'] / 1024));
+                                    $newIdImg = obtainIdImageByUrlAndSizeFromTable($datasImg[$i - 1]['description_image'], $datasImg[$i - 1]['size_image']);
+                                    echo '<pre>' . $newIdImg['id_image'] . '</pre>';
+                                    insertRelativeTableContient($infosAnimal['id_animal'], $newIdImg['id_image']);
+                                } else {
+                                    echo "L'id de l'image actuelle dans la table est " . $isImageInTable['id_image'] . '<br>';
                                 }
                                 if (updateAnimalIntoTable($infosAnimal['id_animal'], $nameAnimal, $typeAnimal, $puce, $sexe, $birth, $adoptionDate, $amiChien, $amiChat, $amiEnfant, $descrAnimal, $descrAnimalAdoption, $localisationAnimalAdoption, $engagement, $nbreStatut)) {
                                     $result = displayAlert("Informations modifiées avec succès !<br>Redirection en cours...", "alert-success");
-                                    ?>
+                                ?>
                                     <script>
-                                        /* window.setTimeout(function() {
+                                        window.setTimeout(function() {
                                             window.location = 'adminPensionnaire';
-                                        }, 2500); */
+                                        }, 2500000);
                                     </script>
 <?php
                                 }
